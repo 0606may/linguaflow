@@ -1,0 +1,2828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#4F46E5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LinguaFlow">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<title>LinguaFlow - 英语德语学习工具</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#4F46E5;--primary-light:#818CF8;--primary-dark:#3730A3;
+  --bg:#F8FAFC;--card:#FFF;--sidebar-bg:#1E293B;--sidebar-text:#CBD5E1;
+  --text:#1E293B;--text-secondary:#64748B;--border:#E2E8F0;
+  --success:#10B981;--warning:#F59E0B;--danger:#EF4444;
+  --highlight:#FEF3C7;--highlight-sentence:#EEF2FF;
+  --shadow:0 1px 3px rgba(0,0,0,.1);--shadow-lg:0 4px 12px rgba(0,0,0,.1);
+  --radius:10px;--radius-sm:6px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
+/* Sidebar */
+.sidebar{width:220px;background:var(--sidebar-bg);color:var(--sidebar-text);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sidebar-brand{padding:20px;font-size:20px;font-weight:700;color:#FFF;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);letter-spacing:1px}
+.sidebar-brand small{display:block;font-size:11px;font-weight:400;color:var(--sidebar-text);margin-top:4px;letter-spacing:0}
+.sidebar-section{padding:12px 16px 6px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#475569}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:all .2s;font-size:14px;border-left:3px solid transparent}
+.sidebar-item:hover{background:rgba(255,255,255,.05);color:#FFF}
+.sidebar-item.active{background:rgba(79,70,229,.3);color:#FFF;border-left-color:var(--primary-light)}
+.sidebar-item .icon{font-size:18px;width:24px;text-align:center}
+.lang-switch{display:flex;margin:8px 16px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid rgba(255,255,255,.15)}
+.lang-btn{flex:1;padding:8px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}
+.lang-btn.active{background:var(--primary);color:#FFF}
+.lang-btn:not(.active):hover{background:rgba(255,255,255,.05)}
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0}
+.topbar-title{font-size:18px;font-weight:700;color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.content{flex:1;overflow-y:auto;padding:20px 24px}
+/* Cards */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:16px}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:600}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;color:var(--text)}
+.btn:hover{background:#F1F5F9}
+.btn-primary{background:var(--primary);color:#FFF;border-color:var(--primary)}
+.btn-primary:hover{background:var(--primary-dark)}
+.btn-success{background:var(--success);color:#FFF;border-color:var(--success)}
+.btn-danger{background:var(--danger);color:#FFF;border-color:var(--danger)}
+.btn-sm{padding:4px 10px;font-size:12px}
+.btn-icon{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:16px}
+.btn-group{display:flex;gap:6px;flex-wrap:wrap}
+/* Controls */
+.control-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.control-label{font-size:12px;color:var(--text-secondary);min-width:50px}
+.speed-slider{-webkit-appearance:none;width:120px;height:4px;border-radius:2px;background:#CBD5E1;outline:none}
+.speed-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer}
+.speed-val{font-size:12px;font-weight:600;color:var(--primary);min-width:32px}
+select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--card);cursor:pointer}
+/* Material list */
+.material-list{display:flex;flex-direction:column;gap:8px}
+.material-card{padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:space-between}
+.material-card:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
+.material-card.active{border-color:var(--primary);background:var(--highlight-sentence);box-shadow:0 0 0 2px rgba(79,70,229,.15)}
+.material-card .mc-title{font-size:14px;font-weight:600}
+.material-card .mc-meta{font-size:12px;color:var(--text-secondary);margin-top:3px}
+.theme-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
+.theme-badge.daily{background:#DBEAFE;color:#1D4ED8}
+.theme-badge.business{background:#FEF3C7;color:#92400E}
+.theme-badge.culture{background:#D1FAE5;color:#065F46}
+.theme-badge.exam{background:#FCE7F3;color:#9D174D}
+/* Bilingual text */
+.bilingual-block{margin:8px 0;padding:10px 14px;border-radius:var(--radius-sm);line-height:1.8;transition:background .2s}
+.bilingual-block:hover{background:#F8FAFC}
+.bilingual-block.highlight{background:var(--highlight-sentence);border-left:3px solid var(--primary)}
+.bilingual-block.playing{background:#EEF2FF;border-left:3px solid var(--primary)}
+.sentence-orig{font-size:16px;font-weight:500;cursor:pointer}
+.sentence-orig .word{cursor:pointer;border-radius:3px;padding:0 1px;transition:background .15s}
+.sentence-orig .word:hover{background:var(--highlight)}
+.sentence-orig .word.looked-up{background:#DBEAFE;border-bottom:2px solid var(--primary)}
+.sentence-trans{font-size:14px;color:var(--text-secondary);margin-top:2px}
+.sentence-idx{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:#F1F5F9;font-size:11px;color:var(--text-secondary);margin-right:8px;flex-shrink:0}
+/* Dictionary popup */
+.dict-popup{position:fixed;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:16px;min-width:240px;max-width:320px;z-index:1000;display:none}
+.dict-popup.show{display:block}
+.dict-word{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:4px}
+.dict-phonetic{font-size:13px;color:var(--text-secondary);margin-bottom:8px}
+.dict-meaning{font-size:14px;line-height:1.6}
+.dict-meaning .pos{color:var(--primary);font-weight:600;margin-right:6px}
+.dict-close{position:absolute;top:8px;right:10px;cursor:pointer;font-size:18px;color:var(--text-secondary)}
+/* Writing */
+.writing-area{width:100%;min-height:180px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:15px;line-height:1.8;resize:vertical;font-family:inherit;outline:none;transition:border-color .2s}
+.writing-area:focus{border-color:var(--primary)}
+.writing-prompt{padding:14px;background:#F8FAFC;border-radius:var(--radius-sm);margin-bottom:12px;border-left:3px solid var(--primary)}
+.writing-prompt .wp-title{font-weight:600;margin-bottom:6px}
+.writing-prompt .wp-hint{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.writing-stats{display:flex;gap:16px;font-size:12px;color:var(--text-secondary);margin-top:8px}
+/* Quiz */
+.quiz-input{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:15px;outline:none;transition:border-color .2s}
+.quiz-input:focus{border-color:var(--primary)}
+.quiz-input.correct{border-color:var(--success);background:#ECFDF5}
+.quiz-input.wrong{border-color:var(--danger);background:#FEF2F2}
+.quiz-feedback{margin-top:8px;padding:10px;border-radius:var(--radius-sm);font-size:14px;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{background:#ECFDF5;color:#065F46}
+.quiz-feedback.wrong{background:#FEF2F2;color:#991B1B}
+/* Import */
+.import-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:30px;text-align:center;cursor:pointer;transition:all .2s;color:var(--text-secondary)}
+.import-zone:hover{border-color:var(--primary);color:var(--primary)}
+.import-zone.dragover{border-color:var(--primary);background:var(--highlight-sentence)}
+/* Tabs */
+.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:16px}
+.tab{padding:8px 18px;cursor:pointer;font-size:14px;font-weight:500;color:var(--text-secondary);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+/* Grid */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+/* Responsive */
+@media(max-width:768px){
+  .sidebar{width:60px}.sidebar-brand small,.sidebar-item span,.sidebar-section{display:none}.sidebar-brand{font-size:14px;padding:14px 4px}.sidebar-item{padding:12px;justify-content:center;border-left:none;border-right:3px solid transparent}.sidebar-item.active{border-left:none;border-right-color:var(--primary-light)}.lang-switch{flex-direction:column;margin:4px 8px}.grid-2{grid-template-columns:1fr}
+}
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#94A3B8}
+/* Animation */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .3s ease}
+/* Record indicator */
+.recording-indicator{display:inline-flex;align-items:center;gap:6px;color:var(--danger);font-size:13px;font-weight:600}
+.recording-dot{width:10px;height:10px;border-radius:50%;background:var(--danger);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* Word bank */
+.word-bank{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.word-chip{padding:4px 10px;background:#F1F5F9;border-radius:14px;font-size:12px;cursor:pointer;transition:all .15s;border:1px solid transparent}
+.word-chip:hover{background:var(--highlight-sentence);border-color:var(--primary-light)}
+.empty-state{text-align:center;padding:40px;color:var(--text-secondary)}
+.empty-state .es-icon{font-size:48px;margin-bottom:12px}
+.empty-state .es-text{font-size:15px}
+/* Progress & Dashboard */
+.progress-bar-bg{height:8px;background:#E2E8F0;border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.stat-card{text-align:center;padding:16px;background:#F8FAFC;border-radius:var(--radius-sm)}
+.stat-card .stat-num{font-size:28px;font-weight:700;color:var(--primary)}
+.stat-card .stat-label{font-size:12px;color:var(--text-secondary);margin-top:4px}
+.level-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:14px;font-size:13px;font-weight:600}
+.streak-fire{font-size:20px;animation:flicker 1.5s infinite alternate}
+@keyframes flicker{0%{transform:scale(1)}100%{transform:scale(1.15)}}
+.recommend-card{padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;margin-bottom:8px}
+.recommend-card:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
+.recommend-card .rc-title{font-size:14px;font-weight:600}
+.recommend-card .rc-reason{font-size:12px;color:var(--primary);margin-top:3px}
+.duo-sync-box{background:linear-gradient(135deg,#58CC02 0%,#45A825 100%);border-radius:var(--radius);padding:16px;color:#FFF;margin-bottom:16px}
+.duo-sync-box .dsb-title{font-weight:700;font-size:15px;margin-bottom:8px}
+.duo-sync-box .dsb-row{display:flex;justify-content:space-between;font-size:13px;opacity:.9;margin-top:4px}
+.target-box{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);border-radius:var(--radius);padding:16px;color:#FFF;margin-bottom:16px}
+.target-box .tb-title{font-weight:700;font-size:15px;margin-bottom:4px}
+.target-box .tb-sub{font-size:13px;opacity:.85}
+.activity-day{margin-bottom:16px}
+.activity-day .ad-date{font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.activity-item{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px}
+.activity-item .ai-icon{width:24px;text-align:center;font-size:14px}
+.activity-item .ai-text{flex:1}
+.activity-item .ai-time{color:var(--text-secondary);font-size:11px}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.setting-row:last-child{border-bottom:none}
+.setting-label{font-size:14px}
+.setting-value{display:flex;align-items:center;gap:8px}
+.duo-owl{font-size:32px;margin-right:8px}
+/* Query module */
+.query-box{position:relative}
+.query-input{width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:var(--radius);font-size:15px;outline:none;transition:border-color .2s}
+.query-input:focus{border-color:var(--primary)}
+.query-result{margin-top:16px;animation:fadeIn .3s}
+.grammar-card{padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;cursor:pointer;transition:all .15s}
+.grammar-card:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
+.grammar-card .gc-title{font-weight:600;font-size:14px;color:var(--primary);margin-bottom:4px}
+.grammar-card .gc-preview{font-size:13px;color:var(--text-secondary)}
+.grammar-detail{padding:16px;background:#F8FAFC;border-radius:var(--radius-sm);margin-bottom:12px;border-left:3px solid var(--primary);animation:fadeIn .2s}
+.grammar-detail .gd-title{font-size:16px;font-weight:700;color:var(--primary);margin-bottom:8px}
+.grammar-detail .gd-content{font-size:14px;line-height:1.8;white-space:pre-line}
+.grammar-detail .gd-example{margin-top:8px;padding:8px 12px;background:#FFF;border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--border)}
+.dict-result{padding:16px;background:#F8FAFC;border-radius:var(--radius-sm);margin-bottom:12px}
+.dict-result .dr-word{font-size:22px;font-weight:700;color:var(--primary)}
+.dict-result .dr-phonetic{font-size:13px;color:var(--text-secondary);margin:4px 0 8px}
+.dict-result .dr-meaning{font-size:14px;line-height:1.8}
+.dict-result .dr-meaning .pos{color:var(--primary);font-weight:600;margin-right:6px}
+/* Notes module */
+.note-tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid var(--border)}
+.note-tab{padding:10px 20px;cursor:pointer;font-size:14px;font-weight:500;color:var(--text-secondary);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.note-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.note-tab:hover{color:var(--text)}
+.note-item{padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;transition:all .15s}
+.note-item:hover{border-color:var(--primary-light)}
+.note-item .ni-content{font-size:14px;font-weight:600}
+.note-item .ni-detail{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6}
+.note-item .ni-meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:11px;color:var(--text-secondary)}
+/* Spot quiz */
+.spot-card{padding:20px;text-align:center;background:linear-gradient(135deg,#EEF2FF,#F8FAFC);border-radius:var(--radius);margin-bottom:16px}
+.spot-question{font-size:18px;font-weight:700;color:var(--text);margin:16px 0}
+.spot-answer{font-size:15px;color:var(--success);margin-top:12px;animation:fadeIn .3s}
+.spot-options{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
+.spot-opt{padding:10px 20px;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:14px;transition:all .15s;background:#FFF}
+.spot-opt:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
+.spot-opt.correct{border-color:var(--success);background:#ECFDF5;color:var(--success)}
+.spot-opt.wrong{border-color:var(--danger);background:#FEF2F2;color:var(--danger)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+/* Photo Upload */
+.upload-panel{background:#F8FAFC;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;animation:fadeIn .3s}
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:#FFF}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--primary);background:var(--highlight-sentence)}
+.upload-zone .uz-icon{font-size:36px;margin-bottom:8px}
+.upload-zone .uz-text{font-size:14px;color:var(--text-secondary)}
+.upload-zone .uz-hint{font-size:12px;color:var(--text-secondary);margin-top:4px;opacity:.7}
+.upload-preview{position:relative;display:inline-block;max-width:100%;margin:12px 0}
+.upload-preview img{max-width:100%;max-height:300px;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.upload-preview .up-remove{position:absolute;top:-8px;right:-8px;width:24px;height:24px;background:var(--danger);color:#FFF;border:none;border-radius:50%;cursor:pointer;font-size:14px;line-height:24px;text-align:center}
+.ocr-progress{margin:12px 0}
+.ocr-progress .op-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.ocr-progress .op-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-light));border-radius:4px;transition:width .3s}
+.ocr-progress .op-label{font-size:12px;color:var(--text-secondary);margin-top:4px;text-align:center}
+.ocr-result{margin-top:12px}
+.ocr-result textarea{width:100%;min-height:120px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-size:14px;line-height:1.8;resize:vertical;font-family:inherit}
+.ocr-result textarea:focus{outline:none;border-color:var(--primary)}
+.ocr-items{margin-top:12px;max-height:360px;overflow-y:auto}
+.ocr-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;background:#FFF;transition:all .15s}
+.ocr-item:hover{border-color:var(--primary-light)}
+.ocr-item.selected{border-color:var(--primary);background:var(--highlight-sentence)}
+.ocr-item input[type=checkbox]{margin-top:3px;accent-color:var(--primary)}
+.ocr-item .oi-text{flex:1;font-size:14px;line-height:1.6}
+.ocr-item .oi-cat{font-size:11px;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.source-tabs{display:flex;gap:0;margin-bottom:12px;border-bottom:2px solid var(--border)}
+.source-tab{padding:8px 18px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-secondary);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.source-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.source-tab:hover{color:var(--text)}
+.batch-actions{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+/* ============================================================
+   MOBILE RESPONSIVE
+   ============================================================ */
+@media(max-width:768px){
+  :root{--sidebar-w:0px;--bottom-nav-h:64px}
+  .sidebar{
+    position:fixed;bottom:0;left:0;right:0;top:auto;
+    width:100%;height:var(--bottom-nav-h);
+    flex-direction:row;overflow-x:auto;overflow-y:hidden;
+    padding:0;padding-bottom:env(safe-area-inset-bottom);
+    z-index:100;border-top:1px solid rgba(255,255,255,.08);
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .sidebar::-webkit-scrollbar{display:none}
+  .sidebar-section{display:none}
+  .sidebar-item{
+    flex:0 0 auto;min-width:72px;
+    flex-direction:column;padding:6px 4px;
+    font-size:10px;gap:2px;text-align:center;
+    justify-content:center;align-items:center;
+  }
+  .sidebar-item .icon{font-size:20px;margin:0}
+  .sidebar-item span:not(.icon){font-size:10px;line-height:1.2}
+  .main{
+    margin-left:0;
+    min-height:100vh;min-height:100dvh;
+    padding-bottom:calc(var(--bottom-nav-h) + env(safe-area-inset-bottom));
+  }
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));
+    flex-wrap:wrap;gap:8px;
+  }
+  .topbar-right{
+    width:100%;justify-content:space-between;
+  }
+  .topbar-title{font-size:16px}
+  .content{padding:12px}
+  .card{border-radius:var(--radius-sm);margin-bottom:12px}
+  .card-header{flex-wrap:wrap;gap:8px}
+  .card-header .btn-group{width:100%;justify-content:flex-end}
+  /* Material cards */
+  .mat-card{padding:12px}
+  .mat-card .mc-title{font-size:14px}
+  .mat-card .mc-meta{flex-wrap:wrap;gap:6px}
+  /* Upload zone */
+  .upload-zone{padding:20px}
+  .upload-zone .uz-icon{font-size:28px}
+  /* Dict popup */
+  .dict-popup{
+    width:calc(100vw - 24px);max-width:360px;
+    left:12px;right:12px;
+  }
+  /* Spot quiz */
+  .spot-options{gap:6px}
+  .spot-opt{padding:8px 14px;font-size:13px}
+  /* OCR items */
+  .ocr-items{max-height:50vh}
+  /* Progress cards */
+  .stat-card{padding:12px}
+  .stat-card .sc-val{font-size:22px}
+}
+/* iPhone X+ safe area */
+@supports(padding:max(0px)){
+  .main{
+    padding-bottom:calc(var(--bottom-nav-h,0px) + max(env(safe-area-inset-bottom),0px));
+  }
+}
+/* PWA install prompt */
+.pwa-install{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+  background:var(--primary);color:#FFF;padding:12px 24px;border-radius:24px;
+  font-size:14px;cursor:pointer;z-index:9999;box-shadow:var(--shadow-lg);
+  animation:fadeIn .3s;white-space:nowrap;
+}
+.pwa-install:hover{background:var(--primary-dark)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-brand">LinguaFlow<small>英语 · 德语 学习工具</small></div>
+  <div class="lang-switch">
+    <div class="lang-btn active" data-lang="en" onclick="switchLang('en')">English</div>
+    <div class="lang-btn" data-lang="de" onclick="switchLang('de')">Deutsch</div>
+  </div>
+  <div class="sidebar-section">学习模块</div>
+  <div class="sidebar-item active" data-module="listening" onclick="switchModule('listening')">
+    <span class="icon">🎧</span><span>听力训练</span>
+  </div>
+  <div class="sidebar-item" data-module="speaking" onclick="switchModule('speaking')">
+    <span class="icon">🗣️</span><span>口语跟读</span>
+  </div>
+  <div class="sidebar-item" data-module="reading" onclick="switchModule('reading')">
+    <span class="icon">📖</span><span>阅读查词</span>
+  </div>
+  <div class="sidebar-item" data-module="writing" onclick="switchModule('writing')">
+    <span class="icon">✍️</span><span>写作练习</span>
+  </div>
+  <div class="sidebar-section">进度</div>
+  <div class="sidebar-item" data-module="progress" onclick="switchModule('progress')">
+    <span class="icon">📊</span><span>学习进度</span>
+  </div>
+  <div class="sidebar-item" data-module="activity" onclick="switchModule('activity')">
+    <span class="icon">📅</span><span>学习记录</span>
+  </div>
+  <div class="sidebar-section">工具</div>
+  <div class="sidebar-item" data-module="query" onclick="switchModule('query')">
+    <span class="icon">🔍</span><span>AI 查询</span>
+  </div>
+  <div class="sidebar-item" data-module="notes" onclick="switchModule('notes')">
+    <span class="icon">📒</span><span>学习笔记</span>
+  </div>
+  <div class="sidebar-item" data-module="quiz" onclick="switchModule('quiz')">
+    <span class="icon">📝</span><span>听写测试</span>
+  </div>
+  <div class="sidebar-item" data-module="import" onclick="switchModule('import')">
+    <span class="icon">📂</span><span>导入素材</span>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">🎧 听力训练</div>
+    <div class="topbar-right">
+      <div class="control-row" style="margin:0">
+        <span class="control-label">语音</span>
+        <select class="ctrl-select" id="voiceSelect" onchange="onVoiceChange()"></select>
+      </div>
+      <div class="control-row" style="margin:0">
+        <span class="control-label">语速</span>
+        <input type="range" class="speed-slider" id="speedSlider" min="0.3" max="1.5" step="0.1" value="0.8" oninput="onSpeedChange()">
+        <span class="speed-val" id="speedVal">0.8x</span>
+      </div>
+    </div>
+  </div>
+  <div class="content" id="contentArea"></div>
+</div>
+
+<!-- Dictionary popup -->
+<div class="dict-popup" id="dictPopup">
+  <span class="dict-close" onclick="closeDict()">&times;</span>
+  <div class="dict-word" id="dictWord"></div>
+  <div class="dict-phonetic" id="dictPhonetic"></div>
+  <div class="dict-meaning" id="dictMeaning"></div>
+</div>
+
+<script>
+// ============================================================
+// DATA: Built-in Materials
+// ============================================================
+const MATERIALS = [
+  // ---- ENGLISH ----
+  {id:'en-daily-1',lang:'en',theme:'daily',difficulty:'基础',title:'Greetings & Introductions 问候与介绍',
+   sentences:[
+     {orig:"Good morning! My name is Sarah. What's your name?",trans:"早上好！我叫Sarah。你叫什么名字？"},
+     {orig:"Nice to meet you. I'm from China.",trans:"很高兴认识你。我来自中国。"},
+     {orig:"Where are you from? I'm from Beijing, the capital of China.",trans:"你从哪里来？我来自北京，中国的首都。"},
+     {orig:"How are you doing today? I'm doing great, thank you.",trans:"你今天怎么样？我很好，谢谢。"},
+     {orig:"What do you do for a living? I work as a project manager.",trans:"你做什么工作？我是一名项目经理。"},
+     {orig:"It was lovely talking to you. Let's keep in touch!",trans:"和你聊天很愉快。我们保持联系吧！"},
+     {orig:"Have a wonderful day! See you tomorrow.",trans:"祝你有美好的一天！明天见。"},
+     {orig:"Could you introduce yourself to the team? Sure, I'd be happy to.",trans:"你能向团队做个自我介绍吗？当然，我很乐意。"}
+   ]},
+  {id:'en-daily-2',lang:'en',theme:'daily',difficulty:'基础',title:'Shopping & Dining 购物与餐饮',
+   sentences:[
+     {orig:"Excuse me, how much is this shirt? It's 29 dollars.",trans:"打扰一下，这件衬衫多少钱？29美元。"},
+     {orig:"Could I try this on? Of course, the fitting room is over there.",trans:"我能试穿一下吗？当然，试衣间在那边。"},
+     {orig:"I'd like to order a cup of coffee and a piece of cake, please.",trans:"我想点一杯咖啡和一块蛋糕。"},
+     {orig:"Could I see the menu, please? Here you go.",trans:"请给我看一下菜单，好吗？给你。"},
+     {orig:"The food here is absolutely delicious. I highly recommend the pasta.",trans:"这里的食物非常好吃。我强烈推荐意面。"},
+     {orig:"Can I pay by credit card? Yes, we accept all major cards.",trans:"可以刷信用卡吗？是的，我们接受所有主流信用卡。"},
+     {orig:"I'm just browsing, thank you. No problem, take your time.",trans:"我只是随便看看，谢谢。没问题，您慢慢看。"},
+     {orig:"Could we get the bill, please? I'll bring it right away.",trans:"请给我们账单好吗？我马上拿来。"}
+   ]},
+  {id:'en-daily-3',lang:'en',theme:'daily',difficulty:'基础',title:'Travel & Directions 出行与问路',
+   sentences:[
+     {orig:"Excuse me, could you tell me how to get to the nearest subway station?",trans:"打扰一下，你能告诉我去最近的地铁站怎么走吗？"},
+     {orig:"Go straight for two blocks, then turn left. You can't miss it.",trans:"直走两个街区，然后左转。你一定能找到。"},
+     {orig:"How long does it take to get there by bus? About thirty minutes, depending on traffic.",trans:"坐公交车到那里要多久？大约三十分钟，取决于交通状况。"},
+     {orig:"I'd like to book a room for two nights. Do you have any vacancies?",trans:"我想订一间房住两晚。你们有空房吗？"},
+     {orig:"What time does the flight depart? The flight departs at 3:30 PM.",trans:"航班几点起飞？航班下午三点三十起飞。"},
+     {orig:"Could you call me a taxi, please? I'll call one for you right now.",trans:"能帮我叫辆出租车吗？我现在就帮你叫。"},
+     {orig:"Is there a convenience store nearby? Yes, there's one just around the corner.",trans:"附近有便利店吗？有的，拐角处就有一家。"},
+     {orig:"I'm lost. Can you show me where we are on the map?",trans:"我迷路了。你能在地图上指给我看我们在哪里吗？"}
+   ]},
+  {id:'en-daily-4',lang:'en',theme:'daily',difficulty:'进阶',title:'Health & Lifestyle 健康与生活',
+   sentences:[
+     {orig:"I haven't been feeling well lately. I have a headache and a sore throat.",trans:"我最近不太舒服。我头疼，嗓子也疼。"},
+     {orig:"You should see a doctor and get some rest. Don't push yourself too hard.",trans:"你应该去看医生，多休息。别太勉强自己。"},
+     {orig:"I've been trying to exercise regularly. I go jogging every morning.",trans:"我一直在坚持锻炼。我每天早上去慢跑。"},
+     {orig:"A balanced diet is essential for good health. Eat more fruits and vegetables.",trans:"均衡饮食对健康至关重要。多吃水果和蔬菜。"},
+     {orig:"I need to make an appointment with the dentist. Do you have any availability this week?",trans:"我需要预约牙医。你这周有空档吗？"},
+     {orig:"Taking a walk after dinner is a great habit. It helps with digestion.",trans:"饭后散步是个好习惯。有助于消化。"},
+     {orig:"I'm trying to cut down on sugar. It's better for your health in the long run.",trans:"我在试着减少糖的摄入。从长远来看对你的健康更好。"}
+   ]},
+  {id:'en-biz-1',lang:'en',theme:'business',difficulty:'进阶',title:'Business Emails 商务邮件',
+   sentences:[
+     {orig:"Dear Mr. Johnson, I am writing to follow up on our meeting last Tuesday.",trans:"尊敬的Johnson先生，我写信是为了跟进上周二的会议。"},
+     {orig:"Thank you for your prompt reply. We appreciate your quick response.",trans:"感谢您的及时回复。我们感谢您的迅速回应。"},
+     {orig:"Please find attached the quarterly report for your review.",trans:"请查收附件中的季度报告供您审阅。"},
+     {orig:"I would like to schedule a meeting to discuss the project timeline.",trans:"我想安排一个会议来讨论项目时间表。"},
+     {orig:"Could you please provide an update on the current status of the contract?",trans:"您能否提供合同当前状态的更新？"},
+     {orig:"We look forward to hearing from you at your earliest convenience.",trans:"我们期待在您方便时尽早收到您的回复。"},
+     {orig:"Please do not hesitate to contact me if you have any questions or concerns.",trans:"如果您有任何问题或疑虑，请随时联系我。"},
+     {orig:"I am writing to confirm our agreement regarding the delivery schedule.",trans:"我写信确认我们关于交付时间表的协议。"}
+   ]},
+  {id:'en-biz-2',lang:'en',theme:'business',difficulty:'进阶',title:'Meetings & Presentations 会议与演示',
+   sentences:[
+     {orig:"Let's get started. Thank you all for coming on such short notice.",trans:"我们开始吧。感谢大家在这么短的时间内赶来。"},
+     {orig:"I'd like to go over the agenda for today's meeting. We have three items to cover.",trans:"我想过一下今天会议的议程。我们有三个议题要讨论。"},
+     {orig:"Could you elaborate on that point? I think we need more details.",trans:"你能详细说明一下那个观点吗？我觉得我们需要更多细节。"},
+     {orig:"Let me share my screen to walk you through the data analysis.",trans:"让我共享屏幕，带你们看一下数据分析。"},
+     {orig:"Based on the numbers, I'd recommend we focus on improving efficiency.",trans:"根据数据，我建议我们专注于提高效率。"},
+     {orig:"Does anyone have any questions before we move on to the next topic?",trans:"在进入下一个话题之前，有人有问题吗？"},
+     {orig:"To sum up, we've agreed on the action items and deadlines.",trans:"总结一下，我们已经商定了行动项目和截止日期。"},
+     {orig:"Great meeting everyone. Let's reconvene next Monday to review progress.",trans:"很高兴和大家开会。我们下周一再碰面回顾进展。"}
+   ]},
+  {id:'en-biz-3',lang:'en',theme:'business',difficulty:'进阶',title:'Reports & Approvals 汇报与审批',
+   sentences:[
+     {orig:"I'd like to present the monthly performance report for your review.",trans:"我想提交月度绩效报告供您审阅。"},
+     {orig:"The approval process requires signatures from three department heads.",trans:"审批流程需要三个部门负责人的签字。"},
+     {orig:"We've identified a bottleneck in the workflow that's causing delays.",trans:"我们发现工作流中有一个导致延误的瓶颈。"},
+     {orig:"The budget proposal has been submitted for management approval.",trans:"预算提案已提交管理层审批。"},
+     {orig:"Could you expedite the approval? The project deadline is approaching.",trans:"您能加快审批吗？项目截止日期快到了。"},
+     {orig:"All key performance indicators are trending positively this quarter.",trans:"本季度所有关键绩效指标都呈积极趋势。"},
+     {orig:"I recommend we allocate additional resources to the high-priority tasks.",trans:"我建议我们给高优先级任务分配更多资源。"},
+     {orig:"The risk assessment indicates we need to strengthen our compliance measures.",trans:"风险评估表明我们需要加强合规措施。"}
+   ]},
+  {id:'en-culture-1',lang:'en',theme:'culture',difficulty:'进阶',title:'Western Business Culture 西方商务文化',
+   sentences:[
+     {orig:"In Western business culture, punctuality is considered a sign of professionalism.",trans:"在西方商务文化中，守时被视为专业素养的标志。"},
+     {orig:"Networking events are a great opportunity to build professional relationships.",trans:"社交活动是建立职业关系的绝佳机会。"},
+     {orig:"Americans tend to value direct communication and getting straight to the point.",trans:"美国人倾向于重视直接沟通和直奔主题。"},
+     {orig:"In British business culture, a firm handshake is the standard greeting.",trans:"在英国商务文化中，有力的握手是标准的问候方式。"},
+     {orig:"Small talk before meetings is common and helps build rapport with colleagues.",trans:"会前闲聊很常见，有助于与同事建立融洽关系。"},
+     {orig:"Understanding cultural differences is key to successful international business.",trans:"理解文化差异是国际商务成功的关键。"},
+     {orig:"In many Western companies, the dress code has become increasingly casual.",trans:"在许多西方公司，着装要求变得越来越休闲。"}
+   ]},
+  {id:'en-culture-2',lang:'en',theme:'culture',difficulty:'进阶',title:'Technology & Innovation 科技与创新',
+   sentences:[
+     {orig:"Artificial intelligence is transforming the way we work and communicate.",trans:"人工智能正在改变我们工作和交流的方式。"},
+     {orig:"Cloud computing has made it possible for teams to collaborate from anywhere.",trans:"云计算使团队可以在任何地方协作。"},
+     {orig:"The Internet of Things connects everyday devices to the internet for smarter living.",trans:"物联网将日常设备连接到互联网，实现更智能的生活。"},
+     {orig:"Cybersecurity is becoming increasingly important as more data moves online.",trans:"随着更多数据转移到线上，网络安全变得越来越重要。"},
+     {orig:"Remote work has become the new normal for many companies around the world.",trans:"远程办公已成为全球许多公司的新常态。"},
+     {orig:"Sustainable technology aims to reduce our environmental impact while maintaining growth.",trans:"可持续技术旨在减少环境影响的同时保持增长。"}
+   ]},
+  {id:'en-exam-1',lang:'en',theme:'exam',difficulty:'进阶',title:'TOEIC Practice - Office 托业练习 - 办公',
+   sentences:[
+     {orig:"The office supply order has been placed and should arrive by Friday.",trans:"办公用品订单已下达，应该在周五前到达。"},
+     {orig:"All employees are required to attend the safety training session next week.",trans:"所有员工都必须参加下周的安全培训。"},
+     {orig:"Please submit your expense reports before the end of the month.",trans:"请在月底前提交您的费用报告。"},
+     {orig:"The conference room has been reserved for the client presentation on Wednesday.",trans:"会议室已预留用于周三的客户演示。"},
+     {orig:"Our company policy requires all visitors to sign in at the reception desk.",trans:"我们公司的政策要求所有访客在前台签到。"},
+     {orig:"The annual performance reviews will be conducted throughout the month of March.",trans:"年度绩效评估将在整个三月进行。"},
+     {orig:"Due to the renovation, the cafeteria will be temporarily relocated to the second floor.",trans:"由于装修，食堂将临时搬到二楼。"}
+   ]},
+  // ---- GERMAN ----
+  {id:'de-daily-1',lang:'de',theme:'daily',difficulty:'入门',title:'Begrüßung & Vorstellung 问候与介绍',
+   sentences:[
+     {orig:"Guten Morgen! Ich heiße Li Ming. Wie heißen Sie?",trans:"早上好！我叫李明。您叫什么名字？"},
+     {orig:"Freut mich, Sie kennenzulernen. Ich komme aus China.",trans:"很高兴认识您。我来自中国。"},
+     {orig:"Woher kommen Sie? Ich komme aus Peking, der Hauptstadt von China.",trans:"您从哪里来？我来自北京，中国的首都。"},
+     {orig:"Wie geht es Ihnen heute? Danke, sehr gut! Und Ihnen?",trans:"您今天怎么样？谢谢，很好！您呢？"},
+     {orig:"Was machen Sie beruflich? Ich bin Projektmanagerin.",trans:"您做什么工作？我是项目经理。"},
+     {orig:"Es war schön, mit Ihnen zu sprechen. Lassen Sie uns in Kontakt bleiben!",trans:"和您交谈很愉快。我们保持联系吧！"},
+     {orig:"Ich wünsche Ihnen einen schönen Tag! Bis morgen!",trans:"祝您有美好的一天！明天见！"},
+     {orig:"Sprechen Sie Englisch? Ja, ein bisschen. Ich lerne noch.",trans:"您说英语吗？是的，一点点。我还在学习。"}
+   ]},
+  {id:'de-daily-2',lang:'de',theme:'daily',difficulty:'入门',title:'Einkaufen 购物',
+   sentences:[
+     {orig:"Entschuldigung, wie viel kostet dieses T-Shirt? Das kostet neunundzwanzig Euro.",trans:"打扰一下，这件T恤多少钱？29欧元。"},
+     {orig:"Kann ich das anprobieren? Ja, natürlich. Die Umkleidekabine ist dort drüben.",trans:"我能试穿吗？当然。试衣间在那边。"},
+     {orig:"Ich hätte gern einen Kaffee und ein Stück Kuchen, bitte.",trans:"我想要一杯咖啡和一块蛋糕。"},
+     {orig:"Kann ich mit Karte bezahlen? Ja, wir akzeptieren alle gängigen Karten.",trans:"可以刷卡吗？是的，我们接受所有主流卡。"},
+     {orig:"Ich schaue nur, danke. Kein Problem, nehmen Sie sich Zeit.",trans:"我只是看看，谢谢。没问题，您慢慢看。"},
+     {orig:"Haben Sie das auch in einer anderen Größe? Ja, ich schaue mal nach.",trans:"这个有其他尺码吗？有的，我帮您查一下。"},
+     {orig:"Könnten wir bitte die Rechnung haben? Ja, gleich bitte.",trans:"请给我们账单好吗？好的，请稍等。"},
+     {orig:"Das ist zu teuer. Haben Sie etwas Günstigeres? Ja, hier bitte.",trans:"这太贵了。有便宜一些的吗？有的，请看这里。"}
+   ]},
+  {id:'de-daily-3',lang:'de',theme:'daily',difficulty:'入门',title:'Nach dem Weg fragen 问路',
+   sentences:[
+     {orig:"Entschuldigung, wie komme ich zum nächsten Bahnhof?",trans:"打扰一下，去最近的火车站怎么走？"},
+     {orig:"Gehen Sie geradeaus und dann links. Sie können es nicht verfehlen.",trans:"直走然后左转。您一定能找到。"},
+     {orig:"Ist es weit von hier? Nein, es ist nur etwa zehn Minuten zu Fuß.",trans:"离这里远吗？不远，步行大约十分钟。"},
+     {orig:"Wo ist die nächste Bushaltestelle? Die ist gleich um die Ecke.",trans:"最近的公交站在哪里？就在拐角处。"},
+     {orig:"Können Sie mir auf der Karte zeigen, wo wir sind? Ja, wir sind hier.",trans:"您能在地图上指给我看我们在哪里吗？可以，我们在这里。"},
+     {orig:"Wie lange dauert es mit dem Taxi? Ungefähr fünfzehn Minuten.",trans:"坐出租车要多久？大约十五分钟。"},
+     {orig:"Gibt es hier in der Nähe ein Restaurant? Ja, gleich dort drüben.",trans:"这附近有餐厅吗？有的，就在那边。"},
+     {orig:"Ich habe mich verlaufen. Können Sie mir helfen? Natürlich, gerne!",trans:"我迷路了。您能帮我吗？当然可以！"}
+   ]},
+  {id:'de-daily-4',lang:'de',theme:'daily',difficulty:'入门',title:'Essen & Trinken 饮食',
+   sentences:[
+     {orig:"Was möchten Sie bestellen? Ich hätte gern die Suppe und ein Wasser.",trans:"您想点什么？我想要汤和一杯水。"},
+     {orig:"Die Speisekarte, bitte. Hier ist die Speisekarte.",trans:"请给我菜单。这是菜单。"},
+     {orig:"Das Essen schmeckt ausgezeichnet! Danke, das freut uns.",trans:"食物味道好极了！谢谢，我们很高兴。"},
+     {orig:"Ich bin Vegetarier. Haben Sie vegetarische Gerichte? Ja, natürlich.",trans:"我是素食者。你们有素食菜吗？有的，当然有。"},
+     {orig:"Zahlen, bitte! Zusammen oder getrennt? Zusammen, bitte.",trans:"请结账！一起付还是分开付？一起付。"},
+     {orig:"Ich möchte einen Tisch für zwei Personen, bitte. Haben Sie reserviert?",trans:"我想订一张两人的桌子。您预约了吗？"},
+     {orig:"Könnte ich noch ein Glas Wasser haben? Ja, sofort.",trans:"能再来一杯水吗？好的，马上。"}
+   ]},
+  {id:'de-work-1',lang:'de',theme:'business',difficulty:'入门',title:'Am Arbeitsplatz 职场',
+   sentences:[
+     {orig:"Guten Morgen zusammen! Wie war euer Wochenende? Danke, es war sehr schön.",trans:"大家早上好！你们周末怎么样？谢谢，很好。"},
+     {orig:"Wir haben heute um zehn Uhr eine Besprechung im Konferenzraum.",trans:"我们今天十点在会议室有一个会议。"},
+     {orig:"Könnten Sie mir bitte den Bericht schicken? Ja, ich schicke ihn Ihnen per E-Mail.",trans:"您能把报告发给我吗？好的，我通过邮件发给您。"},
+     {orig:"Ich muss heute Überstunden machen. Das Projekt hat eine kurze Frist.",trans:"我今天必须加班。这个项目截止日期很近。"},
+     {orig:"Haben Sie schon die neue Richtlinie gelesen? Nein, ich werde es heute tun.",trans:"您看过新的政策了吗？没有，我今天会看。"},
+     {orig:"Die Genehmigung erfordert drei Unterschriften von Abteilungsleitern.",trans:"审批需要三个部门负责人的签字。"},
+     {orig:"Könnten Sie das bitte beschleunigen? Der Termin rückt näher.",trans:"您能加快速度吗？截止日期越来越近了。"},
+     {orig:"Ich empfehle, dass wir mehr Ressourcen für diese Aufgabe bereitstellen.",trans:"我建议我们为这个任务提供更多资源。"}
+   ]},
+  {id:'de-work-2',lang:'de',theme:'business',difficulty:'进阶',title:'Geschäfts-E-Mails 商务邮件',
+   sentences:[
+     {orig:"Sehr geehrter Herr Müller, ich beziehe mich auf unser Meeting vom letzten Dienstag.",trans:"尊敬的Müller先生，我指的是我们上周二的会议。"},
+     {orig:"Vielen Dank für Ihre schnelle Antwort. Wir schätzen Ihre prompte Rückmeldung.",trans:"非常感谢您的迅速回复。我们感谢您的及时回应。"},
+     {orig:"Im Anhang finden Sie den Quartalsbericht zur Durchsicht.",trans:"附件中是季度报告供您审阅。"},
+     {orig:"Ich möchte einen Termin vereinbaren, um den Projektzeitplan zu besprechen.",trans:"我想约定一个时间来讨论项目计划。"},
+     {orig:"Könnten Sie uns bitte ein Update zum aktuellen Stand des Vertrags geben?",trans:"您能给我们提供合同当前状态的更新吗？"},
+     {orig:"Wir freuen uns auf Ihre baldige Rückmeldung.",trans:"我们期待您的尽快回复。"},
+     {orig:"Bitte zögern Sie nicht, mich zu kontaktieren, falls Sie Fragen haben.",trans:"如果您有问题，请随时联系我。"}
+   ]},
+  {id:'de-culture-1',lang:'de',theme:'culture',difficulty:'进阶',title:'Deutsche Arbeitskultur 德国工作文化',
+   sentences:[
+     {orig:"In der deutschen Geschäftskultur ist Pünktlichkeit sehr wichtig.",trans:"在德国商务文化中，守时非常重要。"},
+     {orig:"Deutsche Kollegen schätzen direkte und ehrliche Kommunikation.",trans:"德国同事看重直接和诚实的沟通。"},
+     {orig:"Die Trennung zwischen Berufs- und Privatleben ist in Deutschland sehr ausgeprägt.",trans:"在德国，职业生活和个人生活的区分非常明显。"},
+     {orig:"Man spricht sich am Arbeitsplatz normalerweise mit dem Nachnamen an.",trans:"在职场上通常用姓氏称呼对方。"},
+     {orig:"Deutsche Unternehmen legen großen Wert auf Ordnung und Struktur.",trans:"德国企业非常重视秩序和结构。"},
+     {orig:"Die Mittagspause ist in Deutschland meist zwischen zwölf und dreizehn Uhr.",trans:"在德国的午休时间通常在十二点到一点之间。"},
+     {orig:"Fachkräfte werden in Deutschland sehr geschätzt und respektiert.",trans:"专业技术人员在美国非常受重视和尊重。"}
+   ]},
+  {id:'de-culture-2',lang:'de',theme:'culture',difficulty:'进阶',title:'Alltag in Deutschland 德国日常生活',
+   sentences:[
+     {orig:"Die Deutschen lieben Brot. Es gibt über dreihundert Brotsorten in Deutschland.",trans:"德国人热爱面包。德国有超过三百种面包。"},
+     {orig:"In Deutschland trinkt man gerne Bier. Das Oktoberfest ist das größte Volksfest.",trans:"在德国人们喜欢喝啤酒。十月节是最大的民间节日。"},
+     {orig:"Die Deutschen sind bekannt für ihre Liebe zum Wandern in der Natur.",trans:"德国人以热爱在大自然中徒步旅行而闻名。"},
+     {orig:"Autobahn in Deutschland hat keine allgemeine Geschwindigkeitsbegrenzung.",trans:"德国的高速公路没有普遍的限速。"},
+     {orig:"Weihnachten ist das wichtigste Fest in Deutschland. Man feiert es mit der Familie.",trans:"圣诞节是德国最重要的节日。人们和家人一起庆祝。"},
+     {orig:"Deutsche Kinder gehen ab dem sechsten Lebensjahr zur Schule.",trans:"德国孩子从六岁开始上学。"}
+   ]},
+  {id:'de-exam-1',lang:'de',theme:'exam',difficulty:'入门',title:'Goethe A1 Vorbereitung 歌德A1备考',
+   sentences:[
+     {orig:"Ich wohne in einer Wohnung in der Stadtmitte. Die Miete ist nicht teuer.",trans:"我住在市中心的一套公寓里。房租不贵。"},
+     {orig:"Mein Hobby ist Lesen. Ich lese gern Bücher und Zeitschriften.",trans:"我的爱好是阅读。我喜欢读书和杂志。"},
+     {orig:"Am Wochenende gehe ich oft ins Kino oder treffe mich mit Freunden.",trans:"周末我经常去看电影或者和朋友见面。"},
+     {orig:"Zum Frühstück esse ich normalerweise Brot mit Butter und trinke Kaffee.",trans:"早餐我通常吃黄油面包，喝咖啡。"},
+     {orig:"Können Sie bitte langsam sprechen? Ich verstehe nicht so gut.",trans:"您能说慢一点吗？我不太理解。"},
+     {orig:"Entschuldigung, wo ist die Toilette? Geradeaus und dann rechts.",trans:"打扰一下，洗手间在哪里？直走然后右转。"},
+     {orig:"Ich lerne Deutsch, weil ich in Deutschland arbeiten möchte.",trans:"我学德语是因为我想在德国工作。"},
+     {orig:"Das Wetter ist heute sehr schön. Die Sonne scheint und es ist warm.",trans:"今天天气很好。阳光明媚，很暖和。"}
+   ]},
+  {id:'de-exam-2',lang:'de',theme:'exam',difficulty:'入门',title:'Goethe A1 - Zahlen & Zeit 歌德A1 - 数字与时间',
+   sentences:[
+     {orig:"Es ist halb drei. Ich muss zum Arzt gehen.",trans:"现在两点半。我必须去看医生。"},
+     {orig:"Der Zug fährt um acht Uhr fünfzehn ab. Bitte seien Sie pünktlich.",trans:"火车八点十五分出发。请准时。"},
+     {orig:"Mein Geburtstag ist am fünfzehnten März. Ich werde dreißig Jahre alt.",trans:"我的生日是三月十五号。我将满三十岁。"},
+     {orig:"Der Termin ist am Montag, den zwölften Januar, um zehn Uhr.",trans:"预约在一月十二日星期一，十点。"},
+     {orig:"Wie spät ist es? Es ist Viertel nach vier.",trans:"现在几点了？四点一刻。"},
+     {orig:"Ich stehe jeden Tag um sieben Uhr auf und gehe um acht Uhr zur Arbeit.",trans:"我每天七点起床，八点去上班。"},
+     {orig:"Das Meeting dauert von zwei bis vier Uhr nachmittags.",trans:"会议从下午两点持续到四点。"}
+   ]}
+];
+
+// ============================================================
+// DATA: Dictionary
+// ============================================================
+const DICTIONARY = {
+en:{
+  "hello":"你好","hi":"嗨","good":"好的/好的","morning":"早晨","afternoon":"下午","evening":"晚上",
+  "name":"名字","my":"我的","your":"你的","what":"什么","how":"怎样","where":"哪里","when":"什么时候",
+  "who":"谁","why":"为什么","please":"请","thank":"感谢","thanks":"谢谢","sorry":"对不起",
+  "yes":"是","no":"不","ok":"好的","not":"不","and":"和","but":"但是","or":"或者",
+  "the":"这/那","a":"一个","is":"是","am":"是","are":"是","do":"做","does":"做",
+  "have":"有","has":"有","can":"能","will":"将","would":"将会","could":"可以",
+  "should":"应该","may":"可能","must":"必须","need":"需要","want":"想要",
+  "go":"去","come":"来","see":"看","know":"知道","think":"想/认为","say":"说",
+  "tell":"告诉","ask":"问","give":"给","take":"拿","make":"制作/使得","use":"使用",
+  "find":"找到","get":"得到","put":"放","keep":"保持","let":"让","begin":"开始",
+  "show":"展示","try":"尝试","help":"帮助","move":"移动","live":"生活/居住",
+  "believe":"相信","happen":"发生","bring":"带来","write":"写","provide":"提供",
+  "sit":"坐","stand":"站","lose":"失去","pay":"支付","meet":"遇见","include":"包括",
+  "continue":"继续","set":"设置","learn":"学习","change":"改变","lead":"领导",
+  "understand":"理解","watch":"观看","follow":"跟随","stop":"停止","create":"创造",
+  "speak":"说/讲","read":"阅读","allow":"允许","add":"添加","spend":"花费",
+  "grow":"成长","open":"打开/开放的","walk":"走路","win":"赢","teach":"教",
+  "offer":"提供","remember":"记得","love":"爱","consider":"考虑","appear":"出现",
+  "buy":"买","wait":"等待","serve":"服务","die":"死","send":"发送","build":"建造",
+  "stay":"停留","fall":"落下","cut":"切","reach":"达到","kill":"杀死","remain":"保持",
+  "I":"我","you":"你","he":"他","she":"她","we":"我们","they":"他们","it":"它",
+  "me":"我","him":"他","her":"她","us":"我们","them":"他们",
+  "this":"这个","that":"那个","these":"这些","those":"那些",
+  "here":"这里","there":"那里","now":"现在","then":"然后","today":"今天",
+  "tomorrow":"明天","yesterday":"昨天","always":"总是","never":"从不",
+  "very":"非常","also":"也","just":"只是","still":"仍然","already":"已经",
+  "really":"真的","quite":"相当","well":"好/很好地","only":"仅仅",
+  "time":"时间","day":"天","year":"年","way":"方式","thing":"事物","man":"男人",
+  "woman":"女人","child":"孩子","world":"世界","life":"生活","hand":"手",
+  "part":"部分","place":"地方","case":"情况","week":"周","company":"公司",
+  "system":"系统","program":"项目","question":"问题","work":"工作","government":"政府",
+  "number":"数字","night":"夜晚","point":"点","home":"家","water":"水",
+  "room":"房间","mother":"母亲","area":"地区","money":"钱","story":"故事",
+  "fact":"事实","month":"月","lot":"许多","right":"正确/权利","study":"学习",
+  "book":"书","eye":"眼睛","job":"工作","word":"单词","business":"商业/生意",
+  "issue":"问题","side":"边","kind":"种类","head":"头","house":"房子",
+  "service":"服务","friend":"朋友","father":"父亲","power":"力量","hour":"小时",
+  "game":"游戏","line":"线","end":"结束","member":"成员","law":"法律",
+  "car":"车","city":"城市","community":"社区","president":"总统","team":"团队",
+  "minute":"分钟","idea":"想法","kid":"孩子","body":"身体","information":"信息",
+  "back":"回来","up":"向上","down":"向下","in":"在...里面","out":"出去",
+  "on":"在...上面","off":"离开","over":"超过","after":"在...之后","before":"在...之前",
+  "between":"在...之间","for":"为了","from":"从","with":"和/用","about":"关于",
+  "against":"反对","into":"进入","through":"通过","during":"在...期间",
+  "without":"没有","before":"在...之前","under":"在...下面","around":"围绕",
+  "new":"新的","old":"老的/旧的","great":"伟大的","big":"大的","small":"小的",
+  "long":"长的","short":"短的","high":"高的","right":"正确的","left":"左边的",
+  "early":"早的","late":"晚的","young":"年轻的","important":"重要的",
+  "different":"不同的","beautiful":"美丽的","strong":"强壮的","possible":"可能的",
+  "sure":"确定的","free":"免费的/自由的","full":"满的","special":"特别的",
+  "easy":"容易的","hard":"困难的","fast":"快的","slow":"慢的","hot":"热的",
+  "cold":"冷的","warm":"温暖的","dark":"黑暗的","light":"明亮的/轻的",
+  "happy":"快乐的","sad":"悲伤的","angry":"生气的","tired":"疲倦的",
+  "ready":"准备好的","clean":"干净的","dirty":"脏的","safe":"安全的",
+  "hungry":"饥饿的","thirsty":"渴的","busy":"忙碌的","quiet":"安静的",
+  "breakfast":"早餐","lunch":"午餐","dinner":"晚餐","coffee":"咖啡","tea":"茶",
+  "water":"水","bread":"面包","rice":"米饭","meat":"肉","fish":"鱼",
+  "fruit":"水果","vegetable":"蔬菜","milk":"牛奶","egg":"鸡蛋","sugar":"糖",
+  "salt":"盐","butter":"黄油","cheese":"奶酪","chicken":"鸡肉","beef":"牛肉",
+  "apple":"苹果","banana":"香蕉","orange":"橙子","cake":"蛋糕","soup":"汤",
+  "salad":"沙拉","sandwich":"三明治","noodle":"面条","pizza":"披萨",
+  "schedule":"日程","meeting":"会议","report":"报告","project":"项目",
+  "approval":"审批","deadline":"截止日期","budget":"预算","contract":"合同",
+  "employee":"员工","manager":"经理","department":"部门","client":"客户",
+  "presentation":"演示","performance":"绩效","efficiency":"效率","resource":"资源",
+  "policy":"政策","process":"流程","review":"评审","request":"请求",
+  "confirm":"确认","discuss":"讨论","arrange":"安排","submit":"提交",
+  "expedite":"加速","allocate":"分配","recommend":"建议","require":"要求",
+  "appreciate":"感激","regard":" regard/尊重","hesitate":"犹豫","contact":"联系",
+  "available":"可用的","excellent":"优秀的","necessary":"必要的","additional":"额外的",
+  "approximately":"大约","regarding":"关于","immediately":"立即","especially":"尤其",
+  "actually":"实际上","basically":"基本上","certainly":"当然","definitely":"肯定地",
+  "absolutely":"绝对地","unfortunately":"不幸地","hopefully":"希望","obviously":"显然",
+  "flight":"航班","taxi":"出租车","subway":"地铁","station":"车站","airport":"机场",
+  "hotel":"酒店","room":"房间","ticket":"票","passport":"护照","map":"地图",
+  "doctor":"医生","hospital":"医院","medicine":"药","appointment":"预约",
+  "headache":"头痛","fever":"发烧","exercise":"锻炼","health":"健康",
+  "delicious":"美味的","expensive":"昂贵的","cheap":"便宜的","nearby":"附近的",
+  "vacancy":"空房","browsing":"浏览","fitting":"试穿","credit":"信用",
+  "wonderful":"精彩的","lovely":"可爱的","highly":"高度地","recommend":"推荐"
+},
+de:{
+  "hallo":"你好","guten":"好的","morgen":"早晨","tag":"天","abend":"晚上","nacht":"夜晚",
+  "ich":"我","du":"你","er":"他","sie":"她/您","wir":"我们","ihr":"你们","es":"它",
+  "mich":"我(宾)","dich":"你(宾)","uns":"我们(宾)","ihnen":"您(宾)/他们(宾)",
+  "mein":"我的","dein":"你的","sein":"他的","ihr":"她的/他们的","unser":"我们的",
+  "heiße":"叫做","heißen":"叫做","bin":"是","bist":"是","ist":"是","sind":"是",
+  "komme":"来","kommen":"来","gehen":"走","gehe":"走","mache":"做","machen":"做",
+  "habe":"有","haben":"有","kann":"能","können":"能够","will":"想要","wollen":"想要",
+  "muss":"必须","müssen":"必须","soll":"应该","sollen":"应该","darf":"可以","dürfen":"允许",
+  "wo":"哪里","was":"什么","wer":"谁","wie":"怎样","warum":"为什么","wann":"什么时候",
+  "ja":"是","nein":"不","danke":"谢谢","bitte":"请/不客气","tschüss":"再见",
+  "auf":"在...上","in":"在...里","zu":"到","von":"从","mit":"和/用","ohne":"没有",
+  "für":"为了","nach":"在...之后/到","bei":"在...旁边","vor":"在...前面",
+  "über":"在...上方/关于","unter":"在...下面","zwischen":"在...之间","durch":"通过",
+  "und":"和","oder":"或者","aber":"但是","nicht":"不","auch":"也","nur":"仅仅",
+  "sehr":"非常","schon":"已经","noch":"还","immer":"总是","nie":"从不","oft":"经常",
+  "gut":"好的","schlecht":"坏的","groß":"大的","klein":"小的","alt":"老的",
+  "jung":"年轻的","neu":"新的","schön":"美丽的","hässlich":"丑陋的",
+  "lang":"长的","kurz":"短的","hoch":"高的","niedrig":"低的","teuer":"昂贵的",
+  "billig":"便宜的","schnell":"快的","langsam":"慢的","warm":"温暖的","kalt":"冷的",
+  "heiß":"热的","kühl":"凉爽的","nass":"湿的","trocken":"干的","laut":"响的",
+  "leise":"安静的","schwer":"重的/困难的","leicht":"轻的/容易的","voll":"满的",
+  "leer":"空的","offen":"开放的","geschlossen":"关闭的","richtig":"正确的",
+  "falsch":"错误的","fertig":"完成的","müde":"疲倦的","glücklich":"快乐的",
+  "traurig":"悲伤的","krank":"生病的","gesund":"健康的","hungrig":"饥饿的",
+  "durstig":"渴的","bereit":"准备好的","spät":"晚的","früh":"早的",
+  "zusammen":"一起","allein":"独自","links":"左边","rechts":"右边","geradeaus":"直走",
+  "hier":"这里","dort":"那里","oben":"上面","unten":"下面","drüben":"对面",
+  "name":"名字","haus":"房子","wohnung":"公寓","zimmer":"房间","tür":"门",
+  "fenster":"窗户","tisch":"桌子","stuhl":"椅子","bett":"床","küche":"厨房",
+  "bad":"浴室","garten":"花园","schule":"学校","arbeit":"工作","büro":"办公室",
+  "krankenhaus":"医院","restaurant":"餐厅","café":"咖啡馆","supermarkt":"超市",
+  "bahnhof":"火车站","flughafen":"机场","haltestelle":"车站","straße":"街道",
+  "platz":"广场","brücke":"桥","park":"公园","kirche":"教堂","museum":"博物馆",
+  "wasser":"水","kaffee":"咖啡","tee":"茶","brot":"面包","kuchen":"蛋糕",
+  "milch":"牛奶","ei":"鸡蛋","fleisch":"肉","fisch":"鱼","obst":"水果",
+  "gemüse":"蔬菜","käse":"奶酪","butter":"黄油","zucker":"糖","salz":"盐",
+  "suppe":"汤","salat":"沙拉","bier":"啤酒","wein":"葡萄酒","saft":"果汁",
+  "freund":"朋友","freundin":"女性朋友","familie":"家庭","mutter":"母亲",
+  "vater":"父亲","bruder":"兄弟","schwester":"姐妹","kind":"孩子","mann":"男人",
+  "frau":"女人","chef":"老板","kollege":"同事","nachbar":"邻居",
+  "buch":"书","stift":"笔","papier":"纸","computer":"电脑","telefon":"电话",
+  "auto":"汽车","zug":"火车","bus":"公交车","fahrrad":"自行车","flugzeug":"飞机",
+  "geld":"钱","euro":"欧元","rechnung":"账单","karte":"卡/地图","uhr":"钟/表",
+  "woche":"周","monat":"月","jahr":"年","stunde":"小时","minute":"分钟",
+  "montag":"星期一","dienstag":"星期二","mittwoch":"星期三","donnerstag":"星期四",
+  "freitag":"星期五","samstag":"星期六","sonntag":"星期日",
+  "januar":"一月","februar":"二月","märz":"三月","april":"四月","mai":"五月",
+  "juni":"六月","juli":"七月","august":"八月","september":"九月","oktober":"十月",
+  "november":"十一月","dezember":"十二月",
+  "essen":"吃","trinken":"喝","schlafen":"睡觉","arbeiten":"工作","lernen":"学习",
+  "sprechen":"说","hören":"听","lesen":"阅读","schreiben":"写","sehen":"看",
+  "kaufen":"买","verkaufen":"卖","bezahlen":"支付","kosten":"花费","bestellen":"点餐/订购",
+  "anprobieren":"试穿","suchen":"寻找","finden":"找到","zeigen":"展示","fragen":"问",
+  "antworten":"回答","helfen":"帮助","bringen":"带来","nehmen":"拿","geben":"给",
+  "spielen":"玩","kochen":"做饭","reisen":"旅行","wohnen":"居住","leben":"生活",
+  "verstehen":"理解","glauben":"相信","denken":"想","wissen":"知道","vergessen":"忘记",
+  "erinnern":"记得","versuchen":"尝试","brauchen":"需要","mögen":"喜欢","lieben":"爱",
+  "freuen":"高兴","entschuldigung":"对不起/打扰一下","umkleidekabine":"试衣间",
+  "speisekarte":"菜单","geburtstag":"生日","termin":"预约","besprechung":"会议",
+  "bericht":"报告","genehmigung":"审批","abteilung":"部门","unterschrift":"签名",
+  "richtlinie":"政策","frühstück":"早餐","mittagessen":"午餐","abendessen":"晚餐",
+  "toilette":"洗手间","eintritt":"入场","größe":"尺码","günstig":"便宜的",
+  "pünktlichkeit":"守时","geschwindigkeit":"速度","geschwindigkeitsbegrenzung":"限速",
+  "volksfest":"民间节日","weihnachten":"圣诞节","wandern":"徒步旅行","autobahn":"高速公路",
+  "brotsorten":"面包种类","arbeitsplatz":"工作场所","umziehen":"搬家/换衣服",
+  "neunundzwanzig":"二十九","dreißig":"三十","fünfzehn":"十五","sechsten":"第六",
+  "sonne":"太阳","scheinen":"照耀","wetter":"天气","hobby":"爱好","kino":"电影院"
+}
+};
+
+// ============================================================
+// DATA: Writing Prompts
+// ============================================================
+const WRITING_PROMPTS = {
+en:[
+  {title:"Self Introduction 自我介绍",hint:"Introduce yourself: name, background, work experience, hobbies. Try to use 5-8 sentences.",words:["name","from","work","like","enjoy","experience","team","goal"]},
+  {title:"Business Email 商务邮件",hint:"Write an email to a client confirming a meeting. Include: greeting, purpose, time/place, closing.",words:["dear","meeting","confirm","schedule","look forward","regards","available","agenda"]},
+  {title:"Describe Your Day 描述你的一天",hint:"Write about what you did today. Use past tense. Try to include at least 6 sentences.",words:["morning","went","had","afternoon","then","because","enjoyed","evening"]},
+  {title:"Work Report 工作汇报",hint:"Write a brief weekly work report: what you accomplished, challenges, next steps.",words:["completed","progress","issue","deadline","plan","review","coordinate","update"]},
+  {title:"Travel Experience 旅行经历",hint:"Describe a memorable trip. Where did you go? What did you see? How did you feel?",words:["traveled","visited","beautiful","amazing","tried","scenery","culture","recommend"]},
+  {title:"Opinion on Technology 对科技的看法",hint:"Share your thoughts on how technology has changed work or daily life.",words:["technology","changed","convenient","however","challenge","believe","future","important"]},
+  {title:"Shopping Experience 购物体验",hint:"Describe a recent shopping experience. What did you buy? Was the service good?",words:["bought","store","price","quality","service","helpful","decided","worth"]},
+  {title:"Health & Fitness 健康与健身",hint:"Write about your health habits or a fitness routine you follow.",words:["exercise","healthy","diet","regular","energy","sleep","habit","improve"]}
+],
+de:[
+  {title:"Sich vorstellen 自我介绍",hint:"Stellen Sie sich vor: Name, Herkunft, Beruf, Hobbys. Schreiben Sie 5-8 Sätze.",words:["heiße","komme","aus","bin","arbeite","als","wohne","hobby"]},
+  {title:"Einkaufen beschreiben 描述购物",hint:"Beschreiben Sie Ihren letzten Einkauf. Wo waren Sie? Was haben Sie gekauft?",words:["gegangen","gekauft","kostet","groß","klein","bezahlt","gefunden","danke"]},
+  {title:"Mein Tag 我的一天",hint:"Beschreiben Sie Ihren Tagesablauf. Was machen Sie morgens, mittags, abends?",words:["morgen","aufstehen","frühstück","arbeiten","mittag","abend","essen","schlafen"]},
+  {title:"Am Arbeitsplatz 在工作",hint:"Beschreiben Sie Ihren Arbeitsplatz. Was machen Sie dort? Wer sind Ihre Kollegen?",words:["büro","meeting","bericht","kollegen","chef","aufgabe","telefon","computer"]},
+  {title:"Lieblingsspeise 最爱的食物",hint:"Beschreiben Sie Ihr Lieblingsessen. Was ist es? Wie schmeckt es? Können Sie es kochen?",words:["liebling","essen","schmeckt","lecker","kochen","zutaten","gern","restaurant"]},
+  {title:"Wochenendplan 周末计划",hint:"Was machen Sie am Wochenende? Schreiben Sie über Ihre Pläne oder Hobbys.",words:["wochenende","plan","freunde","treffen","film","spazieren","lesen","entspannen"]},
+  {title:"Eine Reise 一次旅行",hint:"Beschreiben Sie eine Reise. Wo waren Sie? Wie war das Wetter? Was haben Sie gemacht?",words:["reise","gefahren","hotel","wetter","schön","besucht","foto","erfahrung"]},
+  {title:"Deutsche Kultur 德国文化",hint:"Was wissen Sie über Deutschland? Schreiben Sie über deutsche Kultur, Essen oder Traditionen.",words:["deutschland","kultur","brot","bier","pünktlich","ordnung","fest","tradition"]}
+]
+};
+
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  lang: 'en',
+  module: 'listening',
+  currentMaterial: null,
+  speed: 0.8,
+  voices: [],
+  isPlaying: false,
+  currentSentenceIdx: -1,
+  lookedUpWords: new Set(),
+  isRecording: false,
+  customMaterials: [],
+  progress: {
+    en: { duoLevel: '', targetLevel: 'ielts-6', targetLabel: '雅思6.0 (B2)', completedLessons: [], wordsLookedUp: [] },
+    de: { duoLevel: 'stage4-sec1', targetLevel: 'a2', targetLabel: 'A2 进阶', completedLessons: [], wordsLookedUp: [] },
+    dailyRecords: []
+  }
+};
+
+// ============================================================
+// DATA: Duolingo Level Mapping
+// ============================================================
+const DUO_LEVELS = {
+  de: [
+    {id:'stage1',label:'第一阶段 (A1.1)',pct:12,materials:['de-daily-1']},
+    {id:'stage2',label:'第二阶段 (A1.2)',pct:25,materials:['de-daily-2','de-daily-3']},
+    {id:'stage3',label:'第三阶段 (A1.3)',pct:37,materials:['de-daily-4','de-exam-2']},
+    {id:'stage4-sec1',label:'第四阶段·第一部分 (A1+)',pct:50,materials:['de-work-1','de-exam-1']},
+    {id:'stage4-sec2',label:'第四阶段·第二部分 (A1+)',pct:56,materials:['de-work-1','de-exam-1']},
+    {id:'stage5',label:'第五阶段 (A2入门)',pct:62,materials:['de-work-2','de-culture-2']},
+    {id:'stage6',label:'第六阶段 (A2)',pct:75,materials:['de-culture-1','de-work-2']},
+    {id:'stage7',label:'第七阶段 (A2+)',pct:87,materials:['de-culture-1','de-culture-2']},
+    {id:'stage8',label:'第八阶段 (B1入门)',pct:100,materials:['de-work-2','de-culture-1']}
+  ],
+  en: [
+    {id:'basic',label:'基础恢复期',pct:20,materials:['en-daily-1','en-daily-2','en-daily-3']},
+    {id:'intermediate',label:'中级巩固',pct:40,materials:['en-daily-4','en-biz-1']},
+    {id:'ielts-5',label:'雅思5.0-5.5 (B1+)',pct:55,materials:['en-biz-1','en-biz-2','en-culture-2']},
+    {id:'ielts-6',label:'雅思6.0 目标 (B2)',pct:70,materials:['en-biz-2','en-biz-3','en-culture-1','en-exam-1']},
+    {id:'ielts-65',label:'雅思6.5 冲刺 (B2+)',pct:85,materials:['en-biz-3','en-culture-1','en-culture-2','en-exam-1']},
+    {id:'ielts-7',label:'雅思7.0+ (C1)',pct:100,materials:['en-culture-1','en-culture-2','en-exam-1']}
+  ]
+};
+
+const EN_TARGETS = [
+  {id:'ielts-5',label:'雅思5.0-5.5'},
+  {id:'ielts-6',label:'雅思6.0 (推荐)'},
+  {id:'ielts-65',label:'雅思6.5'},
+  {id:'ielts-7',label:'雅思7.0+'}
+];
+const DE_TARGETS = [
+  {id:'a1',label:'A1 巩固'},
+  {id:'a2',label:'A2 进阶 (推荐)'},
+  {id:'b1',label:'B1 中级'}
+];
+
+// ============================================================
+// PROGRESS: Persistence & Tracking
+// ============================================================
+function loadProgress(){
+  try{
+    const saved = localStorage.getItem('linguaflow_progress');
+    if(saved){
+      const parsed = JSON.parse(saved);
+      if(parsed.en) state.progress.en = {...state.progress.en, ...parsed.en};
+      if(parsed.de) state.progress.de = {...state.progress.de, ...parsed.de};
+      if(parsed.dailyRecords) state.progress.dailyRecords = parsed.dailyRecords;
+    }
+  }catch(e){}
+}
+function saveProgress(){
+  try{
+    localStorage.setItem('linguaflow_progress', JSON.stringify(state.progress));
+  }catch(e){}
+}
+function trackActivity(type, detail){
+  const today = new Date().toISOString().split('T')[0];
+  const now = new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+  state.progress.dailyRecords.push({date:today,time:now,type,detail});
+  if(state.progress.dailyRecords.length > 500) state.progress.dailyRecords = state.progress.dailyRecords.slice(-500);
+  saveProgress();
+}
+function markLessonComplete(matId){
+  const lang = matId.split('-')[0];
+  const p = state.progress[lang];
+  if(p && !p.completedLessons.includes(matId)){
+    p.completedLessons.push(matId);
+    trackActivity('lesson', matId);
+    saveProgress();
+  } else {
+    trackActivity('review', matId);
+  }
+}
+function trackWordLookup(word, lang){
+  const p = state.progress[lang];
+  if(p && !p.wordsLookedUp.includes(word)){
+    p.wordsLookedUp.push(word);
+    saveProgress();
+  }
+}
+function getRecommendations(lang){
+  const p = state.progress[lang];
+  const levels = DUO_LEVELS[lang] || [];
+  const currentLevel = levels.find(l => l.id === p.duoLevel);
+  const currentIdx = levels.findIndex(l => l.id === p.duoLevel);
+  let recs = [];
+  // Recommend next materials based on current level
+  if(currentLevel){
+    currentLevel.materials.forEach(mid => {
+      const mat = MATERIALS.find(m => m.id === mid);
+      if(mat && !p.completedLessons.includes(mid)){
+        recs.push({material:mat, reason:'匹配当前进度'});
+      }
+    });
+  }
+  // Recommend materials from next level
+  if(currentIdx >= 0 && currentIdx < levels.length - 1){
+    const nextLevel = levels[currentIdx + 1];
+    nextLevel.materials.forEach(mid => {
+      const mat = MATERIALS.find(m => m.id === mid);
+      if(mat && !p.completedLessons.includes(mid) && !recs.find(r=>r.material.id===mid)){
+        recs.push({material:mat, reason:'下一步进阶内容'});
+      }
+    });
+  }
+  // If not enough recs, add uncompleted materials
+  if(recs.length < 3){
+    const allMats = MATERIALS.filter(m => m.lang === lang && !p.completedLessons.includes(m.id));
+    allMats.forEach(mat => {
+      if(!recs.find(r=>r.material.id===mat.id)){
+        recs.push({material:mat, reason:'待学习'});
+      }
+    });
+  }
+  return recs.slice(0, 5);
+}
+
+// ============================================================
+// TTS ENGINE
+// ============================================================
+let synth = window.speechSynthesis;
+let recognition = null;
+let currentAudio = null;
+let ttsEngine = 'google'; // 'google' or 'browser'
+
+function initVoices(){
+  state.voices = synth.getVoices();
+  populateVoiceSelect();
+}
+function populateVoiceSelect(){
+  const sel = document.getElementById('voiceSelect');
+  sel.innerHTML = '';
+  sel.innerHTML = `<option value="google">Google 真人语音</option><option value="browser">浏览器语音</option>`;
+  sel.value = ttsEngine;
+}
+function getSelectedVoice(){ return null; }
+function onVoiceChange(){
+  const sel = document.getElementById('voiceSelect');
+  ttsEngine = sel.value;
+}
+function onSpeedChange(){
+  state.speed = parseFloat(document.getElementById('speedSlider').value);
+  document.getElementById('speedVal').textContent = state.speed.toFixed(1) + 'x';
+}
+// Google Translate TTS - natural human voice
+function googleTTS(text, onEnd){
+  if(currentAudio){ currentAudio.pause(); currentAudio = null; }
+  const lang = state.lang === 'en' ? 'en' : 'de';
+  // Split long text into chunks (Google limit ~200 chars)
+  const chunks = splitTextForTTS(text, 180);
+  let idx = 0;
+  function playChunk(){
+    if(idx >= chunks.length){ if(onEnd) onEnd(); return; }
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${lang}&client=tw-ob&q=${encodeURIComponent(chunks[idx])}`;
+    const audio = new Audio(url);
+    audio.playbackRate = state.speed;
+    currentAudio = audio;
+    audio.onended = () => { idx++; playChunk(); };
+    audio.onerror = () => {
+      // Fallback to browser TTS if Google fails
+      console.warn('Google TTS failed, falling back to browser TTS');
+      ttsEngine = 'browser';
+      document.getElementById('voiceSelect').value = 'browser';
+      browserTTS(text, onEnd);
+    };
+    audio.play().catch(() => {
+      ttsEngine = 'browser';
+      document.getElementById('voiceSelect').value = 'browser';
+      browserTTS(text, onEnd);
+    });
+  }
+  playChunk();
+}
+function splitTextForTTS(text, maxLen){
+  if(text.length <= maxLen) return [text];
+  const chunks = [];
+  let remaining = text;
+  while(remaining.length > 0){
+    if(remaining.length <= maxLen){ chunks.push(remaining); break; }
+    let splitAt = remaining.lastIndexOf('. ', maxLen);
+    if(splitAt < maxLen * 0.3) splitAt = remaining.lastIndexOf(', ', maxLen);
+    if(splitAt < maxLen * 0.3) splitAt = remaining.lastIndexOf(' ', maxLen);
+    if(splitAt < 0) splitAt = maxLen;
+    chunks.push(remaining.substring(0, splitAt + 1));
+    remaining = remaining.substring(splitAt + 1);
+  }
+  return chunks;
+}
+// Browser SpeechSynthesis - fallback
+function browserTTS(text, onEnd){
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = state.lang === 'en' ? 'en-US' : 'de-DE';
+  u.rate = state.speed;
+  u.pitch = 1;
+  if(onEnd) u.onend = onEnd;
+  synth.speak(u);
+  return u;
+}
+// Unified speak function
+function speak(text, onEnd, onBoundary){
+  stopAudio();
+  if(ttsEngine === 'google'){
+    googleTTS(text, onEnd);
+  } else {
+    browserTTS(text, onEnd);
+  }
+}
+function stopAudio(){
+  if(currentAudio){ try{ currentAudio.pause(); currentAudio.onended=null; }catch(e){} currentAudio=null; }
+}
+function speakSentenceBySentence(sentences, containerId, startIdx=0){
+  stopAudio();
+  synth.cancel();
+  state.isPlaying = true;
+  state.currentSentenceIdx = startIdx;
+  function speakNext(idx){
+    if(idx >= sentences.length || !state.isPlaying){
+      state.isPlaying = false;
+      state.currentSentenceIdx = -1;
+      highlightSentence(containerId, -1);
+      updatePlayBtn();
+      return;
+    }
+    state.currentSentenceIdx = idx;
+    highlightSentence(containerId, idx);
+    speak(sentences[idx].orig, ()=> speakNext(idx+1));
+  }
+  speakNext(startIdx);
+  updatePlayBtn();
+}
+function stopSpeaking(){
+  synth.cancel();
+  stopAudio();
+  state.isPlaying = false;
+  state.currentSentenceIdx = -1;
+  updatePlayBtn();
+}
+function highlightSentence(containerId, idx){
+  document.querySelectorAll(`#${containerId} .bilingual-block`).forEach((el,i)=>{
+    el.classList.toggle('playing', i===idx);
+    if(i===idx) el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+}
+function updatePlayBtn(){
+  document.querySelectorAll('.play-toggle').forEach(btn=>{
+    btn.textContent = state.isPlaying ? '⏸ 暂停' : '▶ 播放';
+  });
+}
+
+// ============================================================
+// SPEECH RECOGNITION
+// ============================================================
+function initRecognition(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR) return null;
+  const r = new SR();
+  r.continuous = false;
+  r.interimResults = false;
+  r.lang = state.lang === 'en' ? 'en-US' : 'de-DE';
+  return r;
+}
+
+// ============================================================
+// DICTIONARY
+// ============================================================
+function lookupWord(word){
+  word = word.toLowerCase().replace(/[^a-zäöüßéèêñ]/gi,'');
+  if(!word || word.length < 2) return null;
+  const dict = DICTIONARY[state.lang] || {};
+  return dict[word] || null;
+}
+function showDictPopup(word, meaning, x, y){
+  const popup = document.getElementById('dictPopup');
+  document.getElementById('dictWord').textContent = word;
+  document.getElementById('dictPhonetic').textContent = '';
+  document.getElementById('dictMeaning').innerHTML = `<span class="pos">${state.lang==='en'?'英':'德'}</span> ${meaning}`;
+  popup.style.left = Math.min(x, window.innerWidth - 280) + 'px';
+  popup.style.top = Math.min(y + 10, window.innerHeight - 120) + 'px';
+  popup.classList.add('show');
+  // Speak the word
+  speak(word);
+}
+function closeDict(){
+  document.getElementById('dictPopup').classList.remove('show');
+}
+document.addEventListener('click', e => {
+  if(!e.target.closest('.dict-popup') && !e.target.closest('.word')){
+    closeDict();
+  }
+});
+
+// ============================================================
+// RENDER: Material Selector
+// ============================================================
+function getMaterialsForLang(lang){
+  const built = MATERIALS.filter(m => m.lang === lang);
+  const custom = state.customMaterials.filter(m => m.lang === lang);
+  return [...built, ...custom];
+}
+function renderMaterialList(containerId, onClick){
+  const mats = getMaterialsForLang(state.lang);
+  const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
+  let html = '<div class="material-list">';
+  mats.forEach(m => {
+    const active = state.currentMaterial && state.currentMaterial.id === m.id ? ' active' : '';
+    html += `<div class="material-card${active}" data-id="${m.id}" onclick="${onClick}('${m.id}')">
+      <div><div class="mc-title">${m.title}</div>
+      <div class="mc-meta"><span class="theme-badge ${m.theme}">${themes[m.theme]||m.theme}</span> · ${m.difficulty} · ${m.sentences.length}句</div></div>
+      <span style="color:var(--text-secondary)">→</span></div>`;
+  });
+  html += '</div>';
+  return html;
+}
+function findMaterial(id){
+  return MATERIALS.find(m=>m.id===id) || state.customMaterials.find(m=>m.id===id);
+}
+
+// ============================================================
+// MODULE: Listening
+// ============================================================
+function renderListening(){
+  const area = document.getElementById('contentArea');
+  if(!state.currentMaterial){
+    area.innerHTML = `<div class="grid-2 fade-in">
+      <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
+      <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('listen-list','selectForListening')}</div></div>
+      <div class="card"><div class="empty-state"><div class="es-icon">🎧</div><div class="es-text">选择一个素材开始听力训练</div></div></div>
+    </div>`;
+    return;
+  }
+  const m = state.currentMaterial;
+  let sentencesHtml = m.sentences.map((s,i)=>`
+    <div class="bilingual-block" id="lb-${i}">
+      <div class="sentence-orig" onclick="playSingle(${i})"><span class="sentence-idx">${i+1}</span>${s.orig}</div>
+      <div class="sentence-trans">${s.trans}</div>
+    </div>`).join('');
+  area.innerHTML = `<div class="grid-2 fade-in">
+    <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
+    <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('listen-list','selectForListening')}</div></div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">${m.title}</div>
+        <div class="btn-group">
+          <button class="btn btn-primary play-toggle" onclick="togglePlayAll()">▶ 播放</button>
+          <button class="btn" onclick="stopSpeaking()">⏹ 停止</button>
+        </div>
+      </div>
+      <div id="listenContent" style="max-height:55vh;overflow-y:auto">${sentencesHtml}</div>
+    </div></div>`;
+}
+function selectForListening(id){
+  stopSpeaking();
+  state.currentMaterial = findMaterial(id);
+  trackActivity('listening', id);
+  renderListening();
+}
+function togglePlayAll(){
+  if(!state.currentMaterial) return;
+  if(state.isPlaying){ stopSpeaking(); }
+  else { speakSentenceBySentence(state.currentMaterial.sentences, 'listenContent'); }
+}
+function playSingle(idx){
+  if(!state.currentMaterial) return;
+  stopSpeaking();
+  const m = state.currentMaterial;
+  highlightSentence('listenContent', idx);
+  speak(m.sentences[idx].orig, ()=> highlightSentence('listenContent', -1));
+}
+
+// ============================================================
+// MODULE: Speaking (Shadow Reading)
+// ============================================================
+function renderSpeaking(){
+  const area = document.getElementById('contentArea');
+  if(!state.currentMaterial){
+    area.innerHTML = `<div class="grid-2 fade-in">
+      <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
+      <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('speak-list','selectForSpeaking')}</div></div>
+      <div class="card"><div class="empty-state"><div class="es-icon">🗣️</div><div class="es-text">选择一个素材开始跟读练习</div></div></div>
+    </div>`;
+    return;
+  }
+  const m = state.currentMaterial;
+  let sentencesHtml = m.sentences.map((s,i)=>`
+    <div class="bilingual-block" id="sb-${i}">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span class="sentence-idx">${i+1}</span>
+        <div style="flex:1">
+          <div class="sentence-orig" onclick="playSingleSpeak(${i})">${s.orig}</div>
+          <div class="sentence-trans">${s.trans}</div>
+        </div>
+        <button class="btn btn-sm" onclick="playSingleSpeak(${i})" title="播放本句">🔊</button>
+      </div>
+    </div>`).join('');
+  area.innerHTML = `<div class="grid-2 fade-in">
+    <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
+    <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('speak-list','selectForSpeaking')}</div></div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">${m.title} · 跟读</div>
+        <div class="btn-group">
+          <button class="btn btn-primary play-toggle" onclick="toggleSpeakAll()">▶ 播放</button>
+          <button class="btn" onclick="repeatMode()">🔁 逐句循环</button>
+          <button class="btn" onclick="stopSpeaking()">⏹ 停止</button>
+        </div>
+      </div>
+      <div id="speakContent" style="max-height:50vh;overflow-y:auto">${sentencesHtml}</div>
+      <div id="speakRecord" style="margin-top:12px;display:flex;align-items:center;gap:10px">
+        <button class="btn btn-success" id="recordBtn" onclick="toggleRecord()">🎤 开始录音</button>
+        <span id="recordStatus" style="font-size:13px;color:var(--text-secondary)">点击录音，跟读后回放对比</span>
+      </div>
+    </div></div>`;
+}
+function selectForSpeaking(id){
+  stopSpeaking();
+  state.currentMaterial = findMaterial(id);
+  trackActivity('speaking', id);
+  renderSpeaking();
+}
+function toggleSpeakAll(){
+  if(!state.currentMaterial) return;
+  if(state.isPlaying){ stopSpeaking(); }
+  else { speakSentenceBySentence(state.currentMaterial.sentences, 'speakContent'); }
+}
+function playSingleSpeak(idx){
+  if(!state.currentMaterial) return;
+  stopSpeaking();
+  highlightSentence('speakContent', idx);
+  speak(state.currentMaterial.sentences[idx].orig, ()=> highlightSentence('speakContent', -1));
+}
+function repeatMode(){
+  if(!state.currentMaterial) return;
+  stopSpeaking();
+  state.isPlaying = true;
+  updatePlayBtn();
+  const sentences = state.currentMaterial.sentences;
+  let idx = 0;
+  function loopSentence(i){
+    if(!state.isPlaying || i >= sentences.length){
+      state.isPlaying = false;
+      state.currentSentenceIdx = -1;
+      highlightSentence('speakContent', -1);
+      updatePlayBtn();
+      return;
+    }
+    state.currentSentenceIdx = i;
+    highlightSentence('speakContent', i);
+    // Play 3 times with pauses
+    let count = 0;
+    function playOnce(){
+      if(count >= 3 || !state.isPlaying){ loopSentence(i+1); return; }
+      count++;
+      speak(sentences[i].orig, ()=> setTimeout(playOnce, 800/state.speed));
+    }
+    playOnce();
+  }
+  loopSentence(0);
+}
+// Recording
+let mediaRecorder = null;
+let audioChunks = [];
+let audioUrl = null;
+async function toggleRecord(){
+  const btn = document.getElementById('recordBtn');
+  const status = document.getElementById('recordStatus');
+  if(state.isRecording){
+    mediaRecorder.stop();
+    state.isRecording = false;
+    btn.textContent = '🎤 开始录音';
+    btn.classList.remove('btn-danger');
+    btn.classList.add('btn-success');
+    status.innerHTML = '✅ 录音完成 <button class="btn btn-sm" onclick="playRecord()">▶ 回放</button>';
+    return;
+  }
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = [];
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = ()=>{
+      audioUrl = URL.createObjectURL(new Blob(audioChunks,{type:'audio/webm'}));
+      stream.getTracks().forEach(t=>t.stop());
+    };
+    mediaRecorder.start();
+    state.isRecording = true;
+    btn.textContent = '⏹ 停止录音';
+    btn.classList.remove('btn-success');
+    btn.classList.add('btn-danger');
+    status.innerHTML = '<span class="recording-indicator"><span class="recording-dot"></span>录音中...</span>';
+  }catch(e){
+    status.textContent = '❌ 无法访问麦克风，请检查权限设置';
+  }
+}
+function playRecord(){
+  if(audioUrl){
+    const a = new Audio(audioUrl);
+    a.play();
+  }
+}
+
+// ============================================================
+// MODULE: Reading
+// ============================================================
+function renderReading(){
+  const area = document.getElementById('contentArea');
+  if(!state.currentMaterial){
+    area.innerHTML = `<div class="grid-2 fade-in">
+      <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
+      <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('read-list','selectForReading')}</div></div>
+      <div class="card"><div class="empty-state"><div class="es-icon">📖</div><div class="es-text">选择一个素材开始阅读，点击单词可查词典</div></div></div>
+    </div>`;
+    return;
+  }
+  const m = state.currentMaterial;
+  let sentencesHtml = m.sentences.map((s,i)=>{
+    const wordsHtml = s.orig.split(/(\s+)/).map(w=>{
+      const clean = w.replace(/[^a-zA-ZäöüÄÖÜß'.-]/g,'');
+      if(!clean || /^\s+$/.test(w)) return w;
+      const lookedUp = state.lookedUpWords.has(clean.toLowerCase()) ? ' looked-up' : '';
+      return `<span class="word${lookedUp}" onclick="onWordClick(event,'${clean.replace(/'/g,"\\'")}')">${w}</span>`;
+    }).join('');
+    return `<div class="bilingual-block" id="rb-${i}">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span class="sentence-idx">${i+1}</span>
+        <div style="flex:1">
+          <div class="sentence-orig">${wordsHtml}</div>
+          <div class="sentence-trans">${s.trans}</div>
+        </div>
+        <button class="btn btn-sm" onclick="playSingleRead(${i})" title="朗读本句">🔊</button>
+      </div>
+    </div>`;
+  }).join('');
+  area.innerHTML = `<div class="grid-2 fade-in">
+    <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
+    <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('read-list','selectForReading')}</div></div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">${m.title} · 阅读</div>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="readAllAloud()">🔊 朗读全文</button>
+          <button class="btn" onclick="stopSpeaking()">⏹ 停止</button>
+        </div>
+      </div>
+      <div id="readContent" style="max-height:55vh;overflow-y:auto">${sentencesHtml}</div>
+    </div></div>`;
+}
+function selectForReading(id){
+  stopSpeaking();
+  state.currentMaterial = findMaterial(id);
+  trackActivity('reading', id);
+  renderReading();
+}
+function onWordClick(e, word){
+  e.stopPropagation();
+  const meaning = lookupWord(word);
+  if(meaning){
+    state.lookedUpWords.add(word.toLowerCase());
+    e.target.classList.add('looked-up');
+    showDictPopup(word, meaning, e.clientX, e.clientY);
+    trackWordLookup(word.toLowerCase(), state.lang);
+    trackActivity('word', word);
+  } else {
+    // Show "not found" briefly
+    showDictPopup(word, '(词典中未找到，试试其他单词)', e.clientX, e.clientY);
+  }
+}
+function playSingleRead(idx){
+  if(!state.currentMaterial) return;
+  stopSpeaking();
+  highlightSentence('readContent', idx);
+  speak(state.currentMaterial.sentences[idx].orig, ()=> highlightSentence('readContent', -1));
+}
+function readAllAloud(){
+  if(!state.currentMaterial) return;
+  speakSentenceBySentence(state.currentMaterial.sentences, 'readContent');
+}
+
+// ============================================================
+// MODULE: Writing
+// ============================================================
+function renderWriting(){
+  const area = document.getElementById('contentArea');
+  const prompts = WRITING_PROMPTS[state.lang] || [];
+  let promptCards = prompts.map((p,i)=>`
+    <div class="material-card" onclick="selectWritingPrompt(${i})">
+      <div><div class="mc-title">${p.title}</div>
+      <div class="mc-meta">${p.hint.substring(0,50)}...</div></div>
+      <span style="color:var(--text-secondary)">→</span>
+    </div>`).join('');
+  area.innerHTML = `<div class="grid-2 fade-in">
+    <div class="card"><div class="card-header"><div class="card-title">写作主题</div></div>
+    <div class="material-list" style="max-height:60vh;overflow-y:auto">${promptCards}</div></div>
+    <div class="card" id="writingPanel">
+      <div class="empty-state"><div class="es-icon">✍️</div><div class="es-text">选择一个主题开始写作练习</div></div>
+    </div></div>`;
+}
+function selectWritingPrompt(idx){
+  const prompts = WRITING_PROMPTS[state.lang] || [];
+  const p = prompts[idx];
+  if(!p) return;
+  const wordBank = p.words.map(w=>`<span class="word-chip" onclick="insertWord('${w}')">${w}</span>`).join('');
+  document.getElementById('writingPanel').innerHTML = `
+    <div class="writing-prompt">
+      <div class="wp-title">${p.title}</div>
+      <div class="wp-hint">${p.hint}</div>
+    </div>
+    <div style="margin-bottom:8px;font-size:13px;color:var(--text-secondary)">参考词汇（点击插入）：</div>
+    <div class="word-bank">${wordBank}</div>
+    <textarea class="writing-area" id="writingText" placeholder="在这里开始写作..." oninput="updateWritingStats()"></textarea>
+    <div class="writing-stats" id="writingStats">
+      <span>字数：0</span><span>句子：0</span>
+    </div>
+    <div style="margin-top:12px" class="btn-group">
+      <button class="btn btn-primary" onclick="checkWriting()">📝 检查</button>
+      <button class="btn" onclick="clearWriting()">🗑️ 清空</button>
+      <button class="btn" onclick="speakWriting()">🔊 朗读</button>
+    </div>
+    <div id="writingFeedback" style="margin-top:12px"></div>`;
+}
+function insertWord(w){
+  const ta = document.getElementById('writingText');
+  if(!ta) return;
+  const pos = ta.selectionStart;
+  const before = ta.value.substring(0,pos);
+  const after = ta.value.substring(pos);
+  ta.value = before + (before && !before.endsWith(' ') ? ' ':'') + w + ' ' + after;
+  ta.focus();
+  updateWritingStats();
+}
+function updateWritingStats(){
+  const ta = document.getElementById('writingText');
+  if(!ta) return;
+  const text = ta.value.trim();
+  const words = text ? text.split(/\s+/).length : 0;
+  const sentences = text ? (text.match(/[.!?。！？]/g)||[]).length : 0;
+  document.getElementById('writingStats').innerHTML = `<span>词数：${words}</span><span>句子：${sentences}</span>`;
+}
+function clearWriting(){
+  const ta = document.getElementById('writingText');
+  if(ta) ta.value = '';
+  updateWritingStats();
+  document.getElementById('writingFeedback').innerHTML = '';
+}
+function checkWriting(){
+  const ta = document.getElementById('writingText');
+  if(!ta || !ta.value.trim()){ return; }
+  const prompts = WRITING_PROMPTS[state.lang] || [];
+  // Find current prompt
+  const title = document.querySelector('.writing-prompt .wp-title')?.textContent || '';
+  const p = prompts.find(pr => pr.title === title);
+  if(!p) return;
+  const text = ta.value.toLowerCase();
+  const usedWords = p.words.filter(w => text.includes(w.toLowerCase()));
+  const unusedWords = p.words.filter(w => !text.includes(w.toLowerCase()));
+  const wordCount = ta.value.trim().split(/\s+/).length;
+  let feedback = `<div class="card" style="background:#F8FAFC">
+    <div style="font-weight:600;margin-bottom:8px">📊 写作检查</div>
+    <div style="font-size:13px;line-height:1.8">
+    <div>词数：${wordCount} ${wordCount < 20 ? '⚠️ 建议写更多' : '✅'}</div>
+    <div>已用参考词：${usedWords.length}/${p.words.length} ${usedWords.map(w=>`<span style="color:var(--success);font-weight:600">${w}</span>`).join(', ')||'无'}</div>
+    ${unusedWords.length > 0 ? `<div>未用词汇：${unusedWords.map(w=>`<span style="color:var(--warning)">${w}</span>`).join(', ')}</div>` : '<div style="color:var(--success)">✅ 所有参考词汇都已使用！</div>'}
+    </div></div>`;
+  document.getElementById('writingFeedback').innerHTML = feedback;
+}
+function speakWriting(){
+  const ta = document.getElementById('writingText');
+  if(!ta || !ta.value.trim()) return;
+  stopSpeaking();
+  speak(ta.value.trim());
+}
+
+// ============================================================
+// MODULE: Quiz (Dictation)
+// ============================================================
+function renderQuiz(){
+  const area = document.getElementById('contentArea');
+  if(!state.currentMaterial){
+    area.innerHTML = `<div class="grid-2 fade-in">
+      <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
+      <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('quiz-list','selectForQuiz')}</div></div>
+      <div class="card"><div class="empty-state"><div class="es-icon">📝</div><div class="es-text">选择一个素材进行听写测试</div></div></div>
+    </div>`;
+    return;
+  }
+  const m = state.currentMaterial;
+  window._quizIdx = 0;
+  window._quizScore = 0;
+  renderQuizQuestion();
+}
+function selectForQuiz(id){
+  stopSpeaking();
+  state.currentMaterial = findMaterial(id);
+  renderQuiz();
+}
+function renderQuizQuestion(){
+  const m = state.currentMaterial;
+  if(!m) return;
+  const idx = window._quizIdx || 0;
+  if(idx >= m.sentences.length){
+    // Quiz complete
+    const score = window._quizScore || 0;
+    const total = m.sentences.length;
+    const pct = Math.round(score/total*100);
+    markLessonComplete(m.id);
+    trackActivity('quiz', `${m.title} (${score}/${total})`);
+    document.getElementById('contentArea').innerHTML = `<div class="card fade-in" style="max-width:500px;margin:40px auto;text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">${pct>=80?'🎉':pct>=60?'👍':'💪'}</div>
+      <div style="font-size:24px;font-weight:700;margin-bottom:8px">听写完成！</div>
+      <div style="font-size:18px;color:var(--text-secondary)">得分：${score} / ${total}（${pct}%）</div>
+      <div style="margin-top:20px" class="btn-group" style="justify-content:center">
+        <button class="btn btn-primary" onclick="selectForQuiz('${m.id}')">🔄 再来一次</button>
+        <button class="btn" onclick="switchModule('listening')">返回</button>
+      </div></div>`;
+    return;
+  }
+  const s = m.sentences[idx];
+  const panel = document.getElementById('contentArea');
+  panel.innerHTML = `<div class="card fade-in" style="max-width:600px;margin:20px auto">
+    <div class="card-header">
+      <div class="card-title">听写测试 (${idx+1}/${m.sentences.length})</div>
+      <div style="font-size:13px;color:var(--text-secondary)">得分：${window._quizScore||0}</div>
+    </div>
+    <div style="text-align:center;margin:20px 0">
+      <button class="btn btn-primary btn-icon" style="width:60px;height:60px;font-size:24px" onclick="playQuizAudio()">🔊</button>
+      <div style="font-size:13px;color:var(--text-secondary);margin-top:8px">点击播放音频，然后输入你听到的内容</div>
+    </div>
+    <input type="text" class="quiz-input" id="quizInput" placeholder="输入你听到的内容..." onkeydown="if(event.key==='Enter')checkQuizAnswer()">
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <div style="margin-top:12px" class="btn-group">
+      <button class="btn btn-primary" onclick="checkQuizAnswer()">✅ 检查</button>
+      <button class="btn" onclick="showQuizHint()">💡 提示</button>
+      <button class="btn" onclick="nextQuizQuestion()">⏭️ 跳过</button>
+    </div>
+    <div id="quizHint" style="margin-top:12px;font-size:14px;color:var(--text-secondary);display:none"></div>
+  </div>`;
+}
+function playQuizAudio(){
+  if(!state.currentMaterial) return;
+  const idx = window._quizIdx || 0;
+  speak(state.currentMaterial.sentences[idx].orig);
+}
+function checkQuizAnswer(){
+  const input = document.getElementById('quizInput');
+  const fb = document.getElementById('quizFeedback');
+  if(!input || !input.value.trim()) return;
+  const m = state.currentMaterial;
+  const idx = window._quizIdx || 0;
+  const correct = m.sentences[idx].orig.toLowerCase().trim();
+  const answer = input.value.trim().toLowerCase();
+  // Simple similarity check
+  const correctWords = correct.split(/\s+/);
+  const answerWords = answer.split(/\s+/);
+  let matches = 0;
+  correctWords.forEach(w => {
+    if(answerWords.some(aw => aw === w || (aw.length > 3 && w.includes(aw)))) matches++;
+  });
+  const ratio = matches / correctWords.length;
+  if(ratio >= 0.7){
+    input.classList.add('correct');
+    input.classList.remove('wrong');
+    fb.className = 'quiz-feedback show correct';
+    fb.innerHTML = `✅ 正确！原文：<strong>${m.sentences[idx].orig}</strong><br>${m.sentences[idx].trans}`;
+    window._quizScore = (window._quizScore||0) + 1;
+  } else {
+    input.classList.add('wrong');
+    input.classList.remove('correct');
+    fb.className = 'quiz-feedback show wrong';
+    fb.innerHTML = `❌ 不太对。原文：<strong>${m.sentences[idx].orig}</strong><br>${m.sentences[idx].trans}`;
+  }
+  setTimeout(()=>{ window._quizIdx = idx + 1; renderQuizQuestion(); }, 2500);
+}
+function showQuizHint(){
+  const m = state.currentMaterial;
+  const idx = window._quizIdx || 0;
+  const s = m.sentences[idx].orig;
+  const words = s.split(/\s+/);
+  const hint = words.map((w,i)=> i < Math.ceil(words.length*0.3) ? w : '___').join(' ');
+  const el = document.getElementById('quizHint');
+  el.style.display = 'block';
+  el.innerHTML = `💡 提示：${hint}...`;
+}
+function nextQuizQuestion(){
+  window._quizIdx = (window._quizIdx||0) + 1;
+  renderQuizQuestion();
+}
+
+// ============================================================
+// MODULE: Import Custom Materials
+// ============================================================
+function renderImport(){
+  const area = document.getElementById('contentArea');
+  area.innerHTML = `<div class="card fade-in" style="max-width:700px">
+    <div class="card-header"><div class="card-title">📂 导入自定义素材</div></div>
+    <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;line-height:1.8">
+      支持导入 JSON 格式的学习素材。文件格式示例：<br>
+    </p>
+    <pre style="background:#F8FAFC;padding:14px;border-radius:var(--radius-sm);font-size:12px;overflow-x:auto;margin-bottom:16px;line-height:1.6">{
+  "lang": "en",
+  "theme": "daily",
+  "title": "My Custom Lesson",
+  "sentences": [
+    {"orig": "Hello, how are you?", "trans": "你好，怎么样？"},
+    {"orig": "I'm fine, thank you.", "trans": "我很好，谢谢。"}
+  ]
+}</pre>
+    <div class="import-zone" id="importZone" onclick="document.getElementById('importFile').click()"
+         ondragover="event.preventDefault();this.classList.add('dragover')"
+         ondragleave="this.classList.remove('dragover')"
+         ondrop="handleImportDrop(event)">
+      <div style="font-size:36px;margin-bottom:8px">📄</div>
+      <div>点击或拖拽 JSON 文件到此处</div>
+      <div style="font-size:12px;margin-top:4px">支持 .json 格式</div>
+    </div>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImportFile(event)">
+    <div id="importResult" style="margin-top:16px"></div>
+    ${state.customMaterials.length > 0 ? `
+    <div style="margin-top:20px">
+      <div class="card-title" style="margin-bottom:10px">已导入素材 (${state.customMaterials.length})</div>
+      ${state.customMaterials.map(m=>`<div class="material-card"><div><div class="mc-title">${m.title}</div><div class="mc-meta">${m.lang==='en'?'英语':'德语'} · ${m.sentences.length}句</div></div><button class="btn btn-sm" onclick="removeCustom('${m.id}')">删除</button></div>`).join('')}
+    </div>` : ''}
+  </div>`;
+}
+function handleImportDrop(e){
+  e.preventDefault();
+  e.currentTarget.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if(file) processImportFile(file);
+}
+function handleImportFile(e){
+  const file = e.target.files[0];
+  if(file) processImportFile(file);
+}
+function processImportFile(file){
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const data = JSON.parse(e.target.result);
+      if(!data.lang || !data.title || !data.sentences || !Array.isArray(data.sentences)){
+        throw new Error('格式不正确');
+      }
+      const material = {
+        id: 'custom-' + Date.now(),
+        lang: data.lang,
+        theme: data.theme || 'daily',
+        difficulty: data.difficulty || '自定义',
+        title: data.title,
+        sentences: data.sentences.map(s => ({orig: s.orig, trans: s.trans}))
+      };
+      state.customMaterials.push(material);
+      document.getElementById('importResult').innerHTML = `<div style="color:var(--success);font-size:14px">✅ 成功导入「${material.title}」(${material.sentences.length}句)</div>`;
+      setTimeout(()=> renderImport(), 1500);
+    }catch(err){
+      document.getElementById('importResult').innerHTML = `<div style="color:var(--danger);font-size:14px">❌ 导入失败：${err.message}</div>`;
+    }
+  };
+  reader.readAsText(file);
+}
+function removeCustom(id){
+  state.customMaterials = state.customMaterials.filter(m=>m.id!==id);
+  renderImport();
+}
+
+// ============================================================
+// MODULE: Progress Dashboard
+// ============================================================
+function renderProgress(){
+  const area = document.getElementById('contentArea');
+  const lang = state.lang;
+  const p = state.progress[lang];
+  const levels = DUO_LEVELS[lang] || [];
+  const currentLevel = levels.find(l => l.id === p.duoLevel);
+  const currentIdx = levels.findIndex(l => l.id === p.duoLevel);
+  const nextLevel = currentIdx >= 0 && currentIdx < levels.length - 1 ? levels[currentIdx + 1] : null;
+  const targets = lang === 'en' ? EN_TARGETS : DE_TARGETS;
+  const targetObj = targets.find(t => t.id === p.targetLevel);
+  const totalLessons = MATERIALS.filter(m => m.lang === lang).length;
+  const completedCount = p.completedLessons.length;
+  const pctComplete = totalLessons > 0 ? Math.round(completedCount / totalLessons * 100) : 0;
+  const duoPct = currentLevel ? currentLevel.pct : 0;
+
+  // Level options for selector
+  let levelOptions = levels.map(l => `<option value="${l.id}" ${l.id===p.duoLevel?'selected':''}>${l.label} (${l.pct}%)</option>`).join('');
+  let targetOptions = targets.map(t => `<option value="${t.id}" ${t.id===p.targetLevel?'selected':''}>${t.label}</option>`).join('');
+
+  // Recommendations
+  const recs = getRecommendations(lang);
+  let recsHtml = '';
+  if(p.duoLevel){
+    if(recs.length > 0){
+      recsHtml = recs.map(r => {
+        const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
+        const done = p.completedLessons.includes(r.material.id);
+        return `<div class="recommend-card" onclick="selectMaterialFromProgress('${r.material.id}')">
+          <div><div class="mc-title">${r.material.title}</div>
+          <div class="mc-meta"><span class="theme-badge ${r.material.theme}">${themes[r.material.theme]||r.material.theme}</span> · ${r.material.difficulty} · ${r.material.sentences.length}句</div></div>
+          <div style="text-align:right">
+            <div style="font-size:11px;color:var(--primary);font-weight:600">${r.reason}</div>
+            ${done ? '<span style="font-size:11px;color:var(--success)">✅ 已完成</span>' : '<span style="color:var(--text-secondary)">→</span>'}
+          </div></div>`;
+      }).join('');
+    } else {
+      recsHtml = '<div style="font-size:13px;color:var(--text-secondary);padding:10px">当前没有推荐内容，请先同步多邻国进度。</div>';
+    }
+  } else {
+    recsHtml = '<div style="font-size:13px;color:var(--text-secondary);padding:10px">请先在下方选择你的多邻国进度阶段，系统将推荐匹配素材。</div>';
+  }
+
+  area.innerHTML = `<div class="fade-in" style="max-width:800px;margin:0 auto">
+    <!-- Duolingo Sync -->
+    <div class="card duo-sync-box">
+      <div class="card-header">
+        <div class="card-title" style="color:#FFF">🦎 多邻国进度同步</div>
+        <span style="color:rgba(255,255,255,.7);font-size:12px">${lang==='en'?'英语':'德语'}</span>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end">
+        <div style="flex:1;min-width:180px">
+          <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:4px">当前多邻国阶段</div>
+          <select class="ctrl-select" style="width:100%;background:#FFF" onchange="setDuoLevel(this.value)">${levelOptions}</select>
+        </div>
+        <div style="flex:1;min-width:180px">
+          <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:4px">目标等级</div>
+          <select class="ctrl-select" style="width:100%;background:#FFF" onchange="setTargetLevel(this.value)">${targetOptions}</select>
+        </div>
+      </div>
+      <div style="margin-top:14px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.8);margin-bottom:4px">
+          <span>多邻国进度</span><span>${duoPct}%</span>
+        </div>
+        <div class="progress-bar-bg" style="background:rgba(255,255,255,.2)">
+          <div class="progress-bar-fill" style="width:${duoPct}%;background:#58CC02"></div>
+        </div>
+        ${nextLevel ? `<div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">下一阶段：${nextLevel.label}</div>` : '<div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">已达最高阶段！</div>'}
+      </div>
+    </div>
+
+    <!-- Target -->
+    <div class="card target-box">
+      <div class="card-header">
+        <div class="card-title" style="color:#FFF">🎯 学习目标</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <div style="font-size:28px;font-weight:700;color:#FFF">${targetObj ? targetObj.label : '未设置'}</div>
+        <div style="flex:1;min-width:200px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.8);margin-bottom:4px">
+            <span>课程完成度</span><span>${completedCount}/${totalLessons} (${pctComplete}%)</span>
+          </div>
+          <div class="progress-bar-bg" style="background:rgba(255,255,255,.2)">
+            <div class="progress-bar-fill" style="width:${pctComplete}%;background:#FFC000"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="card stat-card">
+        <div style="font-size:28px;font-weight:700;color:var(--primary)">${completedCount}</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">已完成课程</div>
+      </div>
+      <div class="card stat-card">
+        <div style="font-size:28px;font-weight:700;color:var(--success)">${p.wordsLookedUp.length}</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">查阅单词数</div>
+      </div>
+      <div class="card stat-card">
+        <div style="font-size:28px;font-weight:700;color:var(--warning)">${getStreakCount()}</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">连续学习天数 🔥</div>
+      </div>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📚 推荐学习素材</div>
+      </div>
+      <div class="material-list">${recsHtml}</div>
+    </div>
+  </div>`;
+}
+
+function setDuoLevel(levelId){
+  const lang = state.lang;
+  state.progress[lang].duoLevel = levelId;
+  saveProgress();
+  trackActivity('sync', `${lang==='en'?'英语':'德语'}多邻国→${levelId}`);
+  renderProgress();
+}
+function setTargetLevel(targetId){
+  const lang = state.lang;
+  const targets = lang === 'en' ? EN_TARGETS : DE_TARGETS;
+  const t = targets.find(t => t.id === targetId);
+  state.progress[lang].targetLevel = targetId;
+  state.progress[lang].targetLabel = t ? t.label : targetId;
+  saveProgress();
+  renderProgress();
+}
+function selectMaterialFromProgress(matId){
+  const mat = findMaterial(matId);
+  if(!mat) return;
+  state.currentMaterial = mat;
+  state.lang = mat.lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === mat.lang));
+  populateVoiceSelect();
+  switchModule('listening');
+}
+function getStreakCount(){
+  const records = state.progress.dailyRecords;
+  if(records.length === 0) return 0;
+  const dates = [...new Set(records.map(r => r.date))].sort().reverse();
+  const today = new Date().toISOString().split('T')[0];
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+  if(dates[0] !== today && dates[0] !== yesterday) return 0;
+  let streak = 1;
+  for(let i = 0; i < dates.length - 1; i++){
+    const d1 = new Date(dates[i]);
+    const d2 = new Date(dates[i+1]);
+    const diff = (d1 - d2) / 86400000;
+    if(diff === 1) streak++;
+    else break;
+  }
+  return streak;
+}
+
+// ============================================================
+// MODULE: Activity Log
+// ============================================================
+function renderActivity(){
+  const area = document.getElementById('contentArea');
+  const records = state.progress.dailyRecords;
+  const typeLabels = {listening:'听力训练',speaking:'口语跟读',reading:'阅读查词',writing:'写作练习',quiz:'听写测试',lesson:'完成课程',review:'复习课程',sync:'进度同步',word:'查词',import:'导入素材'};
+  const typeIcons = {listening:'🎧',speaking:'🗣️',reading:'📖',writing:'✍️',quiz:'📝',lesson:'✅',review:'🔄',sync:'🦎',word:'📖',import:'📂'};
+
+  // Group by date
+  const grouped = {};
+  records.slice().reverse().forEach(r => {
+    if(!grouped[r.date]) grouped[r.date] = [];
+    grouped[r.date].push(r);
+  });
+  const dates = Object.keys(grouped).sort().reverse();
+
+  // Stats
+  const today = new Date().toISOString().split('T')[0];
+  const todayRecords = records.filter(r => r.date === today);
+  const totalDays = new Set(records.map(r => r.date)).size;
+  const totalWords = state.progress.en.wordsLookedUp.length + state.progress.de.wordsLookedUp.length;
+  const totalLessons = state.progress.en.completedLessons.length + state.progress.de.completedLessons.length;
+
+  let activityHtml = '';
+  if(dates.length === 0){
+    activityHtml = '<div class="empty-state"><div class="es-icon">📅</div><div class="es-text">暂无学习记录<br>开始学习后记录将自动出现在这里</div></div>';
+  } else {
+    dates.slice(0, 14).forEach(date => {
+      const items = grouped[date];
+      const dateLabel = date === today ? '今天' : date === new Date(Date.now()-86400000).toISOString().split('T')[0] ? '昨天' : date;
+      activityHtml += `<div class="activity-day">
+        <div style="font-weight:600;font-size:13px;margin-bottom:8px;color:var(--text)">${dateLabel} <span style="font-weight:400;color:var(--text-secondary)">(${items.length}条记录)</span></div>
+        ${items.slice().reverse().map(r => `<div class="activity-item">
+          <span>${typeIcons[r.type]||'📌'}</span>
+          <span style="flex:1">${typeLabels[r.type]||r.type}${r.detail ? ' · ' + (findMaterial(r.detail)?.title || r.detail) : ''}</span>
+          <span style="color:var(--text-secondary);font-size:12px">${r.time}</span>
+        </div>`).join('')}
+      </div>`;
+    });
+  }
+
+  area.innerHTML = `<div class="fade-in" style="max-width:700px;margin:0 auto">
+    <!-- Summary Stats -->
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="card stat-card">
+        <div style="font-size:28px;font-weight:700;color:var(--primary)">${totalDays}</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">学习天数</div>
+      </div>
+      <div class="card stat-card">
+        <div style="font-size:28px;font-weight:700;color:var(--success)">${totalLessons}</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">完成课程</div>
+      </div>
+      <div class="card stat-card">
+        <div style="font-size:28px;font-weight:700;color:var(--warning)">${totalWords}</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">查阅单词</div>
+      </div>
+    </div>
+    <!-- Activity Log -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📅 学习记录</div>
+        ${records.length > 0 ? `<button class="btn btn-sm btn-danger" onclick="clearActivityLog()">清空记录</button>` : ''}
+      </div>
+      ${activityHtml}
+    </div>
+  </div>`;
+}
+
+function clearActivityLog(){
+  if(confirm('确定要清空所有学习记录吗？此操作不可撤销。')){
+    state.progress.dailyRecords = [];
+    saveProgress();
+    renderActivity();
+  }
+}
+
+// ============================================================
+// DATA: German Grammar Reference
+// ============================================================
+const GRAMMAR_REF = [
+{id:'verb-conj',title:'动词变位 Verbkonjugation',keywords:['变位','conjugation','konjugation','动词','verb','ich','du','er','sie','wir'],
+content:'德语动词根据人称和时态发生变化。\n\n规则动词（如machen）现在时变位：\nich mache | du machst | er/sie/es macht\nwir machen | ihr macht | sie/Sie machen\n\n不规则动词需逐个记忆，如：\nsein: ich bin, du bist, er ist, wir sind\nhaben: ich habe, du hast, er hat, wir haben\nwerden: ich werde, du wirst, er wird, wir werden',
+examples:'ich mache → 我做 | du gehst → 你走 | er spricht → 他说'},
+{id:'four-cases',title:'四个格 Die vier Fälle',keywords:['格','case','fall','nominativ','genitiv','dativ','akkusativ','第一格','第二格','第三格','第四格'],
+content:'德语有四个格：\n\n1. Nominativ（第一格）— 主语\n   der Mann liest.（那个男人在阅读。）\n\n2. Genitiv（第二格）— 所属关系\n   das Auto des Mannes.（那个男人的车。）\n\n3. Dativ（第三格）— 间接宾语\n   Ich gebe dem Kind ein Buch.（我给孩子一本书。）\n\n4. Akkusativ（第四格）— 直接宾语\n   Ich sehe den Hund.（我看见那条狗。）',
+examples:'der→der/die/das | gen→des/der/des | dat→dem/der/dem | akk→den/die/das'},
+{id:'article',title:'冠词 Artikel',keywords:['冠词','article','artikel','der','die','das','ein','eine','定冠词','不定冠词'],
+content:'定冠词变化：\n       阳性    阴性    中性    复数\nNom  der     die     das     die\nGen  des     der     des     der\nDat  dem     der     dem     den\nAkk  den     die     das     die\n\n不定冠词变化：\n       阳性    阴性    中性\nNom  ein     eine    ein\nGen  eines   einer   eines\nDat  einem   einer   einem\nAkk  einen   eine    ein',
+examples:'der Mann | die Frau | das Kind | die Leute'},
+{id:'sentence-order',title:'语序 Wortstellung',keywords:['语序','word order','wortstellung','动词位置','verb position','主句','从句'],
+content:'主句：动词固定在第二位（V2规则）\n   Ich gehe heute ins Kino.（我今天去电影院。）\n   Heute gehe ich ins Kino.（今天我去电影院。）\n\n是非问句：动词在第一位\n   Gehst du ins Kino?\n\n从句：动词移到最后\n   Ich weiß, dass er heute ins Kino geht.\n\n注意：助动词（habe/bin/werde）在从句末尾，过去分词在助动词之前。\n   Ich habe den Film gesehen. → ...dass ich den Film gesehen habe.'},
+{id:'perfect',title:'完成时 Das Perfekt',keywords:['完成时','perfekt','过去','haben','sein','ge-','分词','partizip'],
+content:'口语中最常用的过去时态。\n\n构成：haben/sein + 过去分词（ge-形式）\n\n用 sein 的动词（移动/状态变化）：\n   gehen → ist gegangen | kommen → ist gekommen\n   fahren → ist gefahren | aufstehen → ist aufgestanden\n   sterben → ist gestorben | werden → ist geworden\n\n用 haben 的动词（大多数其他动词）：\n   machen → hat gemacht | lesen → hat gelesen\n   schreiben → hat geschrieben | essen → hat gegessen',
+examples:'Ich bin nach Hause gegangen. | Er hat ein Buch gelesen.'},
+{id:'du-sie',title:'你 vs 您 du vs. Sie',keywords:['你','您','du','sie','formal','非正式','称呼'],
+content:'du — 非正式"你"\n   用于：朋友、家人、同事、儿童、同龄人\n   动词变位：du machst, du gehst\n\nSie — 正式"您"\n   用于：陌生人、上级、客户、正式场合\n   动词变位：Sie machen, Sie gehen（与第三人称复数相同）\n\n注意：Sie 始终大写！\n\n提示：在德国，通常先由对方提议用 du 称呼（"Wir können uns duzen"），不要主动切换。'},
+{id:'adj-ending',title:'形容词词尾 Adjektivdeklination',keywords:['形容词','adjektiv','词尾','ending','deklinatio','强变化','弱变化'],
+content:'形容词词尾取决于前面的冠词类型：\n\n定冠词后（弱变化）：\n   der gut_e Mann | die gut_e Frau | das gut_e Kind\n   den gut_en Mann | dem gut_en Mann\n\n不定冠词后（混合变化）：\n   ein gut_er Mann | eine gut_e Frau | ein gut_es Kind\n   einen gut_en Mann | einem gut_en Mann\n\n无冠词时（强变化）：\n   gut_er Mann | gut_e Frau | gut_es Kind\n   gut_en Mann | gut_em Mann\n\n记忆技巧：阳性主格 -er，中性主格 -es，其余多为 -e 或 -en。'},
+{id:'prepositions',title:'介词 Präpositionen',keywords:['介词','preposition','präposition','格支配','Akk','Dat','静三动四'],
+content:'支配第四格（Akkusativ）：\n   durch, für, ohne, gegen, um, bis\n   → Das Geschenk ist für dich.\n\n支配第三格（Dativ）：\n   aus, bei, mit, nach, seit, von, zu, gegenüber\n   → Ich komme aus China.\n\n静三动四（Wechselpräpositionen）— 既支配第三格也支配第四格：\n   in, an, auf, über, unter, vor, hinter, neben, zwischen\n   \n   第四格（运动/方向）：Ich gehe in die Schule.（我去学校。）\n   第三格（位置/静止）：Ich bin in der Schule.（我在学校。）'},
+{id:'modal-verbs',title:'情态动词 Modalverben',keywords:['情态动词','modal','können','müssen','dürfen','sollen','wollen','mögen','möchten'],
+content:'六个情态动词 + möchten：\n\nkönnen 能够/可以 → ich kann, du kannst\nmüssen 必须 → ich muss, du musst\ndürfen 被允许 → ich darf, du darfst\nsollen 应该 → ich soll, du sollst\nwollen 想要 → ich will, du willst\nmögen 喜欢 → ich mag, du magst\nmöchten 想要（虚拟式）→ ich möchte, du möchtest\n\n语序：情态动词在第二位变位，主要动词放句末。\n   Ich kann Deutsch sprechen. | Du musst jetzt gehen.'},
+{id:'separable',title:'可分动词 Trennbare Verben',keywords:['可分','trennbar','separable','前缀','prefix','ab-','an-','auf-'],
+content:'某些动词前缀在变位时分离，移到句末：\n\naufstehen（起床）→ Ich stehe um 7 Uhr auf.\nanrufen（打电话）→ Ich rufe dich morgen an.\neinkaufen（购物）→ Wir kaufen im Supermarkt ein.\nfernsehen（看电视）→ Er sieht abends fern.\n\n常见可分前缀：ab-, an-, auf-, aus-, ein-, mit-, nach-, vor-, zu-, zurück-, fern-\n\n注意：过去分词中 ge- 插入前缀和词干之间：\n   aufstehen → aufgestanden | anrufen → angerufen'},
+{id:'simple-past',title:'简单过去时 Präteritum',keywords:['过去时','präteritum','simple past','war','hatte','书面'],
+content:'主要用于书面语和正式文本。口语中常用 Perfekt 替代。\n\n常用动词的 Präteritum：\n   sein → war (ich war, du warst, er war)\n   haben → hatte (ich hatte, du hattest, er hatte)\n   werden → wurde\n   情态动词：konnte, musste, durfte, sollte, wollte, mochte\n\n规则动词加 -te：\n   machen → machte | gehen → ging (不规则)\n   sagen → sagte | kommen → kam (不规则)',
+examples:'Ich war gestern krank. | Er hatte keine Zeit.'},
+{id:'reflexive',title:'反身动词 Reflexive Verben',keywords:['反身','reflexiv','sich','mich','dich','sich'],
+content:'反身动词需要与主语对应的反身代词：\n\nsich waschen（洗自己）：\n   ich wasche mich | du wäschst dich\n   er wäscht sich | wir waschen uns\n   ihr wäscht euch | sie waschen sich\n\nsich freuen（高兴）：\n   Ich freue mich. | Er freut sich.\n\n第三格反身（某些动词）：\n   sich(D) etwas wünschen → Ich wünsche mir ein Buch.\n   sich(D) etwas vorstellen → Ich stelle mir das vor.',
+examples:'Ich dusche mich. | Wir treffen uns morgen.'},
+{id:'comparative',title:'比较级 Komparativ & Superlativ',keywords:['比较级','komparativ','superlativ','比较','最高级','-er','am -sten'],
+content:'比较级：形容词 + -er\n   schnell → schneller | groß → größer\n   用法：Er ist größer als ich.（他比我高。）\n\n最高级：am + 形容词 + -sten\n   schnell → am schnellsten | groß → am größten\n   用法：Er ist am größten.\n\n不规则变化：\n   gut → besser → am besten\n   viel → mehr → am meisten\n   hoch → höher → am höchsten\n   nah → näher → am nächsten\n   gern → lieber → am liebsten',
+examples:'Schneller als du | am schnellsten | besser als er'},
+{id:'w-questions',title:'W-疑问句 W-Fragen',keywords:['W疑问','w-question','was','wer','wo','wohin','woher','wann','wie','warum','welch'],
+content:'用 W-词开头的特殊疑问句：\n\nwas — 什么 | wer — 谁 | wo — 哪里\nwohin — 去哪里（方向）| woher — 从哪里来\nwann — 什么时候 | wie — 怎样 | warum — 为什么\nwelcher/welche/welches — 哪一个\n\n语序：W-词 + 动词 + 主语 + 其他\n   Was machst du? | Wo wohnst du?\n   Wie geht es Ihnen? | Warum lernst du Deutsch?',
+examples:'Was kostet das? | Woher kommst du? | Wie spät ist es?'},
+{id:'imperative',title:'祈使句 Imperativ',keywords:['祈使','imperative','命令','command','bitte'],
+content:'Sie 形式（正式）：动词 + Sie\n   Gehen Sie! | Bitte warten Sie!\n\ndu 形式（非正式）：动词词干（通常去掉 -st）\n   Geh! | Komm her! | Mach das!\n   注意：sein → Sei! | werden → Werde!\n\nihr 形式（对多人）：动词 ihr 形式\n   Geht! | Kommt! | Macht!\n\n加 bitte 更礼貌：\n   Mach bitte die Tür zu. | Helfen Sie mir bitte.'},
+{id:'negation',title:'否定 Negation',keywords:['否定','negation','nicht','kein','nein'],
+content:'nicht — 否定动词、形容词、副词\n   Ich gehe nicht. | Das ist nicht gut.\n   位置：通常在句末或所否定成分之前。\n   Ich spiele nicht Klavier.（我不弹钢琴。）\n\nkein — 否定名词（替代不定冠词）\n   Ich habe kein Geld. | Das ist keine gute Idee.\n   变化同不定冠词：kein/keine/kein/keinen/keinem...\n\nnein — 回答"不"\n   — Kommst du mit? — Nein.\n\n注意：nicht 在可分前缀之前：\n   Ich mache das Licht nicht an.（我不开灯。）'},
+{id:'irregular-verbs',title:'常用不规则动词 Unregelmäßige Verben',keywords:['不规则','unregelmäßig','强变化','strong verb','bleiben','fahren','geben','nehmen','sprechen'],
+content:'最常用的不规则动词现在时变位：\n\nsein 是：bin/bist/ist/sind/seid/sind\nhaben 有：habe/hast/hat/haben/habt/haben\nwerden 变成：werde/wird/wirst/werden/werdet/werden\ngeben 给：gebe/gibst/gibt/geben/gebt/geben\nnehmen 拿：nehme/nimmst/nimmt/nehmen/nehmt/nehmen\nsprechen 说：spreche/sprichst/spricht/sprechen/sprecht/sprechen\nfahren 驾驶：fahre/fährst/fährt/fahren/fahrt/fahren\nlesen 读：lese/liest/liest/lesen/lest/lesen\nsehen 看：sehe/siehst/sieht/sehen/seht/sehen\nbleiben 留：bleibe/bleibst/bleibt/bleiben/bleibt/bleiben\nhelfen 帮：helfe/hilfst/hilft/helfen/helft/helfen\nessen 吃：esse/isst/isst/essen/esst/essen',
+examples:'er spricht | du nimmst | wir fahren | ihr gebt'},
+{id:'dative-verbs',title:'第三格动词 Dativ-Verben',keywords:['第三格动词','dative verb','Dativ','gehören','gefallen','helfen','danken'],
+content:'某些动词要求第三格宾语（间接宾语）：\n\n常见 Dativ 动词：\n   helfen（帮助）：Kannst du mir helfen?\n   danken（感谢）：Ich danke dir.\n   gefallen（喜欢）：Das gefällt mir.\n   gehören（属于）：Das Buch gehört mir.\n   schmecken（尝起来）：Das Essen schmeckt uns.\n   stehen（站立/适合）：Die Brille steht dir gut.\n   passen（合适）：Die Hose passt mir.\n   fehlen（缺少）：Mir fehlt Geld.\n\n注意：这些动词的"宾语"用第三格，不是第四格！\n   错误：Ich helfe dich. ✗\n   正确：Ich helfe dir. ✓'},
+{id:'conjunctions',title:'连词 Konjunktionen',keywords:['连词','conjunction','und','aber','weil','dass','wenn','obwohl','连词位置'],
+content:'不改变语序的连词（动词仍在第二位）：\n   und, aber, denn, oder, sondern\n   Ich lerne Deutsch und ich arbeite viel.\n\n动词移末尾的连词（从句连词）：\n   weil（因为）：Ich lerne Deutsch, weil ich in Berlin arbeiten will.\n   dass（that）：Ich weiß, dass er krank ist.\n   wenn（如果/当）：Wenn ich Zeit habe, lese ich.\n   obwohl（虽然）：Obwohl es regnet, gehe ich spazieren.\n   seit（自从）：Seit ich in Deutschland bin, lerne ich viel.\n\n注意：从句用逗号与主句隔开，动词移到从句末尾。'},
+{id:'time-expressions',title:'时间表达 Zeitangaben',keywords:['时间','time','zeit','heute','morgen','gestern',' Uhr','am ','um '],
+content:'钟点：um + 数字\n   um 8 Uhr | um halb drei（2:30）| um Viertel nach vier（4:15）\n\n星期：am + 星期\n   am Montag | am Dienstag ... am Sonntag\n\n日期：am + 数字 + 月份\n   am 5. Mai | am ersten Januar\n\n月份：im + 月份\n   im Januar | im März | im Dezember\n\n季节：im + 季节\n   im Frühling | im Sommer | im Herbst | im Winter\n\n年份：im Jahr + 数字 / in + 年份\n   im Jahr 2024 | in zwei Jahren\n\n频率：täglich, wöchentlich, monatlich, jährlich\n   jeden Tag | jede Woche | jeden Monat',
+examples:'um 9 Uhr | am Freitag | im Sommer | heute Morgen'}
+];
+
+// ============================================================
+// MODULE: AI Query
+// ============================================================
+let queryResults = {dict:null, grammar:[], rawText:''};
+
+function renderQuery(){
+  const area = document.getElementById('contentArea');
+  area.innerHTML = `<div class="fade-in" style="max-width:750px;margin:0 auto">
+    <div class="card">
+      <div class="card-header"><div class="card-title">🔍 AI 智能查询</div></div>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px">输入单词、短语或句子，系统将自动识别并提供词典释义和语法分析。支持德语和英语。</p>
+      <div class="query-box">
+        <input type="text" class="query-input" id="queryInput" placeholder="输入要查询的单词、短语或句子..." onkeydown="if(event.key==='Enter')doQuery()">
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="doQuery()">🔍 查询</button>
+          <button class="btn" onclick="document.getElementById('queryInput').value='';clearQuery()">清空</button>
+        </div>
+      </div>
+      <div id="queryResults"></div>
+    </div>
+  </div>`;
+  document.getElementById('queryInput').focus();
+}
+
+function clearQuery(){
+  queryResults = {dict:null, grammar:[], rawText:''};
+  document.getElementById('queryResults').innerHTML = '';
+}
+
+function doQuery(){
+  const input = document.getElementById('queryInput');
+  if(!input || !input.value.trim()) return;
+  const text = input.value.trim();
+  queryResults.rawText = text;
+  const container = document.getElementById('queryResults');
+  container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary)"><div class="loading-spinner"></div>查询中...</div>';
+
+  // Determine query type
+  const words = text.split(/\s+/);
+  const isSingleWord = words.length === 1;
+
+  // 1. Dictionary lookup
+  let dictResult = null;
+  if(isSingleWord){
+    dictResult = lookupWordOnline(text.toLowerCase());
+  }
+
+  // 2. Grammar analysis (for phrases and sentences)
+  let grammarHits = [];
+  if(words.length >= 1){
+    grammarHits = analyzeGrammar(text);
+  }
+
+  queryResults.dict = dictResult;
+  queryResults.grammar = grammarHits;
+
+  // Render results
+  let html = '<div class="query-result">';
+
+  // Dictionary result
+  if(isSingleWord && dictResult){
+    html += `<div class="dict-result">
+      <div class="dr-word">${dictResult.word}</div>
+      ${dictResult.phonetic ? `<div class="dr-phonetic">${dictResult.phonetic}</div>` : ''}
+      <div class="dr-meaning"><span class="pos">${dictResult.lang==='en'?'英':'德'}</span> ${dictResult.meaning}</div>
+      ${dictResult.extra ? `<div style="font-size:12px;color:var(--text-secondary);margin-top:6px">${dictResult.extra}</div>` : ''}
+      <div style="margin-top:10px;display:flex;gap:6px">
+        <button class="btn btn-sm" onclick="speakQueryWord('${dictResult.word.replace(/'/g,"\\'")}')">🔊 发音</button>
+        <button class="btn btn-sm btn-primary" onclick="addToNote('word','${dictResult.word.replace(/'/g,"\\'")}','${dictResult.meaning.replace(/'/g,"\\'")}')">📒 加入笔记</button>
+      </div>
+    </div>`;
+  } else if(isSingleWord && !dictResult){
+    html += `<div class="dict-result">
+      <div class="dr-word">${text}</div>
+      <div class="dr-meaning" style="color:var(--text-secondary)">本地词典未收录，试试查询短语或句子获取语法分析。</div>
+      <div style="margin-top:10px">
+        <button class="btn btn-sm" onclick="speakQueryWord('${text.replace(/'/g,"\\'")}')">🔊 发音</button>
+      </div>
+    </div>`;
+  }
+
+  // Grammar analysis results
+  if(grammarHits.length > 0){
+    html += `<div style="margin-top:16px"><div style="font-weight:600;font-size:14px;margin-bottom:10px">📐 相关语法点（${grammarHits.length}个）</div>`;
+    grammarHits.forEach(g => {
+      html += `<div class="grammar-card" onclick="toggleGrammarDetail('${g.id}')">
+        <div class="gc-title">${g.title}</div>
+        <div class="gc-preview">${g.content.substring(0,60)}...</div>
+        <div id="gd-${g.id}" style="display:none" class="grammar-detail">
+          <div class="gd-title">${g.title}</div>
+          <div class="gd-content">${g.content}</div>
+          ${g.examples ? `<div class="gd-example">📝 ${g.examples}</div>` : ''}
+          <div style="margin-top:10px">
+            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();addToNote('grammar','${g.title.replace(/'/g,"\\'")}','${g.content.substring(0,120).replace(/'/g,"\\'")}')">📒 加入笔记</button>
+          </div>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  } else if(!isSingleWord){
+    html += `<div style="margin-top:16px;padding:16px;background:#F8FAFC;border-radius:var(--radius-sm);text-align:center;color:var(--text-secondary)">
+      <div style="font-size:14px">未找到直接相关的语法点</div>
+      <div style="font-size:12px;margin-top:4px">试试输入包含动词、介词或语法关键词的句子</div>
+    </div>`;
+  }
+
+  // Add to note button for full sentence
+  if(words.length > 1){
+    html += `<div style="margin-top:16px;padding:14px;background:var(--highlight-sentence);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:13px;color:var(--text-secondary)">将查询内容保存为常用句</div>
+      <button class="btn btn-sm btn-primary" onclick="addToNote('phrase','${text.replace(/'/g,"\\'")}','')">📒 加入常用句笔记</button>
+    </div>`;
+  }
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function lookupWordOnline(word){
+  word = word.toLowerCase().replace(/[^a-zäöüßéèêña-z]/gi,'');
+  if(!word || word.length < 2) return null;
+  // Check local dictionary first
+  const localDict = DICTIONARY[state.lang] || {};
+  if(localDict[word]){
+    return {word, meaning: localDict[word], lang: state.lang, phonetic:'', extra:''};
+  }
+  // Check reverse dictionary (Chinese → target)
+  const otherLang = state.lang === 'en' ? 'de' : 'en';
+  const reverseDict = DICTIONARY[otherLang] || {};
+  for(const [k,v] of Object.entries(reverseDict)){
+    if(v.includes(word)){
+      return {word:k, meaning:`${word} 的相关词`, lang:otherLang, phonetic:'', extra:`在${otherLang==='en'?'英':'德'}语词典中找到`};
+    }
+  }
+  // Check other language dictionary
+  const otherDict = DICTIONARY[otherLang] || {};
+  if(otherDict[word]){
+    return {word, meaning: otherDict[word], lang: otherLang, phonetic:'', extra:''};
+  }
+  return null;
+}
+
+function analyzeGrammar(text){
+  const lower = text.toLowerCase();
+  const words = lower.split(/\s+/);
+  let hits = [];
+  let hitIds = new Set();
+
+  // Keyword matching
+  GRAMMAR_REF.forEach(g => {
+    let score = 0;
+    g.keywords.forEach(kw => {
+      const kwLower = kw.toLowerCase();
+      if(words.includes(kwLower)) score += 3;
+      else if(lower.includes(kwLower)) score += 1;
+    });
+    if(score > 0 && !hitIds.has(g.id)){
+      hits.push({...g, score});
+      hitIds.add(g.id);
+    }
+  });
+
+  // Pattern-based detection
+  // Detect verb forms
+  const deVerbPatterns = [
+    {pattern:/\b(ich bin|du bist|er ist|wir sind|ihr seid|sie sind)\b/i, id:'verb-conj'},
+    {pattern:/\b(ich habe|du hast|er hat|wir haben)\b/i, id:'verb-conj'},
+    {pattern:/\b(ich kann|du kannst|er kann|ich muss|du musst|ich will|du willst|ich möchte|du möchtest|ich darf|ich soll)\b/i, id:'modal-verbs'},
+    {pattern:/\b(gegangen|gekommen|gefahren|aufgestanden|gemacht|gelesen|geschrieben|gegessen|getrunken|genommen|gegeben|gesprochen|gefunden|gedacht|gewesen|geworden)\b/i, id:'perfect'},
+    {pattern:/\b(stehe.*auf|rufe.*an|kaufe.*ein|sehe.*fern|mache.*auf|mache.*zu|komme.*mit|gehe.*zurück)\b/i, id:'separable'},
+    {pattern:/\b(mich|dich|sich|uns|euch)\b.*\b(wasche|freue|treffe|setze|stelle|wünsche)\b|\b(wasche|freue|treffe|setze|stelle|wünsche)\b.*\b(mich|dich|sich|uns|euch)\b/i, id:'reflexive'},
+    {pattern:/\b(weil|dass|wenn|obwohl|seit|als ob)\b/i, id:'conjunctions'},
+    {pattern:/\b(als|am .+sten|-er als)\b|\b\w+er als\b|\bam \w+sten\b/i, id:'comparative'},
+    {pattern:/\b(was|wer|wo|wohin|woher|wann|wie|warum|welch)\b/i, id:'w-questions'},
+    {pattern:/\b(geh!|komm!|mach!|sei!|geht!|kommt!|macht!|geben sie|warten sie)\b/i, id:'imperative'},
+    {pattern:/\b(nicht|kein |keine |keinen |keinem )\b/i, id:'negation'},
+    {pattern:/\b(hilft|gefällt|gehört|schmeckt|passt|fehlt|dankst)\b.*\b(mir|dir|ihm|ihr|uns|euch|ihnen)\b|\b(mir|dir|ihm|ihr|uns|euch)\b.*\b(hilft|gefällt|gehört|schmeckt|passt|fehlt|dankst)\b/i, id:'dative-verbs'},
+    {pattern:/\b(um \d|am Montag|am Dienstag|am Mittwoch|am Donnerstag|am Freitag|am Samstag|am Sonntag|im Januar|im Februar|im März)\b/i, id:'time-expressions'},
+    {pattern:/\b(der |die |das |den |dem |des |einen |einem |einer |eines )\b.*\w+(er|es|en|em|e)\b/i, id:'adj-ending'},
+    {pattern:/\b(durch|für|ohne|gegen|um|aus|bei|mit|nach|seit|von|zu)\b/i, id:'prepositions'},
+    {pattern:/\b(in |an |auf |über |unter |vor |hinter |neben |zwischen )\b/i, id:'prepositions'},
+    {pattern:/\b(war|hatte|wurde|konnte|musste|durfte|sollte|wollte)\b/i, id:'simple-past'},
+  ];
+  deVerbPatterns.forEach(p => {
+    if(p.pattern.test(text) && !hitIds.has(p.id)){
+      const g = GRAMMAR_REF.find(gr => gr.id === p.id);
+      if(g){ hits.push({...g, score:2}); hitIds.add(p.id); }
+    }
+  });
+
+  // Sort by score
+  hits.sort((a,b) => b.score - a.score);
+  return hits.slice(0, 6);
+}
+
+function toggleGrammarDetail(id){
+  const el = document.getElementById('gd-' + id);
+  if(el){
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  }
+}
+
+function speakQueryWord(word){
+  stopSpeaking();
+  speak(word);
+}
+
+// ============================================================
+// MODULE: Learning Notes
+// ============================================================
+const NOTES_KEY = 'linguaflow_notes';
+let notesState = {tab:'word', quizMode:false, quizIdx:0, quizScore:0, quizItems:[]};
+let uploadState = {show:false, source:'duolingo', imageData:null, ocrText:'', ocrItems:[], processing:false, tesseractReady:false};
+
+function loadNotes(){
+  try{
+    const saved = localStorage.getItem(NOTES_KEY);
+    if(saved) return JSON.parse(saved);
+  }catch(e){}
+  return {grammar:[], word:[], phrase:[]};
+}
+function saveNotesData(notes){
+  try{ localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); }catch(e){}
+}
+
+function addToNote(category, content, detail){
+  const notes = loadNotes();
+  if(!notes[category]) notes[category] = [];
+  // Avoid duplicates
+  if(notes[category].find(n => n.content === content)){
+    alert('该条目已在笔记中！');
+    return;
+  }
+  notes[category].push({
+    content, detail: detail || '',
+    lang: state.lang,
+    addedAt: new Date().toISOString().split('T')[0] + ' ' + new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})
+  });
+  saveNotesData(notes);
+  trackActivity('note', `${category}:${content}`);
+  // Show brief confirmation
+  const labels = {grammar:'语法',word:'单词',phrase:'常用句'};
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--success);color:#FFF;padding:10px 24px;border-radius:20px;font-size:14px;z-index:9999;animation:fadeIn .3s';
+  toast.textContent = `✅ 已加入${labels[category]}笔记`;
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(), 2000);
+}
+
+function removeNote(category, idx){
+  const notes = loadNotes();
+  if(notes[category]){
+    notes[category].splice(idx, 1);
+    saveNotesData(notes);
+    renderNotes();
+  }
+}
+
+function renderNotes(){
+  const area = document.getElementById('contentArea');
+  const notes = loadNotes();
+  const grammarNotes = notes.grammar || [];
+  const wordNotes = [...(notes.word || []), ...(notes.phrase || [])];
+  const totalNotes = grammarNotes.length + wordNotes.length;
+
+  const tabClass = (t) => notesState.tab === t ? 'note-tab active' : 'note-tab';
+
+  let listHtml = '';
+  const items = notesState.tab === 'grammar' ? grammarNotes : wordNotes;
+
+  if(items.length === 0){
+    listHtml = `<div class="empty-state"><div class="es-icon">📒</div><div class="es-text">暂无${notesState.tab==='grammar'?'语法':'单词/常用句'}笔记<br>在 AI 查询中点击"加入笔记"，或通过"📷 拍照上传"识别图片添加</div></div>`;
+  } else {
+    const catLabel = notesState.tab === 'grammar' ? '语法' : (notes.word||[]).length > 0 && (notes.phrase||[]).length > 0 ? '' : '';
+    items.forEach((n, i) => {
+      const origCat = notes.word && notes.word.includes(n) ? '单词' : '常用句';
+      listHtml += `<div class="note-item">
+        <div class="ni-content">${n.content}</div>
+        ${n.detail ? `<div class="ni-detail">${n.detail}</div>` : ''}
+        <div class="ni-meta">
+          <span class="theme-badge ${n.lang==='en'?'daily':'exam'}">${n.lang==='en'?'英语':'德语'}</span>
+          ${notesState.tab !== 'grammar' && notes.word && notes.phrase ? `<span>${origCat}</span>` : ''}
+          <span>${n.addedAt || ''}</span>
+          <span style="margin-left:auto;cursor:pointer;color:var(--danger)" onclick="removeNote('${notesState.tab === 'grammar' ? 'grammar' : (notes.word && notes.word.includes(n) ? 'word' : 'phrase')}', ${i})">✕</span>
+        </div>
+      </div>`;
+    });
+  }
+
+  area.innerHTML = `<div class="fade-in" style="max-width:700px;margin:0 auto">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📒 学习笔记</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span style="font-size:12px;color:var(--text-secondary)">共 ${totalNotes} 条</span>
+          <button class="btn btn-sm" onclick="toggleUploadPanel()" style="${uploadState.show?'background:var(--primary-light);color:#FFF':''}">📷 拍照上传</button>
+          <button class="btn btn-sm btn-primary" onclick="startSpotQuiz()" ${totalNotes < 2 ? 'disabled title="至少需要2条笔记"' : ''}>🎲 临时抽查</button>
+        </div>
+      </div>
+      ${uploadState.show ? renderUploadPanel() : ''}
+      <div class="note-tabs">
+        <div class="${tabClass('grammar')}" onclick="switchNoteTab('grammar')">📐 语法 (${grammarNotes.length})</div>
+        <div class="${tabClass('word')}" onclick="switchNoteTab('word')">📝 单词及常用句 (${wordNotes.length})</div>
+      </div>
+      <div id="notesList">${listHtml}</div>
+    </div>
+  </div>`;
+}
+
+function switchNoteTab(tab){
+  notesState.tab = tab;
+  notesState.quizMode = false;
+  renderNotes();
+}
+
+// ============================================================
+// SPOT QUIZ (临时抽查)
+// ============================================================
+function startSpotQuiz(){
+  const notes = loadNotes();
+  const allItems = [
+    ...(notes.grammar || []).map(n => ({...n, cat:'grammar'})),
+    ...(notes.word || []).map(n => ({...n, cat:'word'})),
+    ...(notes.phrase || []).map(n => ({...n, cat:'phrase'}))
+  ];
+  if(allItems.length < 2) return;
+
+  // Shuffle and pick items
+  const shuffled = allItems.sort(() => Math.random() - 0.5);
+  notesState.quizItems = shuffled.slice(0, Math.min(10, shuffled.length));
+  notesState.quizIdx = 0;
+  notesState.quizScore = 0;
+  notesState.quizMode = true;
+  renderSpotQuiz();
+}
+
+function renderSpotQuiz(){
+  const area = document.getElementById('contentArea');
+  const items = notesState.quizItems;
+  const idx = notesState.quizIdx;
+
+  if(idx >= items.length){
+    // Quiz complete
+    const score = notesState.quizScore;
+    const total = items.length;
+    const pct = Math.round(score / total * 100);
+    area.innerHTML = `<div class="fade-in" style="max-width:500px;margin:40px auto">
+      <div class="card" style="text-align:center">
+        <div style="font-size:48px;margin-bottom:16px">${pct>=80?'🎉':pct>=60?'👍':'💪'}</div>
+        <div style="font-size:24px;font-weight:700;margin-bottom:8px">抽查完成！</div>
+        <div style="font-size:18px;color:var(--text-secondary)">答对 ${score} / ${total}（${pct}%）</div>
+        <div style="margin-top:20px" class="btn-group" style="justify-content:center">
+          <button class="btn btn-primary" onclick="startSpotQuiz()">🔄 再来一轮</button>
+          <button class="btn" onclick="switchModule('notes')">返回笔记</button>
+        </div>
+      </div></div>`;
+    trackActivity('spotquiz', `抽查 ${score}/${total}`);
+    return;
+  }
+
+  const item = items[idx];
+  let questionHtml = '';
+  let optionsHtml = '';
+  let answerHtml = '';
+
+  if(item.cat === 'grammar'){
+    // Show grammar title, ask for key content
+    questionHtml = `<div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px">📐 语法抽查 (${idx+1}/${items.length})</div>
+      <div class="spot-question">「${item.content}」<br>属于哪个语法点？</div>`;
+    // Generate options: correct + 3 random grammar topics
+    const correctTitle = item.content;
+    const otherTopics = GRAMMAR_REF.filter(g => g.title !== correctTitle).sort(() => Math.random()-0.5).slice(0,3).map(g => g.title);
+    const options = [correctTitle, ...otherTopics].sort(() => Math.random()-0.5);
+    optionsHtml = `<div class="spot-options">${options.map(o =>
+      `<div class="spot-opt" onclick="checkSpotAnswer(this,'${o.replace(/'/g,"\\'")}','${correctTitle.replace(/'/g,"\\'")}')">${o}</div>`
+    ).join('')}</div>`;
+  } else {
+    // Word/phrase: show target word, ask for meaning
+    questionHtml = `<div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px">${item.cat==='word'?'📝 单词抽查':'💬 常用句抽查'} (${idx+1}/${items.length})</div>
+      <div class="spot-question">${item.content}</div>`;
+    if(item.detail){
+      answerHtml = `<div id="spotAnswer" style="display:none"><div class="spot-answer">✅ ${item.detail}</div>
+        <div style="margin-top:12px"><button class="btn btn-primary" onclick="nextSpotQuestion()">⏭️ 下一题</button></div></div>`;
+      optionsHtml = `<div style="margin-top:16px"><button class="btn btn-primary" onclick="showSpotAnswer()">👀 显示答案</button></div>`;
+    } else {
+      // No detail, just show the item and ask user to recall
+      answerHtml = `<div id="spotAnswer" style="display:none"><div class="spot-answer">✅ 请回忆这个${item.cat==='word'?'单词':'句子'}的含义和用法</div>
+        <div style="margin-top:12px"><button class="btn btn-primary" onclick="nextSpotQuestion()">⏭️ 下一题</button></div></div>`;
+      optionsHtml = `<div style="margin-top:16px"><button class="btn btn-primary" onclick="showSpotAnswer()">👀 显示答案</button></div>`;
+    }
+  }
+
+  area.innerHTML = `<div class="fade-in" style="max-width:600px;margin:20px auto">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🎲 临时抽查</div>
+        <div style="font-size:13px;color:var(--text-secondary)">得分：${notesState.quizScore}/${idx}</div>
+      </div>
+      <div class="spot-card">
+        ${questionHtml}
+        ${optionsHtml}
+        ${answerHtml}
+      </div>
+      <div style="text-align:center">
+        <button class="btn" onclick="switchModule('notes')">退出抽查</button>
+      </div>
+    </div></div>`;
+}
+
+function checkSpotAnswer(el, selected, correct){
+  const allOpts = el.parentElement.querySelectorAll('.spot-opt');
+  allOpts.forEach(o => {
+    o.onclick = null;
+    if(o.textContent === correct) o.classList.add('correct');
+  });
+  if(selected === correct){
+    el.classList.add('correct');
+    notesState.quizScore++;
+  } else {
+    el.classList.add('wrong');
+  }
+  setTimeout(() => nextSpotQuestion(), 1500);
+}
+
+function showSpotAnswer(){
+  const el = document.getElementById('spotAnswer');
+  if(el) el.style.display = 'block';
+}
+
+function nextSpotQuestion(){
+  notesState.quizIdx++;
+  renderSpotQuiz();
+}
+
+// ============================================================
+// MODULE: Photo Upload + OCR
+// ============================================================
+function toggleUploadPanel(){
+  uploadState.show = !uploadState.show;
+  if(!uploadState.show){
+    uploadState.imageData = null;
+    uploadState.ocrText = '';
+    uploadState.ocrItems = [];
+    uploadState.processing = false;
+  }
+  renderNotes();
+}
+
+function setUploadSource(src){
+  uploadState.source = src;
+  uploadState.imageData = null;
+  uploadState.ocrText = '';
+  uploadState.ocrItems = [];
+  renderNotes();
+}
+
+function handleUploadFile(input){
+  const file = input.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){
+    alert('请选择图片文件');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    uploadState.imageData = e.target.result;
+    uploadState.ocrText = '';
+    uploadState.ocrItems = [];
+    renderNotes();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeUploadImage(){
+  uploadState.imageData = null;
+  uploadState.ocrText = '';
+  uploadState.ocrItems = [];
+  renderNotes();
+}
+
+async function processOCR(){
+  if(!uploadState.imageData) return;
+  uploadState.processing = true;
+  renderNotes();
+
+  try {
+    const lang = state.lang === 'de' ? 'deu' : 'eng';
+    const extraLangs = state.lang === 'de' ? 'eng' : 'deu';
+    const result = await Tesseract.recognize(uploadState.imageData, `${lang}+${extraLangs}`, {
+      logger: (m) => {
+        if(m.status === 'recognizing text'){
+          const pct = Math.round(m.progress * 100);
+          const fill = document.querySelector('.op-fill');
+          const label = document.querySelector('.op-label');
+          if(fill) fill.style.width = pct + '%';
+          if(label) label.textContent = `正在识别… ${pct}%`;
+        }
+      }
+    });
+    uploadState.ocrText = result.data.text.trim();
+    uploadState.ocrItems = classifyOcrLines(uploadState.ocrText, uploadState.source);
+    uploadState.processing = false;
+    renderNotes();
+  } catch(err){
+    console.error('OCR failed:', err);
+    uploadState.processing = false;
+    alert('文字识别失败，请检查图片质量后重试');
+    renderNotes();
+  }
+}
+
+function classifyOcrLines(text, source){
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  const items = [];
+
+  for(const line of lines){
+    let category = 'word';
+    let display = line;
+
+    // Detect word-translation pairs with separators
+    const sepMatch = line.match(/^(.+?)\s*[-–—=→:|]\s*(.+)$/);
+    if(sepMatch){
+      const left = sepMatch[1].trim();
+      const right = sepMatch[2].trim();
+      // If left side looks like a single word or short phrase
+      if(left.split(/\s+/).length <= 3 && right.split(/\s+/).length <= 5){
+        category = 'word';
+        display = `${left} → ${right}`;
+      } else {
+        category = 'phrase';
+        display = line;
+      }
+    }
+    // Detect grammar rules (lines with keywords)
+    else if(source === 'grammar' || /(?:der|die|das|den|dem|des|ein|eine|einem|einen|einer|ich bin|du bist|er ist|wir haben|Konjugation|Deklination|Präposition|Modalverb|Trennbar)/i.test(line)){
+      category = 'grammar';
+      display = line;
+    }
+    // Detect sentences (longer text with verbs)
+    else if(line.split(/\s+/).length >= 5 || /[.!?,]$/.test(line)){
+      category = 'phrase';
+      display = line;
+    }
+    // Short text = likely a word
+    else if(line.split(/\s+/).length <= 2){
+      category = 'word';
+      display = line;
+    }
+    // Default
+    else {
+      category = 'phrase';
+      display = line;
+    }
+
+    items.push({text: display, category, selected: true});
+  }
+  return items;
+}
+
+function toggleOcrItem(idx){
+  if(uploadState.ocrItems[idx]){
+    uploadState.ocrItems[idx].selected = !uploadState.ocrItems[idx].selected;
+    renderNotes();
+  }
+}
+
+function changeOcrItemCat(idx, cat){
+  if(uploadState.ocrItems[idx]){
+    uploadState.ocrItems[idx].category = cat;
+    renderNotes();
+  }
+}
+
+function editOcrItemText(idx, newText){
+  if(uploadState.ocrItems[idx]){
+    uploadState.ocrItems[idx].text = newText;
+  }
+}
+
+function saveSelectedToNotes(){
+  const selected = uploadState.ocrItems.filter(it => it.selected);
+  if(selected.length === 0){
+    alert('请至少选择一条内容');
+    return;
+  }
+  const notes = loadNotes();
+  let addedCount = 0;
+  const now = new Date().toISOString().split('T')[0] + ' ' + new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});
+  const srcLabel = uploadState.source === 'duolingo' ? '多邻国' : '语法书';
+
+  for(const item of selected){
+    const cat = item.category;
+    if(!notes[cat]) notes[cat] = [];
+    // Skip duplicates
+    if(notes[cat].find(n => n.content === item.text)) continue;
+    notes[cat].push({
+      content: item.text,
+      detail: `来源：${srcLabel}照片识别`,
+      lang: state.lang,
+      addedAt: now
+    });
+    addedCount++;
+    trackActivity('note', `${cat}:${item.text}`);
+  }
+
+  saveNotesData(notes);
+
+  // Remove saved items from the list
+  uploadState.ocrItems = uploadState.ocrItems.filter(it => !it.selected);
+
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--success);color:#FFF;padding:10px 24px;border-radius:20px;font-size:14px;z-index:9999;animation:fadeIn .3s';
+  toast.textContent = `✅ 已保存 ${addedCount} 条到笔记`;
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(), 2000);
+
+  // If all items saved, close the OCR results
+  if(uploadState.ocrItems.length === 0){
+    uploadState.ocrText = '';
+    uploadState.imageData = null;
+  }
+  renderNotes();
+}
+
+function selectAllOcrItems(selectAll){
+  uploadState.ocrItems.forEach(it => it.selected = selectAll);
+  renderNotes();
+}
+
+function renderUploadPanel(){
+  const srcTabs = `
+    <div class="source-tabs">
+      <div class="source-tab ${uploadState.source==='duolingo'?'active':''}" onclick="setUploadSource('duolingo')">📱 多邻国</div>
+      <div class="source-tab ${uploadState.source==='grammar'?'active':''}" onclick="setUploadSource('grammar')">📕 语法书</div>
+    </div>`;
+
+  let bodyHtml = '';
+
+  if(!uploadState.imageData){
+    // Upload zone
+    bodyHtml = `
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('uploadInput').click()"
+           ondragover="event.preventDefault();this.classList.add('dragover')"
+           ondragleave="this.classList.remove('dragover')"
+           ondrop="event.preventDefault();this.classList.remove('dragover');handleDropFile(event)">
+        <div class="uz-icon">📷</div>
+        <div class="uz-text">点击上传或拖拽图片到此处</div>
+        <div class="uz-hint">支持 JPG / PNG / HEIC，可拍照上传</div>
+      </div>
+      <input type="file" id="uploadInput" accept="image/*" capture="environment" style="display:none" onchange="handleUploadFile(this)">`;
+  } else {
+    // Image preview + OCR controls
+    bodyHtml = `
+      <div class="upload-preview">
+        <img src="${uploadState.imageData}" alt="uploaded">
+        <button class="up-remove" onclick="removeUploadImage()">✕</button>
+      </div>`;
+
+    if(uploadState.processing){
+      bodyHtml += `
+        <div class="ocr-progress">
+          <div class="op-bar"><div class="op-fill" style="width:0%"></div></div>
+          <div class="op-label">正在初始化识别引擎…</div>
+        </div>`;
+    } else if(uploadState.ocrItems.length > 0){
+      // Show classified items
+      const catLabels = {word:'单词', phrase:'常用句', grammar:'语法'};
+      const catColors = {word:'background:#DBEAFE;color:#1D4ED8', phrase:'background:#D1FAE5;color:#065F46', grammar:'background:#FEF3C7;color:#92400E'};
+
+      let itemsHtml = '';
+      uploadState.ocrItems.forEach((item, i) => {
+        itemsHtml += `
+          <div class="ocr-item ${item.selected?'selected':''}" onclick="toggleOcrItem(${i})">
+            <input type="checkbox" ${item.selected?'checked':''} onclick="event.stopPropagation();toggleOcrItem(${i})">
+            <div class="oi-text" contenteditable="true" onblur="editOcrItemText(${i}, this.textContent)">${item.text}</div>
+            <select class="oi-cat" style="${catColors[item.category]};border:none;cursor:pointer;font-size:11px;padding:2px 6px;border-radius:10px" onclick="event.stopPropagation()" onchange="changeOcrItemCat(${i}, this.value)">
+              <option value="word" ${item.category==='word'?'selected':''}>单词</option>
+              <option value="phrase" ${item.category==='phrase'?'selected':''}>常用句</option>
+              <option value="grammar" ${item.category==='grammar'?'selected':''}>语法</option>
+            </select>
+          </div>`;
+      });
+
+      const selCount = uploadState.ocrItems.filter(it => it.selected).length;
+      bodyHtml += `
+        <div class="ocr-result">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px">📋 识别结果（点击文字可编辑，点击分类可修改）</div>
+          <div class="ocr-items">${itemsHtml}</div>
+          <div class="batch-actions">
+            <button class="btn btn-sm" onclick="selectAllOcrItems(true)">全选</button>
+            <button class="btn btn-sm" onclick="selectAllOcrItems(false)">取消全选</button>
+            <span style="font-size:12px;color:var(--text-secondary)">已选 ${selCount} 条</span>
+            <button class="btn btn-sm btn-primary" style="margin-left:auto" onclick="saveSelectedToNotes()" ${selCount===0?'disabled':''}>💾 保存选中到笔记</button>
+          </div>
+        </div>`;
+    } else if(uploadState.ocrText){
+      // OCR done but no items parsed - show raw text
+      bodyHtml += `
+        <div class="ocr-result">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px">📋 识别结果（原始文本）</div>
+          <textarea id="ocrRawText">${uploadState.ocrText}</textarea>
+          <div class="batch-actions">
+            <button class="btn btn-sm" onclick="reparseOcrText()">🔄 重新解析</button>
+            <button class="btn btn-sm btn-primary" style="margin-left:auto" onclick="saveRawOcrAsNote()">💾 整体保存为笔记</button>
+          </div>
+        </div>`;
+    } else {
+      // Image loaded, OCR not yet run
+      bodyHtml += `
+        <div style="text-align:center;margin-top:12px">
+          <button class="btn btn-primary" onclick="processOCR()">🔍 开始识别文字</button>
+        </div>`;
+    }
+  }
+
+  return `
+    <div class="upload-panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:15px;font-weight:600">📷 照片上传识别</div>
+        <button class="btn btn-sm" onclick="toggleUploadPanel()">收起 ✕</button>
+      </div>
+      ${srcTabs}
+      ${bodyHtml}
+    </div>`;
+}
+
+function handleDropFile(event){
+  const file = event.dataTransfer.files[0];
+  if(file && file.type.startsWith('image/')){
+    const fakeInput = {files: [file]};
+    handleUploadFile(fakeInput);
+  }
+}
+
+function reparseOcrText(){
+  const textarea = document.getElementById('ocrRawText');
+  if(textarea){
+    uploadState.ocrText = textarea.value;
+    uploadState.ocrItems = classifyOcrLines(uploadState.ocrText, uploadState.source);
+    renderNotes();
+  }
+}
+
+function saveRawOcrAsNote(){
+  const textarea = document.getElementById('ocrRawText');
+  if(!textarea || !textarea.value.trim()){
+    alert('没有可保存的内容');
+    return;
+  }
+  const cat = uploadState.source === 'grammar' ? 'grammar' : 'phrase';
+  const srcLabel = uploadState.source === 'duolingo' ? '多邻国' : '语法书';
+  addToNote(cat, textarea.value.trim(), `来源：${srcLabel}照片识别（整体保存）`);
+  uploadState.ocrText = '';
+  uploadState.imageData = null;
+  uploadState.ocrItems = [];
+  renderNotes();
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function switchLang(lang){
+  state.lang = lang;
+  state.currentMaterial = null;
+  stopSpeaking();
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  populateVoiceSelect();
+  renderCurrentModule();
+}
+function switchModule(mod){
+  state.module = mod;
+  stopSpeaking();
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.toggle('active', el.dataset.module === mod));
+  const titles = {listening:'🎧 听力训练',speaking:'🗣️ 口语跟读',reading:'📖 阅读查词',writing:'✍️ 写作练习',quiz:'📝 听写测试',import:'📂 导入素材',progress:'📊 学习进度',activity:'📅 学习记录',query:'🔍 AI 查询',notes:'📒 学习笔记'};
+  document.getElementById('topbarTitle').textContent = titles[mod] || mod;
+  renderCurrentModule();
+}
+function renderCurrentModule(){
+  const renderers = {listening:renderListening,speaking:renderSpeaking,reading:renderReading,writing:renderWriting,quiz:renderQuiz,import:renderImport,progress:renderProgress,activity:renderActivity,query:renderQuery,notes:renderNotes};
+  (renderers[state.module] || renderListening)();
+}
+function stopSpeaking(){
+  synth.cancel();
+  stopAudio();
+  state.isPlaying = false;
+  state.currentSentenceIdx = -1;
+  updatePlayBtn();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('load', ()=>{
+  // Load saved progress
+  loadProgress();
+  // Init voices
+  initVoices();
+  synth.onvoiceschanged = initVoices;
+  // Render initial module
+  renderCurrentModule();
+});
+
+// ============================================================
+// PWA: Service Worker + Install Prompt
+// ============================================================
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').then((reg) => {
+      console.log('SW registered:', reg.scope);
+    }).catch((err) => {
+      console.warn('SW registration failed:', err);
+    });
+  });
+}
+
+// PWA install prompt
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  showInstallBanner();
+});
+
+function showInstallBanner(){
+  // Only show on mobile, not in standalone mode
+  if(window.matchMedia('(max-width:768px)').matches && !window.matchMedia('(display-mode: standalone)').matches){
+    const banner = document.createElement('div');
+    banner.className = 'pwa-install';
+    banner.textContent = '📲 添加到主屏幕，像 App 一样使用';
+    banner.onclick = async () => {
+      if(deferredPrompt){
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        banner.remove();
+        if(outcome === 'dismissed'){
+          // User dismissed, don't show again for a while
+          sessionStorage.setItem('pwa_dismissed', '1');
+        }
+      } else {
+        // iOS: show manual instructions
+        banner.textContent = '👆 点击 Safari 底部分享按钮 → "添加到主屏幕"';
+        banner.onclick = () => banner.remove();
+        setTimeout(() => banner.remove(), 5000);
+      }
+    };
+    if(!sessionStorage.getItem('pwa_dismissed')){
+      document.body.appendChild(banner);
+    }
+  }
+}
+</script>
+</body>
+</html>
