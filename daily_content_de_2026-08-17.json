@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-17",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Einkaufen 购物",
+  "sentences": [
+    {
+      "orig": "Ich suche ein Geschenk für meine Mutter.",
+      "trans": "我在找给我妈妈的礼物。"
+    },
+    {
+      "orig": "Was möchte sie gerne?",
+      "trans": "她喜欢什么？"
+    },
+    {
+      "orig": "Vielleicht einen Schal oder eine Tasche.",
+      "trans": "也许一条围巾或一个包。"
+    },
+    {
+      "orig": "Wir haben viele schöne Schals hier.",
+      "trans": "我们这里有很多漂亮的围巾。"
+    },
+    {
+      "orig": "Darf ich diesen anprobieren?",
+      "trans": "我可以试一下这个吗？"
+    },
+    {
+      "orig": "Selbstverständlich, die Umkleide ist dort.",
+      "trans": "当然，更衣室在那边。"
+    },
+    {
+      "orig": "Der steht Ihnen sehr gut!",
+      "trans": "这个很适合您！"
+    },
+    {
+      "orig": "Ich nehme ihn. Was kostet er?",
+      "trans": "我要这个。多少钱？"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "das Geschenk",
+      "meaning": "礼物"
+    },
+    {
+      "word": "der Schal",
+      "meaning": "围巾"
+    },
+    {
+      "word": "die Tasche",
+      "meaning": "包"
+    },
+    {
+      "word": "anprobieren",
+      "meaning": "试穿"
+    },
+    {
+      "word": "die Umkleide",
+      "meaning": "更衣室"
+    },
+    {
+      "word": "der Preis",
+      "meaning": "价格"
+    },
+    {
+      "word": "die Größe",
+      "meaning": "尺码"
+    },
+    {
+      "word": "die Farbe",
+      "meaning": "颜色"
+    },
+    {
+      "word": "günstig",
+      "meaning": "实惠的"
+    },
+    {
+      "word": "die Qualität",
+      "meaning": "质量"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Für wen sucht die Person ein Geschenk?",
+      "options": [
+        "Für die Mutter",
+        "Für den Vater",
+        "Für die Schwester",
+        "Für den Freund"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was möchte die Person anprobieren?",
+      "options": [
+        "Einen Schal",
+        "Eine Tasche",
+        "Einen Mantel",
+        "Ein Kleid"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"anprobieren\"?",
+      "options": [
+        "试穿",
+        "购买",
+        "付款",
+        "包装"
+      ],
+      "answer": 0
+    }
+  ]
+}

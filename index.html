@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#4F46E5">
+<meta name="theme-color" content="#5b6e7a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LinguaFlow">
@@ -15,28 +15,30 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --primary:#4F46E5;--primary-light:#818CF8;--primary-dark:#3730A3;
-  --bg:#F8FAFC;--card:#FFF;--sidebar-bg:#1E293B;--sidebar-text:#CBD5E1;
-  --text:#1E293B;--text-secondary:#64748B;--border:#E2E8F0;
-  --success:#10B981;--warning:#F59E0B;--danger:#EF4444;
-  --highlight:#FEF3C7;--highlight-sentence:#EEF2FF;
-  --shadow:0 1px 3px rgba(0,0,0,.1);--shadow-lg:0 4px 12px rgba(0,0,0,.1);
-  --radius:10px;--radius-sm:6px;
+  --primary:#5b6e7a;--primary-light:#7d8b8f;--primary-dark:#4a5d69;
+  --accent:#b09878;--accent-light:#c4ad96;
+  --warn:#c4816b;
+  --bg:#f5f2ed;--card:#fafaf8;--sidebar-bg:#5b6e7a;--sidebar-text:#c5cdd1;
+  --text:#3a3a3a;--text-secondary:#8c8c8c;--border:#e0dcd5;
+  --success:#7a9a7e;--danger:#c4816b;--warning:#c4816b;
+  --highlight:#eee9e1;--highlight-sentence:#f0ebe4;
+  --shadow:0 1px 3px rgba(0,0,0,.03);--shadow-lg:0 4px 12px rgba(0,0,0,.06);
+  --radius:8px;--radius-sm:6px;--radius-tag:4px;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
+body{font-family:"PingFang SC",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
 /* Sidebar */
 .sidebar{width:220px;background:var(--sidebar-bg);color:var(--sidebar-text);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
-.sidebar-brand{padding:20px;font-size:20px;font-weight:700;color:#FFF;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);letter-spacing:1px}
+.sidebar-brand{padding:20px;font-size:20px;font-weight:700;color:#f5f2ed;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);letter-spacing:1px}
 .sidebar-brand small{display:block;font-size:11px;font-weight:400;color:var(--sidebar-text);margin-top:4px;letter-spacing:0}
-.sidebar-section{padding:12px 16px 6px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#475569}
+.sidebar-section{padding:12px 16px 6px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#8a9ba3}
 .sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:all .2s;font-size:14px;border-left:3px solid transparent}
-.sidebar-item:hover{background:rgba(255,255,255,.05);color:#FFF}
-.sidebar-item.active{background:rgba(79,70,229,.3);color:#FFF;border-left-color:var(--primary-light)}
+.sidebar-item:hover{background:rgba(255,255,255,.06);color:#f5f2ed}
+.sidebar-item.active{background:rgba(176,152,120,.25);color:#f5f2ed;border-left-color:var(--accent)}
 .sidebar-item .icon{font-size:18px;width:24px;text-align:center}
-.lang-switch{display:flex;margin:8px 16px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid rgba(255,255,255,.15)}
+.lang-switch{display:flex;margin:8px 16px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid rgba(255,255,255,.12)}
 .lang-btn{flex:1;padding:8px;text-align:center;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s}
-.lang-btn.active{background:var(--primary);color:#FFF}
-.lang-btn:not(.active):hover{background:rgba(255,255,255,.05)}
+.lang-btn.active{background:var(--accent);color:#f5f2ed}
+.lang-btn:not(.active):hover{background:rgba(255,255,255,.06)}
 /* Main */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0}
@@ -49,68 +51,73 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica N
 .card-title{font-size:15px;font-weight:600}
 /* Buttons */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;color:var(--text)}
-.btn:hover{background:#F1F5F9}
-.btn-primary{background:var(--primary);color:#FFF;border-color:var(--primary)}
+.btn:hover{background:var(--highlight)}
+.btn-primary{background:var(--primary);color:#f5f2ed;border-color:var(--primary)}
 .btn-primary:hover{background:var(--primary-dark)}
-.btn-success{background:var(--success);color:#FFF;border-color:var(--success)}
-.btn-danger{background:var(--danger);color:#FFF;border-color:var(--danger)}
+.btn-accent{background:var(--accent);color:#f5f2ed;border-color:var(--accent)}
+.btn-accent:hover{background:#9e8768}
+.btn-success{background:var(--success);color:#f5f2ed;border-color:var(--success)}
+.btn-danger{background:var(--warn);color:#f5f2ed;border-color:var(--warn)}
 .btn-sm{padding:4px 10px;font-size:12px}
 .btn-icon{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-size:16px}
 .btn-group{display:flex;gap:6px;flex-wrap:wrap}
 /* Controls */
 .control-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .control-label{font-size:12px;color:var(--text-secondary);min-width:50px}
-.speed-slider{-webkit-appearance:none;width:120px;height:4px;border-radius:2px;background:#CBD5E1;outline:none}
-.speed-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer}
-.speed-val{font-size:12px;font-weight:600;color:var(--primary);min-width:32px}
+.speed-slider{-webkit-appearance:none;width:120px;height:4px;border-radius:2px;background:var(--border);outline:none}
+.speed-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer}
+.speed-val{font-size:12px;font-weight:600;color:var(--accent);min-width:32px}
 select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;background:var(--card);cursor:pointer}
+/* Search bar (unified for all modules) */
+.search-bar{display:flex;gap:8px;margin-bottom:16px}
+.search-input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:var(--card);color:var(--text);outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text-secondary)}
 /* Material list */
 .material-list{display:flex;flex-direction:column;gap:8px}
 .material-card{padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:space-between}
-.material-card:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
-.material-card.active{border-color:var(--primary);background:var(--highlight-sentence);box-shadow:0 0 0 2px rgba(79,70,229,.15)}
+.material-card:hover{border-color:var(--accent-light);background:var(--highlight)}
+.material-card.active{border-color:var(--accent);background:var(--highlight-sentence);box-shadow:0 0 0 2px rgba(176,152,120,.12)}
 .material-card .mc-title{font-size:14px;font-weight:600}
 .material-card .mc-meta{font-size:12px;color:var(--text-secondary);margin-top:3px}
-.theme-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
-.theme-badge.daily{background:#DBEAFE;color:#1D4ED8}
-.theme-badge.business{background:#FEF3C7;color:#92400E}
-.theme-badge.culture{background:#D1FAE5;color:#065F46}
-.theme-badge.exam{background:#FCE7F3;color:#9D174D}
+.theme-badge{display:inline-block;padding:2px 8px;border-radius:var(--radius-tag);font-size:11px;font-weight:500}
+.theme-badge.daily{background:#e8e4dd;color:#5b6e7a}
+.theme-badge.business{background:#eee9e1;color:#8c7a5e}
+.theme-badge.culture{background:#e4e8e4;color:#5e7a62}
+.theme-badge.exam{background:#ece4e0;color:#9a6b5e}
 /* Bilingual text */
 .bilingual-block{margin:8px 0;padding:10px 14px;border-radius:var(--radius-sm);line-height:1.8;transition:background .2s}
-.bilingual-block:hover{background:#F8FAFC}
-.bilingual-block.highlight{background:var(--highlight-sentence);border-left:3px solid var(--primary)}
-.bilingual-block.playing{background:#EEF2FF;border-left:3px solid var(--primary)}
+.bilingual-block:hover{background:var(--highlight)}
+.bilingual-block.highlight{background:var(--highlight-sentence);border-left:3px solid var(--accent)}
+.bilingual-block.playing{background:#f0ebe4;border-left:3px solid var(--accent)}
 .sentence-orig{font-size:16px;font-weight:500;cursor:pointer}
 .sentence-orig .word{cursor:pointer;border-radius:3px;padding:0 1px;transition:background .15s}
 .sentence-orig .word:hover{background:var(--highlight)}
-.sentence-orig .word.looked-up{background:#DBEAFE;border-bottom:2px solid var(--primary)}
+.sentence-orig .word.looked-up{background:#e4e8e4;border-bottom:2px solid var(--success)}
 .sentence-trans{font-size:14px;color:var(--text-secondary);margin-top:2px}
-.sentence-idx{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:#F1F5F9;font-size:11px;color:var(--text-secondary);margin-right:8px;flex-shrink:0}
+.sentence-idx{display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;background:var(--highlight);font-size:11px;color:var(--text-secondary);margin-right:8px;flex-shrink:0}
+/* Archive checkbox on sentences */
+.archive-check{display:inline-flex;align-items:center;gap:4px;margin-left:8px;cursor:pointer;font-size:12px;color:var(--text-secondary);transition:color .15s}
+.archive-check:hover{color:var(--accent)}
+.archive-check.checked{color:var(--success)}
 /* Dictionary popup */
 .dict-popup{position:fixed;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:16px;min-width:240px;max-width:320px;z-index:1000;display:none}
 .dict-popup.show{display:block}
 .dict-word{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:4px}
 .dict-phonetic{font-size:13px;color:var(--text-secondary);margin-bottom:8px}
 .dict-meaning{font-size:14px;line-height:1.6}
-.dict-meaning .pos{color:var(--primary);font-weight:600;margin-right:6px}
+.dict-meaning .pos{color:var(--accent);font-weight:600;margin-right:6px}
 .dict-close{position:absolute;top:8px;right:10px;cursor:pointer;font-size:18px;color:var(--text-secondary)}
-/* Writing */
-.writing-area{width:100%;min-height:180px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:15px;line-height:1.8;resize:vertical;font-family:inherit;outline:none;transition:border-color .2s}
-.writing-area:focus{border-color:var(--primary)}
-.writing-prompt{padding:14px;background:#F8FAFC;border-radius:var(--radius-sm);margin-bottom:12px;border-left:3px solid var(--primary)}
-.writing-prompt .wp-title{font-weight:600;margin-bottom:6px}
-.writing-prompt .wp-hint{font-size:13px;color:var(--text-secondary);line-height:1.6}
-.writing-stats{display:flex;gap:16px;font-size:12px;color:var(--text-secondary);margin-top:8px}
+/* Grammar area */
 /* Quiz */
 .quiz-input{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:15px;outline:none;transition:border-color .2s}
 .quiz-input:focus{border-color:var(--primary)}
-.quiz-input.correct{border-color:var(--success);background:#ECFDF5}
-.quiz-input.wrong{border-color:var(--danger);background:#FEF2F2}
+.quiz-input.correct{border-color:var(--success);background:#edf3ee}
+.quiz-input.wrong{border-color:var(--warn);background:#f5eae6}
 .quiz-feedback{margin-top:8px;padding:10px;border-radius:var(--radius-sm);font-size:14px;display:none}
 .quiz-feedback.show{display:block}
-.quiz-feedback.correct{background:#ECFDF5;color:#065F46}
-.quiz-feedback.wrong{background:#FEF2F2;color:#991B1B}
+.quiz-feedback.correct{background:#edf3ee;color:#4a6b4e}
+.quiz-feedback.wrong{background:#f5eae6;color:#8a4a3a}
 /* Import */
 .import-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:30px;text-align:center;cursor:pointer;transition:all .2s;color:var(--text-secondary)}
 .import-zone:hover{border-color:var(--primary);color:var(--primary)}
@@ -125,13 +132,13 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 /* Responsive */
 @media(max-width:768px){
-  .sidebar{width:60px}.sidebar-brand small,.sidebar-item span,.sidebar-section{display:none}.sidebar-brand{font-size:14px;padding:14px 4px}.sidebar-item{padding:12px;justify-content:center;border-left:none;border-right:3px solid transparent}.sidebar-item.active{border-left:none;border-right-color:var(--primary-light)}.lang-switch{flex-direction:column;margin:4px 8px}.grid-2{grid-template-columns:1fr}
+  .sidebar{width:60px}.sidebar-brand small,.sidebar-item span,.sidebar-section{display:none}.sidebar-brand{font-size:14px;padding:14px 4px}.sidebar-item{padding:12px;justify-content:center;border-left:none;border-right:3px solid transparent}.sidebar-item.active{border-left:none;border-right-color:var(--accent)}.lang-switch{flex-direction:column;margin:4px 8px}.grid-2{grid-template-columns:1fr}
 }
 /* Scrollbar */
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:#94A3B8}
+::-webkit-scrollbar-thumb{background:#c5c0b8;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#a8a298}
 /* Animation */
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .fade-in{animation:fadeIn .3s ease}
@@ -141,15 +148,15 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 /* Word bank */
 .word-bank{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.word-chip{padding:4px 10px;background:#F1F5F9;border-radius:14px;font-size:12px;cursor:pointer;transition:all .15s;border:1px solid transparent}
-.word-chip:hover{background:var(--highlight-sentence);border-color:var(--primary-light)}
+.word-chip{padding:4px 10px;background:var(--highlight);border-radius:14px;font-size:12px;cursor:pointer;transition:all .15s;border:1px solid transparent}
+.word-chip:hover{background:var(--highlight-sentence);border-color:var(--accent-light)}
 .empty-state{text-align:center;padding:40px;color:var(--text-secondary)}
 .empty-state .es-icon{font-size:48px;margin-bottom:12px}
 .empty-state .es-text{font-size:15px}
 /* Progress & Dashboard */
-.progress-bar-bg{height:8px;background:#E2E8F0;border-radius:4px;overflow:hidden}
+.progress-bar-bg{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
 .progress-bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
-.stat-card{text-align:center;padding:16px;background:#F8FAFC;border-radius:var(--radius-sm)}
+.stat-card{text-align:center;padding:16px;background:var(--highlight);border-radius:var(--radius-sm)}
 .stat-card .stat-num{font-size:28px;font-weight:700;color:var(--primary)}
 .stat-card .stat-label{font-size:12px;color:var(--text-secondary);margin-top:4px}
 .level-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:14px;font-size:13px;font-weight:600}
@@ -159,10 +166,10 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 .recommend-card:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
 .recommend-card .rc-title{font-size:14px;font-weight:600}
 .recommend-card .rc-reason{font-size:12px;color:var(--primary);margin-top:3px}
-.duo-sync-box{background:linear-gradient(135deg,#58CC02 0%,#45A825 100%);border-radius:var(--radius);padding:16px;color:#FFF;margin-bottom:16px}
+.duo-sync-box{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);border-radius:var(--radius);padding:16px;color:#f5f2ed;margin-bottom:16px}
 .duo-sync-box .dsb-title{font-weight:700;font-size:15px;margin-bottom:8px}
 .duo-sync-box .dsb-row{display:flex;justify-content:space-between;font-size:13px;opacity:.9;margin-top:4px}
-.target-box{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);border-radius:var(--radius);padding:16px;color:#FFF;margin-bottom:16px}
+.target-box{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);border-radius:var(--radius);padding:16px;color:#f5f2ed;margin-bottom:16px}
 .target-box .tb-title{font-weight:700;font-size:15px;margin-bottom:4px}
 .target-box .tb-sub{font-size:13px;opacity:.85}
 .activity-day{margin-bottom:16px}
@@ -185,11 +192,11 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 .grammar-card:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
 .grammar-card .gc-title{font-weight:600;font-size:14px;color:var(--primary);margin-bottom:4px}
 .grammar-card .gc-preview{font-size:13px;color:var(--text-secondary)}
-.grammar-detail{padding:16px;background:#F8FAFC;border-radius:var(--radius-sm);margin-bottom:12px;border-left:3px solid var(--primary);animation:fadeIn .2s}
+.grammar-detail{padding:16px;background:var(--highlight);border-radius:var(--radius-sm);margin-bottom:12px;border-left:3px solid var(--accent);animation:fadeIn .2s}
 .grammar-detail .gd-title{font-size:16px;font-weight:700;color:var(--primary);margin-bottom:8px}
 .grammar-detail .gd-content{font-size:14px;line-height:1.8;white-space:pre-line}
-.grammar-detail .gd-example{margin-top:8px;padding:8px 12px;background:#FFF;border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--border)}
-.dict-result{padding:16px;background:#F8FAFC;border-radius:var(--radius-sm);margin-bottom:12px}
+.grammar-detail .gd-example{margin-top:8px;padding:8px 12px;background:var(--card);border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--border)}
+.dict-result{padding:16px;background:var(--highlight);border-radius:var(--radius-sm);margin-bottom:12px}
 .dict-result .dr-word{font-size:22px;font-weight:700;color:var(--primary)}
 .dict-result .dr-phonetic{font-size:13px;color:var(--text-secondary);margin:4px 0 8px}
 .dict-result .dr-meaning{font-size:14px;line-height:1.8}
@@ -205,25 +212,25 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 .note-item .ni-detail{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.6}
 .note-item .ni-meta{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:11px;color:var(--text-secondary)}
 /* Spot quiz */
-.spot-card{padding:20px;text-align:center;background:linear-gradient(135deg,#EEF2FF,#F8FAFC);border-radius:var(--radius);margin-bottom:16px}
+.spot-card{padding:20px;text-align:center;background:linear-gradient(135deg,var(--highlight),var(--card));border-radius:var(--radius);margin-bottom:16px}
 .spot-question{font-size:18px;font-weight:700;color:var(--text);margin:16px 0}
 .spot-answer{font-size:15px;color:var(--success);margin-top:12px;animation:fadeIn .3s}
 .spot-options{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}
-.spot-opt{padding:10px 20px;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:14px;transition:all .15s;background:#FFF}
-.spot-opt:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
-.spot-opt.correct{border-color:var(--success);background:#ECFDF5;color:var(--success)}
-.spot-opt.wrong{border-color:var(--danger);background:#FEF2F2;color:var(--danger)}
+.spot-opt{padding:10px 20px;border:2px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:14px;transition:all .15s;background:var(--card)}
+.spot-opt:hover{border-color:var(--accent-light);background:var(--highlight-sentence)}
+.spot-opt.correct{border-color:var(--success);background:#edf3ee;color:var(--success)}
+.spot-opt.wrong{border-color:var(--warn);background:#f5eae6;color:var(--warn)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 /* Photo Upload */
-.upload-panel{background:#F8FAFC;border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;animation:fadeIn .3s}
-.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:#FFF}
+.upload-panel{background:var(--highlight);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;animation:fadeIn .3s}
+.upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:32px;text-align:center;cursor:pointer;transition:all .2s;background:var(--card)}
 .upload-zone:hover,.upload-zone.dragover{border-color:var(--primary);background:var(--highlight-sentence)}
 .upload-zone .uz-icon{font-size:36px;margin-bottom:8px}
 .upload-zone .uz-text{font-size:14px;color:var(--text-secondary)}
 .upload-zone .uz-hint{font-size:12px;color:var(--text-secondary);margin-top:4px;opacity:.7}
 .upload-preview{position:relative;display:inline-block;max-width:100%;margin:12px 0}
 .upload-preview img{max-width:100%;max-height:300px;border-radius:var(--radius-sm);border:1px solid var(--border)}
-.upload-preview .up-remove{position:absolute;top:-8px;right:-8px;width:24px;height:24px;background:var(--danger);color:#FFF;border:none;border-radius:50%;cursor:pointer;font-size:14px;line-height:24px;text-align:center}
+.upload-preview .up-remove{position:absolute;top:-8px;right:-8px;width:24px;height:24px;background:var(--danger);color:#f5f2ed;border:none;border-radius:50%;cursor:pointer;font-size:14px;line-height:24px;text-align:center}
 .ocr-progress{margin:12px 0}
 .ocr-progress .op-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
 .ocr-progress .op-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--primary-light));border-radius:4px;transition:width .3s}
@@ -232,7 +239,7 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 .ocr-result textarea{width:100%;min-height:120px;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-size:14px;line-height:1.8;resize:vertical;font-family:inherit}
 .ocr-result textarea:focus{outline:none;border-color:var(--primary)}
 .ocr-items{margin-top:12px;max-height:360px;overflow-y:auto}
-.ocr-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;background:#FFF;transition:all .15s}
+.ocr-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;background:var(--card);transition:all .15s}
 .ocr-item:hover{border-color:var(--primary-light)}
 .ocr-item.selected{border-color:var(--primary);background:var(--highlight-sentence)}
 .ocr-item input[type=checkbox]{margin-top:3px;accent-color:var(--primary)}
@@ -243,6 +250,113 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 .source-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
 .source-tab:hover{color:var(--text)}
 .batch-actions{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+/* Right-side AI Query Panel - always visible */
+.query-panel{
+  width:380px;max-width:380px;min-width:380px;
+  background:var(--card);border-left:1px solid var(--border);
+  box-shadow:-2px 0 12px rgba(0,0,0,.04);
+  display:flex;flex-direction:column;height:100vh;flex-shrink:0;
+  overflow:hidden;
+}
+.qp-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#f5f2ed;
+  flex-shrink:0;
+}
+.qp-header .qp-title{font-size:15px;font-weight:600}
+.qp-header .qp-close{
+  width:28px;height:28px;border:none;background:rgba(255,255,255,.2);
+  color:#f5f2ed;border-radius:50%;cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+.qp-header .qp-close:hover{background:rgba(255,255,255,.3)}
+.qp-body{flex:1;overflow-y:auto;padding:16px}
+.qp-input-wrap{display:flex;gap:8px;margin-bottom:12px}
+.qp-input-wrap input{
+  flex:1;padding:10px 14px;border:1px solid var(--border);
+  border-radius:var(--radius-sm);font-size:14px;outline:none;
+}
+.qp-input-wrap input:focus{border-color:var(--primary)}
+.qp-input-wrap button{
+  padding:10px 16px;background:var(--primary);color:#f5f2ed;
+  border:none;border-radius:var(--radius-sm);cursor:pointer;
+  font-size:14px;white-space:nowrap;
+}
+.qp-input-wrap button:hover{background:var(--primary-dark)}
+.qp-results{font-size:14px;line-height:1.8}
+.qp-results .qr-section{margin-bottom:16px}
+.qp-results .qr-label{font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.qp-results .qr-card{
+  padding:12px;background:var(--highlight);border:1px solid var(--border);
+  border-radius:var(--radius-sm);margin-bottom:8px;
+}
+.qp-results .qr-word{font-size:16px;font-weight:700;color:var(--primary)}
+.qp-results .qr-phonetic{font-size:13px;color:var(--text-secondary);margin-left:8px}
+.qp-results .qr-meaning{margin-top:6px;font-size:14px}
+.qp-results .qr-example{font-size:13px;color:var(--text-secondary);margin-top:4px;font-style:italic}
+.qp-results .qr-grammar-title{font-weight:600;color:var(--warning);margin-bottom:4px}
+.qp-results .qr-grammar-desc{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.qp-results .qr-add-btn{
+  margin-top:8px;padding:6px 14px;background:var(--success);color:#f5f2ed;
+  border:none;border-radius:12px;font-size:12px;cursor:pointer;
+}
+.qp-results .qr-add-btn:hover{opacity:.85}
+.qp-empty{text-align:center;padding:40px 20px;color:var(--text-secondary)}
+.qp-empty .qe-icon{font-size:36px;margin-bottom:8px}
+.qp-empty .qe-text{font-size:13px}
+.ext-dict-link:hover{background:var(--highlight) !important;border-color:var(--accent-light) !important}
+/* Quick query tooltip for text selection */
+.quick-query-tip{
+  position:absolute;background:var(--primary);color:#f5f2ed;
+  padding:6px 14px;border-radius:16px;font-size:12px;
+  cursor:pointer;z-index:300;box-shadow:var(--shadow-lg);
+  white-space:nowrap;display:none;
+}
+.quick-query-tip:hover{background:var(--primary-dark)}
+/* Topbar query toggle button - hidden on desktop (panel always visible) */
+.query-toggle-btn{
+  display:none;
+  padding:6px 14px;background:transparent;border:1px solid var(--border);
+  border-radius:16px;font-size:13px;cursor:pointer;color:var(--text-secondary);
+  transition:all .15s;white-space:nowrap;
+}
+.query-toggle-btn:hover,.query-toggle-btn.active{
+  background:var(--primary);color:#f5f2ed;border-color:var(--primary);
+}
+/* Daily Update Module */
+.daily-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.daily-date{font-size:13px;color:var(--text-secondary);font-weight:500}
+.daily-section{margin-bottom:20px}
+.daily-section-title{font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.daily-article{border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;transition:all .15s}
+.daily-article:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
+.daily-article-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.daily-article-meta{font-size:12px;color:var(--text-secondary);margin-bottom:6px}
+.daily-article-summary{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.daily-vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.daily-vocab-card{border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;transition:all .15s;cursor:pointer}
+.daily-vocab-card:hover{border-color:var(--primary);background:var(--highlight-sentence)}
+.daily-vocab-word{font-size:16px;font-weight:700;color:var(--primary);margin-bottom:4px}
+.daily-vocab-meaning{font-size:13px;color:var(--text-secondary)}
+.daily-vocab-example{font-size:12px;color:var(--text-secondary);font-style:italic;margin-top:4px}
+.daily-question{border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px}
+.daily-question-text{font-size:14px;font-weight:600;margin-bottom:10px}
+.daily-option{display:block;padding:8px 12px;margin:4px 0;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-size:13px;transition:all .15s}
+.daily-option:hover{border-color:var(--primary-light);background:var(--highlight-sentence)}
+.daily-option.correct{border-color:var(--success);background:#edf3ee;color:#4a6b4e}
+.daily-option.wrong{border-color:var(--warn);background:#f5eae6;color:#8a4a3a}
+.daily-loading{text-align:center;padding:40px;color:var(--text-secondary)}
+.daily-loading .spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.daily-error{text-align:center;padding:30px;color:var(--text-secondary)}
+.daily-error .retry-btn{margin-top:12px}
+.daily-tab-bar{display:flex;gap:8px;margin-bottom:16px}
+.daily-tab{padding:6px 16px;border-radius:20px;border:1px solid var(--border);cursor:pointer;font-size:13px;font-weight:500;transition:all .15s}
+.daily-tab.active{background:var(--primary);color:#f5f2ed;border-color:var(--primary)}
+.daily-tab:not(.active):hover{background:var(--highlight)}
+.daily-bridge-btn{font-size:11px;padding:3px 8px;border-radius:10px;border:1px solid var(--primary-light);color:var(--primary);cursor:pointer;background:transparent;margin-left:8px}
+.daily-bridge-btn:hover{background:var(--primary);color:#f5f2ed}
 /* ============================================================
    MOBILE RESPONSIVE
    ============================================================ */
@@ -304,6 +418,10 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
   /* Progress cards */
   .stat-card{padding:12px}
   .stat-card .sc-val{font-size:22px}
+  /* Query panel mobile */
+  .query-panel{position:fixed;top:0;right:0;bottom:0;width:100vw;max-width:100vw;min-width:0;z-index:200;transform:translateX(100%);transition:transform .25s ease}
+  .query-panel.open{transform:translateX(0)}
+  .query-toggle-btn{display:inline-flex;font-size:12px;padding:5px 10px}
 }
 /* iPhone X+ safe area */
 @supports(padding:max(0px)){
@@ -314,13 +432,29 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 /* PWA install prompt */
 .pwa-install{
   position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
-  background:var(--primary);color:#FFF;padding:12px 24px;border-radius:24px;
+  background:var(--primary);color:#f5f2ed;padding:12px 24px;border-radius:24px;
   font-size:14px;cursor:pointer;z-index:9999;box-shadow:var(--shadow-lg);
   animation:fadeIn .3s;white-space:nowrap;
 }
 .pwa-install:hover{background:var(--primary-dark)}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script>
+// Load Tesseract.js on demand (avoid blocking page load if CDN is unreachable)
+let _tesseractLoaded = false;
+let _tesseractLoading = false;
+function loadTesseract(){
+  if(_tesseractLoaded) return Promise.resolve(window.Tesseract);
+  if(_tesseractLoading) return new Promise(r => { const iv = setInterval(() => { if(_tesseractLoaded){clearInterval(iv);r(window.Tesseract)} }, 200); });
+  _tesseractLoading = true;
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+    s.onload = () => { _tesseractLoaded = true; resolve(window.Tesseract); };
+    s.onerror = () => { _tesseractLoading = false; reject(new Error('Tesseract.js load failed')); };
+    document.head.appendChild(s);
+  });
+}
+</script>
 </head>
 <body>
 
@@ -341,8 +475,11 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
   <div class="sidebar-item" data-module="reading" onclick="switchModule('reading')">
     <span class="icon">📖</span><span>阅读查词</span>
   </div>
-  <div class="sidebar-item" data-module="writing" onclick="switchModule('writing')">
-    <span class="icon">✍️</span><span>写作练习</span>
+  <div class="sidebar-item" data-module="grammar" onclick="switchModule('grammar')">
+    <span class="icon">📐</span><span>语法学习</span>
+  </div>
+  <div class="sidebar-item" data-module="daily" onclick="switchModule('daily')">
+    <span class="icon">📰</span><span>每日更新</span>
   </div>
   <div class="sidebar-section">进度</div>
   <div class="sidebar-item" data-module="progress" onclick="switchModule('progress')">
@@ -352,9 +489,6 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
     <span class="icon">📅</span><span>学习记录</span>
   </div>
   <div class="sidebar-section">工具</div>
-  <div class="sidebar-item" data-module="query" onclick="switchModule('query')">
-    <span class="icon">🔍</span><span>AI 查询</span>
-  </div>
   <div class="sidebar-item" data-module="notes" onclick="switchModule('notes')">
     <span class="icon">📒</span><span>学习笔记</span>
   </div>
@@ -366,11 +500,35 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
   </div>
 </div>
 
+<!-- Right-side AI Query Panel -->
+<div class="query-panel" id="queryPanel">
+  <div class="qp-header">
+    <div class="qp-title">🔍 AI 智能查询</div>
+    <button class="qp-close" onclick="toggleQueryPanel()">✕</button>
+  </div>
+  <div class="qp-body">
+    <div class="qp-input-wrap">
+      <input type="text" id="qpInput" placeholder="输入单词、短语或句子…" onkeydown="if(event.key==='Enter')doQuickQuery()">
+      <button onclick="doQuickQuery()">查询</button>
+    </div>
+    <div class="qp-results" id="qpResults">
+      <div class="qp-empty">
+        <div class="qe-icon">🔍</div>
+        <div class="qe-text">输入内容或选中页面上的文字<br>点击弹出的"查询"按钮即可查询</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick query tooltip for text selection -->
+<div class="quick-query-tip" id="quickQueryTip" onclick="querySelectedText()">🔍 查询</div>
+
 <!-- Main -->
 <div class="main">
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle">🎧 听力训练</div>
     <div class="topbar-right">
+      <button class="query-toggle-btn" id="queryToggleBtn" onclick="toggleQueryPanel()">🔍 AI 查询</button>
       <div class="control-row" style="margin:0">
         <span class="control-label">语音</span>
         <select class="ctrl-select" id="voiceSelect" onchange="onVoiceChange()"></select>
@@ -1048,7 +1206,7 @@ function speakSentenceBySentence(sentences, containerId, startIdx=0){
   updatePlayBtn();
 }
 function stopSpeaking(){
-  synth.cancel();
+  try { if(synth) synth.cancel(); } catch(e){}
   stopAudio();
   state.isPlaying = false;
   state.currentSentenceIdx = -1;
@@ -1092,7 +1250,8 @@ function showDictPopup(word, meaning, x, y){
   const popup = document.getElementById('dictPopup');
   document.getElementById('dictWord').textContent = word;
   document.getElementById('dictPhonetic').textContent = '';
-  document.getElementById('dictMeaning').innerHTML = `<span class="pos">${state.lang==='en'?'英':'德'}</span> ${meaning}`;
+  document.getElementById('dictMeaning').innerHTML = `<span class="pos">${state.lang==='en'?'英':'德'}</span> ${meaning}
+    <div style="margin-top:8px"><button class="btn btn-sm btn-accent" onclick="addToNote('word','${word.replace(/'/g,"\\'")}','${meaning.replace(/'/g,"\\'")}');event.stopPropagation()">📌 归档</button></div>`;
   popup.style.left = Math.min(x, window.innerWidth - 280) + 'px';
   popup.style.top = Math.min(y + 10, window.innerHeight - 120) + 'px';
   popup.classList.add('show');
@@ -1139,33 +1298,89 @@ function findMaterial(id){
 // ============================================================
 function renderListening(){
   const area = document.getElementById('contentArea');
+  const mats = getMaterialsForLang(state.lang);
+  const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   if(!state.currentMaterial){
-    area.innerHTML = `<div class="grid-2 fade-in">
-      <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
-      <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('listen-list','selectForListening')}</div></div>
+    let matCards = mats.map(m => {
+      const active = state.currentMaterial && state.currentMaterial.id === m.id ? ' active' : '';
+      return `<div class="material-card${active}" onclick="selectForListening('${m.id}')">
+        <div><div class="mc-title">${m.title}</div>
+        <div class="mc-meta"><span class="theme-badge ${m.theme}">${themes[m.theme]||m.theme}</span> · ${m.difficulty} · ${m.sentences.length}句</div></div>
+        <span style="color:var(--text-secondary)">→</span></div>`;
+    }).join('');
+    area.innerHTML = `<div class="fade-in">
+      <div class="search-bar"><input type="text" class="search-input" id="listenSearch" placeholder="搜索素材：输入主题、关键词..." oninput="filterListenMats()"></div>
+      <div class="card"><div class="card-header"><div class="card-title">选择素材</div><span style="font-size:12px;color:var(--text-secondary)">${mats.length}个素材</span></div>
+      <div id="listenMatList" style="max-height:65vh;overflow-y:auto"><div class="material-list">${matCards}</div></div></div>
       <div class="card"><div class="empty-state"><div class="es-icon">🎧</div><div class="es-text">选择一个素材开始听力训练</div></div></div>
     </div>`;
     return;
   }
   const m = state.currentMaterial;
-  let sentencesHtml = m.sentences.map((s,i)=>`
-    <div class="bilingual-block" id="lb-${i}">
-      <div class="sentence-orig" onclick="playSingle(${i})"><span class="sentence-idx">${i+1}</span>${s.orig}</div>
-      <div class="sentence-trans">${s.trans}</div>
-    </div>`).join('');
-  area.innerHTML = `<div class="grid-2 fade-in">
-    <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
-    <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('listen-list','selectForListening')}</div></div>
+  let sentencesHtml = m.sentences.map((s,i)=>{
+    const wordsHtml = s.orig.split(/(\s+)/).map(w=>{
+      const clean = w.replace(/[^a-zA-ZäöüÄÖÜßéèêñ'.-]/g,'');
+      if(!clean || /^\s+$/.test(w)) return w;
+      return `<span class="word" onclick="clickWordForQuery(event,'${clean.replace(/'/g,"\\'")}')">${w}</span>`;
+    }).join('');
+    return `<div class="bilingual-block" id="lb-${i}">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span class="sentence-idx">${i+1}</span>
+        <div style="flex:1">
+          <div class="sentence-orig" onclick="playSingle(${i})">${wordsHtml}</div>
+          <div class="sentence-trans">${s.trans}</div>
+        </div>
+        <button class="btn btn-sm" onclick="playSingle(${i})" title="播放本句">🔊</button>
+        <label class="archive-check" title="归档到笔记"><input type="checkbox" onchange="archiveSentence('phrase',${i},'listen')"><span>📌</span></label>
+      </div>
+    </div>`;
+  }).join('');
+  area.innerHTML = `<div class="fade-in">
+    <div class="search-bar"><input type="text" class="search-input" id="listenSearch" placeholder="搜索素材..." oninput="filterListenMats()"></div>
+    <div id="listenMatList" style="max-height:120px;overflow-y:auto;margin-bottom:12px"></div>
     <div class="card">
       <div class="card-header">
         <div class="card-title">${m.title}</div>
         <div class="btn-group">
           <button class="btn btn-primary play-toggle" onclick="togglePlayAll()">▶ 播放</button>
           <button class="btn" onclick="stopSpeaking()">⏹ 停止</button>
+          <button class="btn btn-accent" onclick="archiveAllSentences('phrase','listen')">📌 全部归档</button>
         </div>
       </div>
       <div id="listenContent" style="max-height:55vh;overflow-y:auto">${sentencesHtml}</div>
     </div></div>`;
+  filterListenMats();
+}
+function filterListenMats(){
+  const q = (document.getElementById('listenSearch')?.value || '').toLowerCase();
+  const list = document.getElementById('listenMatList');
+  if(!list) return;
+  const mats = getMaterialsForLang(state.lang);
+  const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
+  const filtered = mats.filter(m => !q || m.title.toLowerCase().includes(q) || m.theme.includes(q) || m.sentences.some(s => s.orig.toLowerCase().includes(q) || s.trans.includes(q)));
+  let html = '<div class="material-list">';
+  filtered.forEach(m => {
+    const active = state.currentMaterial && state.currentMaterial.id === m.id ? ' active' : '';
+    html += `<div class="material-card${active}" onclick="selectForListening('${m.id}')">
+      <div><div class="mc-title">${m.title}</div>
+      <div class="mc-meta"><span class="theme-badge ${m.theme}">${themes[m.theme]||m.theme}</span> · ${m.difficulty} · ${m.sentences.length}句</div></div>
+      <span style="color:var(--text-secondary)">→</span></div>`;
+  });
+  html += '</div>';
+  if(!filtered.length) html = '<div class="empty-state" style="padding:20px"><div class="es-text">未找到匹配素材</div></div>';
+  list.innerHTML = html;
+}
+function archiveSentence(category, sentIdx, module){
+  if(!state.currentMaterial) return;
+  const s = state.currentMaterial.sentences[sentIdx];
+  if(!s) return;
+  addToNote(category, s.orig, s.trans);
+}
+function archiveAllSentences(category, module){
+  if(!state.currentMaterial) return;
+  state.currentMaterial.sentences.forEach((s,i) => {
+    addToNote(category, s.orig, s.trans);
+  });
 }
 function selectForListening(id){
   stopSpeaking();
@@ -1191,10 +1406,19 @@ function playSingle(idx){
 // ============================================================
 function renderSpeaking(){
   const area = document.getElementById('contentArea');
+  const mats = getMaterialsForLang(state.lang);
+  const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   if(!state.currentMaterial){
-    area.innerHTML = `<div class="grid-2 fade-in">
-      <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
-      <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('speak-list','selectForSpeaking')}</div></div>
+    let matCards = mats.map(m => {
+      return `<div class="material-card" onclick="selectForSpeaking('${m.id}')">
+        <div><div class="mc-title">${m.title}</div>
+        <div class="mc-meta"><span class="theme-badge ${m.theme}">${themes[m.theme]||m.theme}</span> · ${m.difficulty} · ${m.sentences.length}句</div></div>
+        <span style="color:var(--text-secondary)">→</span></div>`;
+    }).join('');
+    area.innerHTML = `<div class="fade-in">
+      <div class="search-bar"><input type="text" class="search-input" id="speakSearch" placeholder="搜索素材：输入主题、关键词..." oninput="filterSpeakMats()"></div>
+      <div class="card"><div class="card-header"><div class="card-title">选择素材</div><span style="font-size:12px;color:var(--text-secondary)">${mats.length}个素材</span></div>
+      <div id="speakMatList" style="max-height:65vh;overflow-y:auto"><div class="material-list">${matCards}</div></div></div>
       <div class="card"><div class="empty-state"><div class="es-icon">🗣️</div><div class="es-text">选择一个素材开始跟读练习</div></div></div>
     </div>`;
     return;
@@ -1209,11 +1433,12 @@ function renderSpeaking(){
           <div class="sentence-trans">${s.trans}</div>
         </div>
         <button class="btn btn-sm" onclick="playSingleSpeak(${i})" title="播放本句">🔊</button>
+        <label class="archive-check" title="归档到笔记"><input type="checkbox" onchange="archiveSentence('phrase',${i},'speak')"><span>📌</span></label>
       </div>
     </div>`).join('');
-  area.innerHTML = `<div class="grid-2 fade-in">
-    <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
-    <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('speak-list','selectForSpeaking')}</div></div>
+  area.innerHTML = `<div class="fade-in">
+    <div class="search-bar"><input type="text" class="search-input" id="speakSearch" placeholder="搜索素材..." oninput="filterSpeakMats()"></div>
+    <div id="speakMatList" style="max-height:120px;overflow-y:auto;margin-bottom:12px"></div>
     <div class="card">
       <div class="card-header">
         <div class="card-title">${m.title} · 跟读</div>
@@ -1221,6 +1446,7 @@ function renderSpeaking(){
           <button class="btn btn-primary play-toggle" onclick="toggleSpeakAll()">▶ 播放</button>
           <button class="btn" onclick="repeatMode()">🔁 逐句循环</button>
           <button class="btn" onclick="stopSpeaking()">⏹ 停止</button>
+          <button class="btn btn-accent" onclick="archiveAllSentences('phrase','speak')">📌 全部归档</button>
         </div>
       </div>
       <div id="speakContent" style="max-height:50vh;overflow-y:auto">${sentencesHtml}</div>
@@ -1229,6 +1455,26 @@ function renderSpeaking(){
         <span id="recordStatus" style="font-size:13px;color:var(--text-secondary)">点击录音，跟读后回放对比</span>
       </div>
     </div></div>`;
+  filterSpeakMats();
+}
+function filterSpeakMats(){
+  const q = (document.getElementById('speakSearch')?.value || '').toLowerCase();
+  const list = document.getElementById('speakMatList');
+  if(!list) return;
+  const mats = getMaterialsForLang(state.lang);
+  const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
+  const filtered = mats.filter(m => !q || m.title.toLowerCase().includes(q) || m.theme.includes(q) || m.sentences.some(s => s.orig.toLowerCase().includes(q) || s.trans.includes(q)));
+  let html = '<div class="material-list">';
+  filtered.forEach(m => {
+    const active = state.currentMaterial && state.currentMaterial.id === m.id ? ' active' : '';
+    html += `<div class="material-card${active}" onclick="selectForSpeaking('${m.id}')">
+      <div><div class="mc-title">${m.title}</div>
+      <div class="mc-meta"><span class="theme-badge ${m.theme}">${themes[m.theme]||m.theme}</span> · ${m.difficulty} · ${m.sentences.length}句</div></div>
+      <span style="color:var(--text-secondary)">→</span></div>`;
+  });
+  html += '</div>';
+  if(!filtered.length) html = '<div class="empty-state" style="padding:20px"><div class="es-text">未找到匹配素材</div></div>';
+  list.innerHTML = html;
 }
 function selectForSpeaking(id){
   stopSpeaking();
@@ -1322,10 +1568,19 @@ function playRecord(){
 // ============================================================
 function renderReading(){
   const area = document.getElementById('contentArea');
+  const mats = getMaterialsForLang(state.lang);
+  const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   if(!state.currentMaterial){
-    area.innerHTML = `<div class="grid-2 fade-in">
-      <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
-      <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('read-list','selectForReading')}</div></div>
+    let matCards = mats.map(m => {
+      return `<div class="material-card" onclick="selectForReading('${m.id}')">
+        <div><div class="mc-title">${m.title}</div>
+        <div class="mc-meta"><span class="theme-badge ${m.theme}">${themes[m.theme]||m.theme}</span> · ${m.difficulty} · ${m.sentences.length}句</div></div>
+        <span style="color:var(--text-secondary)">→</span></div>`;
+    }).join('');
+    area.innerHTML = `<div class="fade-in">
+      <div class="search-bar"><input type="text" class="search-input" id="readSearch" placeholder="搜索素材：输入主题、关键词..." oninput="filterReadMats()"></div>
+      <div class="card"><div class="card-header"><div class="card-title">选择素材</div><span style="font-size:12px;color:var(--text-secondary)">${mats.length}个素材</span></div>
+      <div id="readMatList" style="max-height:65vh;overflow-y:auto"><div class="material-list">${matCards}</div></div></div>
       <div class="card"><div class="empty-state"><div class="es-icon">📖</div><div class="es-text">选择一个素材开始阅读，点击单词可查词典</div></div></div>
     </div>`;
     return;
@@ -1346,22 +1601,44 @@ function renderReading(){
           <div class="sentence-trans">${s.trans}</div>
         </div>
         <button class="btn btn-sm" onclick="playSingleRead(${i})" title="朗读本句">🔊</button>
+        <label class="archive-check" title="归档到笔记"><input type="checkbox" onchange="archiveSentence('phrase',${i},'read')"><span>📌</span></label>
       </div>
     </div>`;
   }).join('');
-  area.innerHTML = `<div class="grid-2 fade-in">
-    <div class="card"><div class="card-header"><div class="card-title">选择素材</div></div>
-    <div style="max-height:60vh;overflow-y:auto">${renderMaterialList('read-list','selectForReading')}</div></div>
+  area.innerHTML = `<div class="fade-in">
+    <div class="search-bar"><input type="text" class="search-input" id="readSearch" placeholder="搜索素材..." oninput="filterReadMats()"></div>
+    <div id="readMatList" style="max-height:120px;overflow-y:auto;margin-bottom:12px"></div>
     <div class="card">
       <div class="card-header">
         <div class="card-title">${m.title} · 阅读</div>
         <div class="btn-group">
           <button class="btn btn-primary" onclick="readAllAloud()">🔊 朗读全文</button>
           <button class="btn" onclick="stopSpeaking()">⏹ 停止</button>
+          <button class="btn btn-accent" onclick="archiveAllSentences('phrase','read')">📌 全部归档</button>
         </div>
       </div>
       <div id="readContent" style="max-height:55vh;overflow-y:auto">${sentencesHtml}</div>
     </div></div>`;
+  filterReadMats();
+}
+function filterReadMats(){
+  const q = (document.getElementById('readSearch')?.value || '').toLowerCase();
+  const list = document.getElementById('readMatList');
+  if(!list) return;
+  const mats = getMaterialsForLang(state.lang);
+  const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
+  const filtered = mats.filter(m => !q || m.title.toLowerCase().includes(q) || m.theme.includes(q) || m.sentences.some(s => s.orig.toLowerCase().includes(q) || s.trans.includes(q)));
+  let html = '<div class="material-list">';
+  filtered.forEach(m => {
+    const active = state.currentMaterial && state.currentMaterial.id === m.id ? ' active' : '';
+    html += `<div class="material-card${active}" onclick="selectForReading('${m.id}')">
+      <div><div class="mc-title">${m.title}</div>
+      <div class="mc-meta"><span class="theme-badge ${m.theme}">${themes[m.theme]||m.theme}</span> · ${m.difficulty} · ${m.sentences.length}句</div></div>
+      <span style="color:var(--text-secondary)">→</span></div>`;
+  });
+  html += '</div>';
+  if(!filtered.length) html = '<div class="empty-state" style="padding:20px"><div class="es-text">未找到匹配素材</div></div>';
+  list.innerHTML = html;
 }
 function selectForReading(id){
   stopSpeaking();
@@ -1395,97 +1672,300 @@ function readAllAloud(){
 }
 
 // ============================================================
-// MODULE: Writing
+// MODULE: Grammar (语法学习)
 // ============================================================
-function renderWriting(){
+let _grammarDetail = null; // currently selected grammar item id
+
+function renderGrammar(){
   const area = document.getElementById('contentArea');
-  const prompts = WRITING_PROMPTS[state.lang] || [];
-  let promptCards = prompts.map((p,i)=>`
-    <div class="material-card" onclick="selectWritingPrompt(${i})">
-      <div><div class="mc-title">${p.title}</div>
-      <div class="mc-meta">${p.hint.substring(0,50)}...</div></div>
-      <span style="color:var(--text-secondary)">→</span>
-    </div>`).join('');
-  area.innerHTML = `<div class="grid-2 fade-in">
-    <div class="card"><div class="card-header"><div class="card-title">写作主题</div></div>
-    <div class="material-list" style="max-height:60vh;overflow-y:auto">${promptCards}</div></div>
-    <div class="card" id="writingPanel">
-      <div class="empty-state"><div class="es-icon">✍️</div><div class="es-text">选择一个主题开始写作练习</div></div>
-    </div></div>`;
-}
-function selectWritingPrompt(idx){
-  const prompts = WRITING_PROMPTS[state.lang] || [];
-  const p = prompts[idx];
-  if(!p) return;
-  const wordBank = p.words.map(w=>`<span class="word-chip" onclick="insertWord('${w}')">${w}</span>`).join('');
-  document.getElementById('writingPanel').innerHTML = `
-    <div class="writing-prompt">
-      <div class="wp-title">${p.title}</div>
-      <div class="wp-hint">${p.hint}</div>
+  const items = GRAMMAR_REF;
+  if(!_grammarDetail){
+    let cards = items.map(g => {
+      return `<div class="grammar-card" onclick="_grammarDetail='${g.id}';renderGrammar()">
+        <div class="gc-title">${g.title}</div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${g.keywords.slice(0,5).join(' · ')}</div>
+      </div>`;
+    }).join('');
+    area.innerHTML = `<div class="fade-in">
+      <div class="search-bar"><input type="text" class="search-input" id="grammarSearch" placeholder="搜索语法：输入关键词（如 变位、介词、完成时...）" oninput="filterGrammar()"></div>
+      <div class="card"><div class="card-header"><div class="card-title">语法知识点</div><span style="font-size:12px;color:var(--text-secondary)">${items.length}个专题</span></div>
+      <div id="grammarList">${cards}</div></div>
+    </div>`;
+    return;
+  }
+  // Detail view
+  const g = items.find(x => x.id === _grammarDetail);
+  if(!g){ _grammarDetail = null; renderGrammar(); return; }
+  const contentHtml = g.content.split('\n').map(line => {
+    if(!line.trim()) return '<br>';
+    // Indented lines are examples/sub-items
+    if(line.startsWith('   ')) return `<div style="padding-left:16px;color:var(--text);font-size:14px;line-height:1.8">${escHtml(line.trim())}</div>`;
+    return `<div style="font-size:14px;line-height:1.8;margin-top:4px">${escHtml(line)}</div>`;
+  }).join('');
+  const examplesHtml = g.examples ? g.examples.split('|').map(ex => `<span style="display:inline-block;padding:4px 10px;margin:3px;background:var(--highlight);border-radius:var(--radius-tag);font-size:13px">${escHtml(ex.trim())}</span>`).join('') : '';
+  area.innerHTML = `<div class="fade-in">
+    <div style="margin-bottom:12px"><button class="btn" onclick="_grammarDetail=null;renderGrammar()">← 返回列表</button></div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">${g.title}</div>
+        <button class="btn btn-accent" onclick="addToNote('grammar','${g.title.replace(/'/g,"\\'")}',\`${g.content.replace(/`/g,'\\`').replace(/\\/g,'\\\\').substring(0,200)}...\`)">📌 归档到笔记</button>
+      </div>
+      <div style="margin-bottom:12px">${g.keywords.map(k => `<span style="display:inline-block;padding:2px 8px;margin:2px;background:var(--highlight);border-radius:var(--radius-tag);font-size:11px;color:var(--text-secondary)">${k}</span>`).join('')}</div>
+      <div style="line-height:1.8">${contentHtml}</div>
+      ${examplesHtml ? `<div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border)"><div style="font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:8px">例句 Examples</div><div>${examplesHtml}</div></div>` : ''}
     </div>
-    <div style="margin-bottom:8px;font-size:13px;color:var(--text-secondary)">参考词汇（点击插入）：</div>
-    <div class="word-bank">${wordBank}</div>
-    <textarea class="writing-area" id="writingText" placeholder="在这里开始写作..." oninput="updateWritingStats()"></textarea>
-    <div class="writing-stats" id="writingStats">
-      <span>字数：0</span><span>句子：0</span>
+  </div>`;
+}
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function filterGrammar(){
+  const q = (document.getElementById('grammarSearch')?.value || '').toLowerCase();
+  const list = document.getElementById('grammarList');
+  if(!list) return;
+  const items = GRAMMAR_REF;
+  const filtered = items.filter(g => !q || g.title.toLowerCase().includes(q) || g.keywords.some(k => k.toLowerCase().includes(q)) || g.content.toLowerCase().includes(q));
+  if(!filtered.length){ list.innerHTML = '<div class="empty-state" style="padding:20px"><div class="es-text">未找到匹配的语法知识点</div></div>'; return; }
+  list.innerHTML = filtered.map(g => {
+    return `<div class="grammar-card" onclick="_grammarDetail='${g.id}';renderGrammar()">
+      <div class="gc-title">${g.title}</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px">${g.keywords.slice(0,5).join(' · ')}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// MODULE: Daily Update (每日更新)
+// ============================================================
+let _dailyCache = {};
+let _dailyTab = 'articles'; // articles | vocab | sentences | quiz
+
+async function loadDailyContent(lang){
+  const now = new Date();
+  const cacheKey = `${lang}_${now.toDateString()}`;
+  if(_dailyCache[cacheKey]) return _dailyCache[cacheKey];
+  const bust = `?_=${now.getTime()}`;
+  const url = `daily_content_${lang}.json${bust}`;
+  try {
+    const resp = await fetch(url);
+    if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    _dailyCache[cacheKey] = data;
+    return data;
+  } catch(e){
+    console.warn('Failed to load daily content:', e);
+    return null;
+  }
+}
+
+function renderDaily(){
+  const area = document.getElementById('contentArea');
+  const lang = state.lang;
+  // Show loading
+  area.innerHTML = `<div class="daily-loading"><div class="spinner"></div><div style="margin-top:12px">加载每日内容...</div></div>`;
+  loadDailyContent(lang).then(data => {
+    if(!data){
+      area.innerHTML = `<div class="daily-error">
+        <div style="font-size:36px;margin-bottom:12px">📡</div>
+        <div>无法加载每日内容</div>
+        <div style="font-size:13px;margin-top:6px">请检查网络连接，或确认 JSON 文件已生成</div>
+        <button class="btn btn-primary retry-btn" onclick="renderDaily()">🔄 重试</button>
+      </div>`;
+      return;
+    }
+    renderDailyContent(data, lang);
+  });
+}
+
+function renderDailyContent(data, lang){
+  const area = document.getElementById('contentArea');
+  const dateStr = data.date || new Date().toISOString().slice(0,10);
+  const langLabel = lang === 'en' ? '英语' : '德语';
+
+  // Tab bar
+  const tabs = [
+    {key:'articles', icon:'📰', label:'文章'},
+    {key:'vocab', icon:'📚', label:'词汇'},
+    {key:'sentences', icon:'💬', label:'句子'},
+    {key:'quiz', icon:'🧠', label:'理解测试'}
+  ];
+  const tabBar = `<div class="daily-tab-bar">${tabs.map(t =>
+    `<div class="daily-tab${_dailyTab===t.key?' active':''}" onclick="_dailyTab='${t.key}';_renderDailyFromCache()">${t.icon} ${t.label}</div>`
+  ).join('')}</div>`;
+
+  let content = '';
+  if(_dailyTab === 'articles') content = renderDailyArticles(data, lang);
+  else if(_dailyTab === 'vocab') content = renderDailyVocab(data, lang);
+  else if(_dailyTab === 'sentences') content = renderDailySentences(data, lang);
+  else if(_dailyTab === 'quiz') content = renderDailyQuiz(data, lang);
+
+  area.innerHTML = `<div class="fade-in">
+    <div class="daily-header">
+      <div class="daily-date">📅 ${dateStr} · ${langLabel}每日内容</div>
+      <div style="font-size:12px;color:var(--text-secondary)">${data.theme || 'daily'}</div>
     </div>
-    <div style="margin-top:12px" class="btn-group">
-      <button class="btn btn-primary" onclick="checkWriting()">📝 检查</button>
-      <button class="btn" onclick="clearWriting()">🗑️ 清空</button>
-      <button class="btn" onclick="speakWriting()">🔊 朗读</button>
+    ${tabBar}
+    ${content}
+  </div>`;
+}
+
+function _renderDailyFromCache(){
+  const lang = state.lang;
+  const cacheKey = `${lang}_${new Date().toDateString()}`;
+  const data = _dailyCache[cacheKey];
+  if(data) renderDailyContent(data, lang);
+  else renderDaily();
+}
+
+function renderDailyArticles(data, lang){
+  const articles = data.articles || [];
+  if(!articles.length) return '<div class="daily-error">暂无文章</div>';
+  return `<div class="daily-section">
+    <div class="daily-section-title">📰 今日文章 (${articles.length}篇)</div>
+    ${articles.map((a, i) => {
+      const summary = a.summary || a.description || '';
+      const truncated = summary.length > 200 ? summary.slice(0, 200) + '...' : summary;
+      const bridgeBtns = lang === 'en' ? `
+        <button class="daily-bridge-btn" onclick="useDailyInListening(${i})" title="用于听力训练">🎧 听力</button>
+        <button class="daily-bridge-btn" onclick="useDailyInReading(${i})" title="用于阅读查词">📖 阅读</button>
+      ` : `
+        <button class="daily-bridge-btn" onclick="useDailyInListening(${i})" title="用于听力训练">🎧 听力</button>
+        <button class="daily-bridge-btn" onclick="useDailyInReading(${i})" title="用于阅读查词">📖 阅读</button>
+      `;
+      return `<div class="daily-article">
+        <div class="daily-article-title">${a.title}${bridgeBtns}</div>
+        <div class="daily-article-meta">${a.category || '综合'} ${a.link ? `· <a href="${a.link}" target="_blank" style="color:var(--primary)">原文链接</a>` : ''}</div>
+        <div class="daily-article-summary">${truncated}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function renderDailyVocab(data, lang){
+  const vocab = data.vocabulary || [];
+  if(!vocab.length) return '<div class="daily-error">暂无词汇</div>';
+  return `<div class="daily-section">
+    <div class="daily-section-title">📚 今日词汇 (${vocab.length}词)</div>
+    <div class="daily-vocab-grid">
+      ${vocab.map((v, vi) => `<div class="daily-vocab-card" style="position:relative">
+        <div onclick="speak('${v.word.replace(/'/g,"\\'")}')" style="cursor:pointer">
+          <div class="daily-vocab-word">${v.word}</div>
+          <div class="daily-vocab-meaning">${v.meaning || ''}</div>
+          ${v.example ? `<div class="daily-vocab-example">"${v.example}"</div>` : ''}
+        </div>
+        <label class="archive-check" style="position:absolute;top:6px;right:8px" title="归档到笔记"><input type="checkbox" onchange="archiveDailyVocab(${vi})"><span>📌</span></label>
+      </div>`).join('')}
     </div>
-    <div id="writingFeedback" style="margin-top:12px"></div>`;
+  </div>`;
 }
-function insertWord(w){
-  const ta = document.getElementById('writingText');
-  if(!ta) return;
-  const pos = ta.selectionStart;
-  const before = ta.value.substring(0,pos);
-  const after = ta.value.substring(pos);
-  ta.value = before + (before && !before.endsWith(' ') ? ' ':'') + w + ' ' + after;
-  ta.focus();
-  updateWritingStats();
+function archiveDailyVocab(idx){
+  const cacheKey = `${state.lang}_${new Date().toDateString()}`;
+  const data = _dailyCache[cacheKey];
+  if(!data || !data.vocabulary[idx]) return;
+  const v = data.vocabulary[idx];
+  addToNote('word', v.word, v.meaning || '');
 }
-function updateWritingStats(){
-  const ta = document.getElementById('writingText');
-  if(!ta) return;
-  const text = ta.value.trim();
-  const words = text ? text.split(/\s+/).length : 0;
-  const sentences = text ? (text.match(/[.!?。！？]/g)||[]).length : 0;
-  document.getElementById('writingStats').innerHTML = `<span>词数：${words}</span><span>句子：${sentences}</span>`;
+
+function renderDailySentences(data, lang){
+  const sentences = data.sentences || [];
+  if(!sentences.length) return '<div class="daily-error">暂无句子</div>';
+  return `<div class="daily-section">
+    <div class="daily-section-title">💬 今日句子 (${sentences.length}句)</div>
+    ${sentences.map((s, i) => `<div class="bilingual-block" id="daily-s-${i}">
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <span class="sentence-idx">${i+1}</span>
+        <div style="flex:1">
+          <div class="sentence-orig">${s.orig}</div>
+          <div class="sentence-trans">${s.trans || ''}</div>
+        </div>
+        <button class="btn btn-sm" onclick="speakDailySentence(${i})" title="朗读">🔊</button>
+        <label class="archive-check" title="归档到笔记"><input type="checkbox" onchange="archiveDailySentence(${i})"><span>📌</span></label>
+      </div>
+    </div>`).join('')}
+  </div>`;
 }
-function clearWriting(){
-  const ta = document.getElementById('writingText');
-  if(ta) ta.value = '';
-  updateWritingStats();
-  document.getElementById('writingFeedback').innerHTML = '';
+function archiveDailySentence(idx){
+  const cacheKey = `${state.lang}_${new Date().toDateString()}`;
+  const data = _dailyCache[cacheKey];
+  if(!data || !data.sentences[idx]) return;
+  const s = data.sentences[idx];
+  addToNote('phrase', s.orig, s.trans || '');
 }
-function checkWriting(){
-  const ta = document.getElementById('writingText');
-  if(!ta || !ta.value.trim()){ return; }
-  const prompts = WRITING_PROMPTS[state.lang] || [];
-  // Find current prompt
-  const title = document.querySelector('.writing-prompt .wp-title')?.textContent || '';
-  const p = prompts.find(pr => pr.title === title);
-  if(!p) return;
-  const text = ta.value.toLowerCase();
-  const usedWords = p.words.filter(w => text.includes(w.toLowerCase()));
-  const unusedWords = p.words.filter(w => !text.includes(w.toLowerCase()));
-  const wordCount = ta.value.trim().split(/\s+/).length;
-  let feedback = `<div class="card" style="background:#F8FAFC">
-    <div style="font-weight:600;margin-bottom:8px">📊 写作检查</div>
-    <div style="font-size:13px;line-height:1.8">
-    <div>词数：${wordCount} ${wordCount < 20 ? '⚠️ 建议写更多' : '✅'}</div>
-    <div>已用参考词：${usedWords.length}/${p.words.length} ${usedWords.map(w=>`<span style="color:var(--success);font-weight:600">${w}</span>`).join(', ')||'无'}</div>
-    ${unusedWords.length > 0 ? `<div>未用词汇：${unusedWords.map(w=>`<span style="color:var(--warning)">${w}</span>`).join(', ')}</div>` : '<div style="color:var(--success)">✅ 所有参考词汇都已使用！</div>'}
-    </div></div>`;
-  document.getElementById('writingFeedback').innerHTML = feedback;
+
+function renderDailyQuiz(data, lang){
+  const questions = data.questions || [];
+  if(!questions.length) return '<div class="daily-error">暂无测试题</div>';
+  return `<div class="daily-section">
+    <div class="daily-section-title">🧠 理解测试 (${questions.length}题)</div>
+    ${questions.map((q, qi) => `<div class="daily-question" id="dq-${qi}">
+      <div class="daily-question-text">${qi+1}. ${q.question}</div>
+      ${(q.options||[]).map((opt, oi) => `<div class="daily-option" id="dq-${qi}-o${oi}" onclick="checkDailyAnswer(${qi},${oi},${q.answer||0})">${String.fromCharCode(65+oi)}. ${opt}</div>`).join('')}
+    </div>`).join('')}
+  </div>`;
 }
-function speakWriting(){
-  const ta = document.getElementById('writingText');
-  if(!ta || !ta.value.trim()) return;
-  stopSpeaking();
-  speak(ta.value.trim());
+
+function checkDailyAnswer(qi, oi, correct){
+  const qDiv = document.getElementById(`dq-${qi}`);
+  if(!qDiv) return;
+  const options = qDiv.querySelectorAll('.daily-option');
+  // Prevent re-answering
+  if(qDiv.dataset.answered) return;
+  qDiv.dataset.answered = '1';
+  options.forEach((o, i) => {
+    if(i === correct) o.classList.add('correct');
+    else if(i === oi && oi !== correct) o.classList.add('wrong');
+  });
+}
+
+function speakDailySentence(idx){
+  if(!_dailyCache) return;
+  const cacheKey = `${state.lang}_${new Date().toDateString()}`;
+  const data = _dailyCache[cacheKey];
+  if(!data || !data.sentences[idx]) return;
+  speak(data.sentences[idx].orig);
+}
+
+// Bridge functions: use daily content in other modules
+function useDailyInListening(articleIdx){
+  const cacheKey = `${state.lang}_${new Date().toDateString()}`;
+  const data = _dailyCache[cacheKey];
+  if(!data) return;
+  // Build a temporary material from daily sentences
+  const sentences = data.sentences || [];
+  if(!sentences.length) return;
+  const mat = {
+    id: `daily-${state.lang}-${Date.now()}`,
+    lang: state.lang,
+    theme: 'daily',
+    difficulty: state.lang === 'en' ? '进阶' : '基础',
+    title: `📰 今日${state.lang==='en'?'英语':'德语'} - ${data.date}`,
+    sentences: sentences
+  };
+  // Inject into custom materials
+  if(!state.customMaterials.find(m => m.id === mat.id)){
+    state.customMaterials.push(mat);
+  }
+  state.currentMaterial = mat;
+  switchModule('listening');
+}
+
+function useDailyInReading(articleIdx){
+  const cacheKey = `${state.lang}_${new Date().toDateString()}`;
+  const data = _dailyCache[cacheKey];
+  if(!data) return;
+  const sentences = data.sentences || [];
+  if(!sentences.length) return;
+  const mat = {
+    id: `daily-read-${state.lang}-${Date.now()}`,
+    lang: state.lang,
+    theme: 'daily',
+    difficulty: state.lang === 'en' ? '进阶' : '基础',
+    title: `📰 今日阅读 - ${data.date}`,
+    sentences: sentences
+  };
+  if(!state.customMaterials.find(m => m.id === mat.id)){
+    state.customMaterials.push(mat);
+  }
+  state.currentMaterial = mat;
+  switchModule('reading');
 }
 
 // ============================================================
@@ -1613,7 +2093,7 @@ function renderImport(){
     <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;line-height:1.8">
       支持导入 JSON 格式的学习素材。文件格式示例：<br>
     </p>
-    <pre style="background:#F8FAFC;padding:14px;border-radius:var(--radius-sm);font-size:12px;overflow-x:auto;margin-bottom:16px;line-height:1.6">{
+    <pre style="background:var(--highlight);padding:14px;border-radius:var(--radius-sm);font-size:12px;overflow-x:auto;margin-bottom:16px;line-height:1.6">{
   "lang": "en",
   "theme": "daily",
   "title": "My Custom Lesson",
@@ -1728,17 +2208,17 @@ function renderProgress(){
     <!-- Duolingo Sync -->
     <div class="card duo-sync-box">
       <div class="card-header">
-        <div class="card-title" style="color:#FFF">🦎 多邻国进度同步</div>
+        <div class="card-title" style="color:#f5f2ed">🦎 多邻国进度同步</div>
         <span style="color:rgba(255,255,255,.7);font-size:12px">${lang==='en'?'英语':'德语'}</span>
       </div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end">
         <div style="flex:1;min-width:180px">
           <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:4px">当前多邻国阶段</div>
-          <select class="ctrl-select" style="width:100%;background:#FFF" onchange="setDuoLevel(this.value)">${levelOptions}</select>
+          <select class="ctrl-select" style="width:100%;background:var(--card)" onchange="setDuoLevel(this.value)">${levelOptions}</select>
         </div>
         <div style="flex:1;min-width:180px">
           <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:4px">目标等级</div>
-          <select class="ctrl-select" style="width:100%;background:#FFF" onchange="setTargetLevel(this.value)">${targetOptions}</select>
+          <select class="ctrl-select" style="width:100%;background:var(--card)" onchange="setTargetLevel(this.value)">${targetOptions}</select>
         </div>
       </div>
       <div style="margin-top:14px">
@@ -1746,7 +2226,7 @@ function renderProgress(){
           <span>多邻国进度</span><span>${duoPct}%</span>
         </div>
         <div class="progress-bar-bg" style="background:rgba(255,255,255,.2)">
-          <div class="progress-bar-fill" style="width:${duoPct}%;background:#58CC02"></div>
+          <div class="progress-bar-fill" style="width:${duoPct}%;background:var(--accent)"></div>
         </div>
         ${nextLevel ? `<div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">下一阶段：${nextLevel.label}</div>` : '<div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">已达最高阶段！</div>'}
       </div>
@@ -1755,10 +2235,10 @@ function renderProgress(){
     <!-- Target -->
     <div class="card target-box">
       <div class="card-header">
-        <div class="card-title" style="color:#FFF">🎯 学习目标</div>
+        <div class="card-title" style="color:#f5f2ed">🎯 学习目标</div>
       </div>
       <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-        <div style="font-size:28px;font-weight:700;color:#FFF">${targetObj ? targetObj.label : '未设置'}</div>
+        <div style="font-size:28px;font-weight:700;color:#f5f2ed">${targetObj ? targetObj.label : '未设置'}</div>
         <div style="flex:1;min-width:200px">
           <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.8);margin-bottom:4px">
             <span>课程完成度</span><span>${completedCount}/${totalLessons} (${pctComplete}%)</span>
@@ -1845,8 +2325,8 @@ function getStreakCount(){
 function renderActivity(){
   const area = document.getElementById('contentArea');
   const records = state.progress.dailyRecords;
-  const typeLabels = {listening:'听力训练',speaking:'口语跟读',reading:'阅读查词',writing:'写作练习',quiz:'听写测试',lesson:'完成课程',review:'复习课程',sync:'进度同步',word:'查词',import:'导入素材'};
-  const typeIcons = {listening:'🎧',speaking:'🗣️',reading:'📖',writing:'✍️',quiz:'📝',lesson:'✅',review:'🔄',sync:'🦎',word:'📖',import:'📂'};
+  const typeLabels = {listening:'听力训练',speaking:'口语跟读',reading:'阅读查词',grammar:'语法学习',quiz:'听写测试',lesson:'完成课程',review:'复习课程',sync:'进度同步',word:'查词',import:'导入素材'};
+  const typeIcons = {listening:'🎧',speaking:'🗣️',reading:'📖',grammar:'📐',quiz:'📝',lesson:'✅',review:'🔄',sync:'🦎',word:'📖',import:'📂'};
 
   // Group by date
   const grouped = {};
@@ -2072,7 +2552,7 @@ function doQuery(){
     });
     html += '</div>';
   } else if(!isSingleWord){
-    html += `<div style="margin-top:16px;padding:16px;background:#F8FAFC;border-radius:var(--radius-sm);text-align:center;color:var(--text-secondary)">
+    html += `<div style="margin-top:16px;padding:16px;background:var(--highlight);border-radius:var(--radius-sm);text-align:center;color:var(--text-secondary)">
       <div style="font-size:14px">未找到直接相关的语法点</div>
       <div style="font-size:12px;margin-top:4px">试试输入包含动词、介词或语法关键词的句子</div>
     </div>`;
@@ -2088,6 +2568,220 @@ function doQuery(){
 
   html += '</div>';
   container.innerHTML = html;
+}
+
+// ============================================================
+// RIGHT-SIDE QUERY PANEL
+// ============================================================
+let queryPanelOpen = true; // always open on desktop
+
+function toggleQueryPanel(){
+  // Only effective on mobile (desktop panel is always visible)
+  if(window.innerWidth > 768) return;
+  queryPanelOpen = !queryPanelOpen;
+  const panel = document.getElementById('queryPanel');
+  const btn = document.getElementById('queryToggleBtn');
+  if(panel) panel.classList.toggle('open', queryPanelOpen);
+  if(btn) btn.classList.toggle('active', queryPanelOpen);
+  if(queryPanelOpen){
+    setTimeout(() => document.getElementById('qpInput')?.focus(), 300);
+  }
+}
+
+// Click word in listening/reading sentences → query in panel
+function clickWordForQuery(e, word){
+  e.stopPropagation();
+  // On mobile, open panel first
+  if(window.innerWidth <= 768 && !queryPanelOpen) toggleQueryPanel();
+  const input = document.getElementById('qpInput');
+  if(input){
+    input.value = word;
+    doQuickQuery();
+  }
+}
+
+function doQuickQuery(){
+  const input = document.getElementById('qpInput');
+  if(!input || !input.value.trim()) return;
+  const text = input.value.trim();
+  const container = document.getElementById('qpResults');
+  container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary)">查询中...</div>';
+
+  const words = text.split(/\s+/);
+  const isSingleWord = words.length === 1;
+  const encodedWord = encodeURIComponent(text);
+  const lang = state.lang;
+
+  let dictResult = isSingleWord ? lookupWordOnline(text.toLowerCase()) : null;
+  let grammarHits = words.length >= 1 ? analyzeGrammar(text) : [];
+
+  let html = '';
+
+  // Section 1: 词典释义 (local dictionary, only for single word)
+  if(isSingleWord && dictResult){
+    html += `<div class="qr-section">
+      <div class="qr-label">词典释义</div>
+      <div class="qr-card">
+        <span class="qr-word">${dictResult.word}</span>
+        ${dictResult.phonetic ? `<span class="qr-phonetic">${dictResult.phonetic}</span>` : ''}
+        <div class="qr-meaning"><span style="background:var(--primary);color:#f5f2ed;padding:1px 6px;border-radius:8px;font-size:11px;margin-right:6px">${dictResult.lang==='en'?'英':'德'}</span>${dictResult.meaning}</div>
+        ${dictResult.extra ? `<div class="qr-example">${dictResult.extra}</div>` : ''}
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-sm" onclick="speak('${dictResult.word.replace(/'/g,"\\'")}')"> 发音</button>
+          <button class="qr-add-btn" onclick="addToNote('word','${dictResult.word.replace(/'/g,"\\'")}','${dictResult.meaning.replace(/'/g,"\\'")}')"> 加入笔记</button>
+        </div>
+      </div>
+    </div>`;
+  } else if(isSingleWord && !dictResult){
+    html += `<div class="qr-section">
+      <div class="qr-label">词典释义</div>
+      <div class="qr-card">
+        <span class="qr-word">${text}</span>
+        <div class="qr-meaning" style="color:var(--text-secondary)">本地词典未收录，请在下方查看在线词典结果</div>
+        <div style="margin-top:8px">
+          <button class="btn btn-sm" onclick="speak('${text.replace(/'/g,"\\'")}')"> 发音</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Section 2: 主词典快速链接（根据语言自动选择推荐）
+  // 德语 → PONS, 英语 → Leo
+  let primaryDictUrl = '';
+  let primaryDictName = '';
+  let primaryDictDesc = '';
+  if(lang === 'de'){
+    primaryDictUrl = `https://${lang}.pons.com/dict/search?q=${encodedWord}`;
+    primaryDictName = 'PONS';
+    primaryDictDesc = '权威德英/德中词典 · 冠词、复数、变位、例句';
+  } else {
+    primaryDictUrl = `https://dict.leo.org/${lang}englisch/${encodedWord}`;
+    primaryDictName = 'Leo';
+    primaryDictDesc = '德英/德中词典 · 冠词、复数、变位、例句';
+  }
+
+  html += `<div class="qr-section">
+    <div class="qr-label">推荐词典</div>
+    <a href="${primaryDictUrl}" target="_blank" rel="noopener" class="ext-dict-link" style="display:flex;align-items:center;gap:12px;padding:16px 18px;background:linear-gradient(135deg,var(--highlight) 0%,var(--highlight-sentence) 100%);border:2px solid var(--accent-light);border-radius:var(--radius);text-decoration:none;color:var(--text);font-size:14px;transition:all .2s">
+      <div style="flex-shrink:0;width:48px;height:48px;background:${lang==='de'?'var(--success)':'var(--primary)'};color:#f5f2ed;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px">${primaryDictName.substring(0,2)}</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:15px;margin-bottom:2px">${primaryDictName} ${isSingleWord ? '单词查询' : '短语/句子查询'}</div>
+        <div style="font-size:12px;color:var(--text-secondary)">${primaryDictDesc}</div>
+      </div>
+      <span style="font-size:18px;color:var(--primary)">→</span>
+    </a>
+  </div>`;
+
+  // Section 3: 其他词典链接（备选）
+  let leoLang = lang === 'de' ? 'de' : 'en';
+  let leoUrl = `https://dict.leo.org/${leoLang}englisch/${encodedWord}`;
+  let ponsLang = lang === 'de' ? 'de' : 'en';
+  let ponsUrl = `https://${ponsLang}.pons.com/dict/search?q=${encodedWord}`;
+  let lingueeLang = lang === 'de' ? 'german-english' : 'english-german';
+  let lingueeUrl = `https://www.linguee.com/${lingueeLang}/search?query=${encodedWord}`;
+  let collinsUrl = lang === 'de'
+    ? `https://www.collinsdictionary.com/dictionary/german-english/${encodedWord}`
+    : `https://www.collinsdictionary.com/dictionary/english-german/${encodedWord}`;
+
+  html += `<div class="qr-section">
+    <div class="qr-label">更多词典</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <a href="${leoUrl}" target="_blank" rel="noopener" class="ext-dict-link" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--highlight);border:1px solid var(--border);border-radius:var(--radius-sm);text-decoration:none;color:var(--text);font-size:13px;transition:all .15s">
+        <span style="font-weight:600;color:var(--primary);min-width:60px">Leo</span>
+        <span style="color:var(--text-secondary);font-size:12px">德英/德中 · 冠词、复数、变位、例句</span>
+        <span style="margin-left:auto;color:var(--text-secondary)">→</span>
+      </a>
+      <a href="${ponsUrl}" target="_blank" rel="noopener" class="ext-dict-link" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--highlight);border:1px solid var(--border);border-radius:var(--radius-sm);text-decoration:none;color:var(--text);font-size:13px;transition:all .15s">
+        <span style="font-weight:600;color:var(--success);min-width:60px">PONS</span>
+        <span style="color:var(--text-secondary);font-size:12px">权威词典 · 发音、词性、变格</span>
+        <span style="margin-left:auto;color:var(--text-secondary)">→</span>
+      </a>
+      <a href="${lingueeUrl}" target="_blank" rel="noopener" class="ext-dict-link" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--highlight);border:1px solid var(--border);border-radius:var(--radius-sm);text-decoration:none;color:var(--text);font-size:13px;transition:all .15s">
+        <span style="font-weight:600;color:var(--accent);min-width:60px">Linguee</span>
+        <span style="color:var(--text-secondary);font-size:12px">真实语境例句 · 适合跟读和写作</span>
+        <span style="margin-left:auto;color:var(--text-secondary)">→</span>
+      </a>
+      <a href="${collinsUrl}" target="_blank" rel="noopener" class="ext-dict-link" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--highlight);border:1px solid var(--border);border-radius:var(--radius-sm);text-decoration:none;color:var(--text);font-size:13px;transition:all .15s">
+        <span style="font-weight:600;color:var(--primary-light);min-width:60px">Collins</span>
+        <span style="color:var(--text-secondary);font-size:12px">柯林斯德英 · 详细释义</span>
+        <span style="margin-left:auto;color:var(--text-secondary)">→</span>
+      </a>
+    </div>
+  </div>`;
+
+  // Section 4: 相关语法
+  if(grammarHits.length > 0){
+    html += `<div class="qr-section">
+      <div class="qr-label">相关语法（${grammarHits.length}个）</div>`;
+    grammarHits.forEach(g => {
+      html += `<div class="qr-card">
+        <div class="qr-grammar-title">${g.title}</div>
+        <div class="qr-grammar-desc">${g.content.substring(0,100)}${g.content.length>100?'...':''}</div>
+        ${g.examples ? `<div class="qr-example">📝 ${g.examples}</div>` : ''}
+        <button class="qr-add-btn" onclick="addToNote('grammar','${g.title.replace(/'/g,"\\'")}','${g.content.substring(0,120).replace(/'/g,"\\'")}')"> 加入笔记</button>
+      </div>`;
+    });
+    html += '</div>';
+  }
+
+  // Section 5: 加入笔记 (for phrases/sentences)
+  if(words.length > 1){
+    html += `<div class="qr-section">
+      <div class="qr-card" style="background:var(--highlight-sentence);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:12px;color:var(--text-secondary)">保存为常用句</div>
+        <button class="qr-add-btn" onclick="addToNote('phrase','${text.replace(/'/g,"\\'")}','')"> 加入笔记</button>
+      </div>
+    </div>`;
+  }
+
+  if(!html){
+    html = `<div class="qp-empty"><div class="qe-icon">🤷</div><div class="qe-text">未找到相关内容<br>试试其他单词或句子</div></div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+// Text selection quick query
+let selectedTextForQuery = '';
+
+document.addEventListener('mouseup', (e) => {
+  const tip = document.getElementById('quickQueryTip');
+  if(!tip) return;
+  if(e.target.closest('.query-panel') || e.target.closest('.dict-popup')){
+    tip.style.display = 'none';
+    return;
+  }
+  const selection = window.getSelection();
+  const text = selection.toString().trim();
+  if(text.length > 0 && text.length < 200){
+    selectedTextForQuery = text;
+    const rect = selection.getRangeAt(0).getBoundingClientRect();
+    tip.style.display = 'block';
+    tip.style.left = (rect.left + rect.width / 2 - 40) + 'px';
+    tip.style.top = (rect.top - 36 + window.scrollY) + 'px';
+  } else {
+    tip.style.display = 'none';
+    selectedTextForQuery = '';
+  }
+});
+
+document.addEventListener('mousedown', (e) => {
+  const tip = document.getElementById('quickQueryTip');
+  if(tip && !e.target.closest('.quick-query-tip')){
+    tip.style.display = 'none';
+  }
+});
+
+function querySelectedText(){
+  if(!selectedTextForQuery) return;
+  const tip = document.getElementById('quickQueryTip');
+  if(tip) tip.style.display = 'none';
+  if(window.innerWidth <= 768 && !queryPanelOpen) toggleQueryPanel();
+  const input = document.getElementById('qpInput');
+  if(input){
+    input.value = selectedTextForQuery;
+    doQuickQuery();
+  }
 }
 
 function lookupWordOnline(word){
@@ -2215,7 +2909,7 @@ function addToNote(category, content, detail){
   // Show brief confirmation
   const labels = {grammar:'语法',word:'单词',phrase:'常用句'};
   const toast = document.createElement('div');
-  toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--success);color:#FFF;padding:10px 24px;border-radius:20px;font-size:14px;z-index:9999;animation:fadeIn .3s';
+  toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--success);color:#f5f2ed;padding:10px 24px;border-radius:20px;font-size:14px;z-index:9999;animation:fadeIn .3s';
   toast.textContent = `✅ 已加入${labels[category]}笔记`;
   document.body.appendChild(toast);
   setTimeout(()=>toast.remove(), 2000);
@@ -2267,7 +2961,7 @@ function renderNotes(){
         <div class="card-title">📒 学习笔记</div>
         <div style="display:flex;gap:8px;align-items:center">
           <span style="font-size:12px;color:var(--text-secondary)">共 ${totalNotes} 条</span>
-          <button class="btn btn-sm" onclick="toggleUploadPanel()" style="${uploadState.show?'background:var(--primary-light);color:#FFF':''}">📷 拍照上传</button>
+          <button class="btn btn-sm" onclick="toggleUploadPanel()" style="${uploadState.show?'background:var(--primary-light);color:#f5f2ed':''}">📷 拍照上传</button>
           <button class="btn btn-sm btn-primary" onclick="startSpotQuiz()" ${totalNotes < 2 ? 'disabled title="至少需要2条笔记"' : ''}>🎲 临时抽查</button>
         </div>
       </div>
@@ -2460,7 +3154,8 @@ async function processOCR(){
   try {
     const lang = state.lang === 'de' ? 'deu' : 'eng';
     const extraLangs = state.lang === 'de' ? 'eng' : 'deu';
-    const result = await Tesseract.recognize(uploadState.imageData, `${lang}+${extraLangs}`, {
+    const TesseractLib = await loadTesseract();
+    const result = await TesseractLib.recognize(uploadState.imageData, `${lang}+${extraLangs}`, {
       logger: (m) => {
         if(m.status === 'recognizing text'){
           const pct = Math.round(m.progress * 100);
@@ -2583,7 +3278,7 @@ function saveSelectedToNotes(){
   uploadState.ocrItems = uploadState.ocrItems.filter(it => !it.selected);
 
   const toast = document.createElement('div');
-  toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--success);color:#FFF;padding:10px 24px;border-radius:20px;font-size:14px;z-index:9999;animation:fadeIn .3s';
+  toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--success);color:#f5f2ed;padding:10px 24px;border-radius:20px;font-size:14px;z-index:9999;animation:fadeIn .3s';
   toast.textContent = `✅ 已保存 ${addedCount} 条到笔记`;
   document.body.appendChild(toast);
   setTimeout(()=>toast.remove(), 2000);
@@ -2639,7 +3334,7 @@ function renderUploadPanel(){
     } else if(uploadState.ocrItems.length > 0){
       // Show classified items
       const catLabels = {word:'单词', phrase:'常用句', grammar:'语法'};
-      const catColors = {word:'background:#DBEAFE;color:#1D4ED8', phrase:'background:#D1FAE5;color:#065F46', grammar:'background:#FEF3C7;color:#92400E'};
+      const catColors = {word:'background:#e4e8ea;color:#4a5d69', phrase:'background:#e4e8e4;color:#4a6b4e', grammar:'background:#eee9e1;color:#8c7a5e'};
 
       let itemsHtml = '';
       uploadState.ocrItems.forEach((item, i) => {
@@ -2742,23 +3437,23 @@ function switchLang(lang){
   renderCurrentModule();
 }
 function switchModule(mod){
-  state.module = mod;
-  stopSpeaking();
-  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.toggle('active', el.dataset.module === mod));
-  const titles = {listening:'🎧 听力训练',speaking:'🗣️ 口语跟读',reading:'📖 阅读查词',writing:'✍️ 写作练习',quiz:'📝 听写测试',import:'📂 导入素材',progress:'📊 学习进度',activity:'📅 学习记录',query:'🔍 AI 查询',notes:'📒 学习笔记'};
-  document.getElementById('topbarTitle').textContent = titles[mod] || mod;
-  renderCurrentModule();
+  try {
+    state.module = mod;
+    stopSpeaking();
+    _grammarDetail = null;
+    document.querySelectorAll('.sidebar-item').forEach(el => el.classList.toggle('active', el.dataset.module === mod));
+    const titles = {listening:'🎧 听力训练',speaking:'🗣️ 口语跟读',reading:'📖 阅读查词',grammar:'📐 语法学习',daily:'📰 每日更新',quiz:'📝 听写测试',import:'📂 导入素材',progress:'📊 学习进度',activity:'📅 学习记录',query:'🔍 AI 查询',notes:'📒 学习笔记'};
+    document.getElementById('topbarTitle').textContent = titles[mod] || mod;
+    renderCurrentModule();
+  } catch(e) {
+    console.error('switchModule error:', e);
+    const area = document.getElementById('contentArea');
+    if(area) area.innerHTML = '<div class="card"><div class="empty-state"><div class="es-icon">⚠️</div><div class="es-text">模块加载出错，请刷新页面重试</div></div></div>';
+  }
 }
 function renderCurrentModule(){
-  const renderers = {listening:renderListening,speaking:renderSpeaking,reading:renderReading,writing:renderWriting,quiz:renderQuiz,import:renderImport,progress:renderProgress,activity:renderActivity,query:renderQuery,notes:renderNotes};
+  const renderers = {listening:renderListening,speaking:renderSpeaking,reading:renderReading,grammar:renderGrammar,daily:renderDaily,quiz:renderQuiz,import:renderImport,progress:renderProgress,activity:renderActivity,query:renderQuery,notes:renderNotes};
   (renderers[state.module] || renderListening)();
-}
-function stopSpeaking(){
-  synth.cancel();
-  stopAudio();
-  state.isPlaying = false;
-  state.currentSentenceIdx = -1;
-  updatePlayBtn();
 }
 
 // ============================================================

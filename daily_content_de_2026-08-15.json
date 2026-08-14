@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-15",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Beim Arzt 看医生",
+  "sentences": [
+    {
+      "orig": "Ich fühle mich nicht gut.",
+      "trans": "我感觉不舒服。"
+    },
+    {
+      "orig": "Was fehlt Ihnen?",
+      "trans": "您哪里不舒服？"
+    },
+    {
+      "orig": "Ich habe Kopfschmerzen und Fieber.",
+      "trans": "我头痛和发烧。"
+    },
+    {
+      "orig": "Seit wann haben Sie diese Symptome?",
+      "trans": "您什么时候开始有这些症状的？"
+    },
+    {
+      "orig": "Seit gestern Abend.",
+      "trans": "从昨天晚上开始。"
+    },
+    {
+      "orig": "Ich verschreibe Ihnen Medikamente.",
+      "trans": "我给您开一些药。"
+    },
+    {
+      "orig": "Nehmen Sie die Tabletten dreimal täglich.",
+      "trans": "每天吃三次药片。"
+    },
+    {
+      "orig": "Gute Besserung!",
+      "trans": "祝您早日康复！"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "der Arzt",
+      "meaning": "医生"
+    },
+    {
+      "word": "die Schmerzen",
+      "meaning": "疼痛"
+    },
+    {
+      "word": "das Fieber",
+      "meaning": "发烧"
+    },
+    {
+      "word": "die Tablette",
+      "meaning": "药片"
+    },
+    {
+      "word": "das Rezept",
+      "meaning": "处方"
+    },
+    {
+      "word": "die Apotheke",
+      "meaning": "药店"
+    },
+    {
+      "word": "krank",
+      "meaning": "生病的"
+    },
+    {
+      "word": "gesund",
+      "meaning": "健康的"
+    },
+    {
+      "word": "die Symptome",
+      "meaning": "症状"
+    },
+    {
+      "word": "verschreiben",
+      "meaning": "开处方"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Welche Symptome hat der Patient?",
+      "options": [
+        "Kopfschmerzen und Fieber",
+        "Bauchschmerzen",
+        "Husten und Schnupfen",
+        "Rückenschmerzen"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Wie oft soll der Patient die Tabletten nehmen?",
+      "options": [
+        "Dreimal täglich",
+        "Zweimal täglich",
+        "Einmal täglich",
+        "Viermal täglich"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"Gute Besserung\"?",
+      "options": [
+        "祝早日康复",
+        "早上好",
+        "再见",
+        "谢谢"
+      ],
+      "answer": 0
+    }
+  ]
+}

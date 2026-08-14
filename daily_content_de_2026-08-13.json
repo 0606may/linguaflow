@@ -1,0 +1,51 @@
+{
+  "date": "2026-08-13",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Im Restaurant 在餐厅",
+  "sentences": [
+    {
+      "orig": "Guten Abend! Einen Tisch für zwei Personen, bitte.",
+      "trans": "晚上好！请给我一张两人的桌子。"
+    },
+    {
+      "orig": "Hier ist die Speisekarte.",
+      "trans": "这是菜单。"
+    },
+    {
+      "orig": "Ich hätte gern das Schnitzel mit Pommes.",
+      "trans": "我想要炸猪排配薯条。"
+    },
+    {
+      "orig": "Und für Sie?",
+      "trans": "您呢？"
+    },
+    {
+      "orig": "Ich nehme den Salat mit Hähnchen.",
+      "trans": "我要鸡肉沙拉。"
+    },
+    {
+      "orig": "Möchten Sie etwas trinken?",
+      "trans": "您想喝点什么吗？"
+    },
+    {
+      "orig": "Ein Wasser und ein Bier, bitte.",
+      "trans": "一杯水和一杯啤酒，谢谢。"
+    },
+    {
+      "orig": "Die Rechnung, bitte!",
+      "trans": "请买单！"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "gern",
+      "meaning": "喜欢"
+    },
+    {
+      "word": "bitte",
+      "meaning": "请"
+    }
+  ],
+  "questions": []
+}

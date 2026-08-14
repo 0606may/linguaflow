@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-16",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Auf der Arbeit 在工作",
+  "sentences": [
+    {
+      "orig": "Guten Morgen! Wie geht es Ihnen?",
+      "trans": "早上好！您好吗？"
+    },
+    {
+      "orig": "Mir geht es gut, danke. Und Ihnen?",
+      "trans": "我很好，谢谢。您呢？"
+    },
+    {
+      "orig": "Haben Sie das Meeting heute gesehen?",
+      "trans": "您看到今天的会议通知了吗？"
+    },
+    {
+      "orig": "Ja, um 10 Uhr im Konferenzraum.",
+      "trans": "是的，10 点在会议室。"
+    },
+    {
+      "orig": "Können Sie mir bitte helfen?",
+      "trans": "您能帮我一下吗？"
+    },
+    {
+      "orig": "Natürlich, was brauchen Sie?",
+      "trans": "当然，您需要什么？"
+    },
+    {
+      "orig": "Ich brauche den Bericht bis Freitag.",
+      "trans": "我需要周五前拿到报告。"
+    },
+    {
+      "orig": "Kein Problem, ich schicke ihn Ihnen.",
+      "trans": "没问题，我发给您。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "die Arbeit",
+      "meaning": "工作"
+    },
+    {
+      "word": "das Meeting",
+      "meaning": "会议"
+    },
+    {
+      "word": "der Bericht",
+      "meaning": "报告"
+    },
+    {
+      "word": "der Kollege",
+      "meaning": "同事"
+    },
+    {
+      "word": "der Chef",
+      "meaning": "老板"
+    },
+    {
+      "word": "besprechen",
+      "meaning": "讨论"
+    },
+    {
+      "word": "die Frist",
+      "meaning": "截止日期"
+    },
+    {
+      "word": "erledigen",
+      "meaning": "完成"
+    },
+    {
+      "word": "das Büro",
+      "meaning": "办公室"
+    },
+    {
+      "word": "die Aufgabe",
+      "meaning": "任务"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Wann ist das Meeting?",
+      "options": [
+        "Um 10 Uhr",
+        "Um 9 Uhr",
+        "Um 11 Uhr",
+        "Um 14 Uhr"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Bis wann wird der Bericht gebraucht?",
+      "options": [
+        "Bis Freitag",
+        "Bis Montag",
+        "Bis Mittwoch",
+        "Bis Donnerstag"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"der Bericht\"?",
+      "options": [
+        "报告",
+        "会议",
+        "邮件",
+        "合同"
+      ],
+      "answer": 0
+    }
+  ]
+}

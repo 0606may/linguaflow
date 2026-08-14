@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5"/>
+      <stop offset="100%" style="stop-color:#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <!-- Book -->
+  <g transform="translate(256,280)">
+    <path d="M-120,-60 Q-120,-100 -80,-100 L-10,-100 Q0,-100 0,-85 L0,40 Q0,50 -10,50 L-80,50 Q-120,50 -120,10 Z" fill="rgba(255,255,255,0.9)"/>
+    <path d="M120,-60 Q120,-100 80,-100 L10,-100 Q0,-100 0,-85 L0,40 Q0,50 10,50 L80,50 Q120,50 120,10 Z" fill="rgba(255,255,255,0.75)"/>
+    <line x1="0" y1="-85" x2="0" y2="50" stroke="rgba(79,70,229,0.3)" stroke-width="2"/>
+  </g>
+  <!-- Speech bubble -->
+  <g transform="translate(310,150)">
+    <rect x="-50" y="-40" width="100" height="65" rx="16" fill="#FFF"/>
+    <polygon points="-10,25 5,25 -20,45" fill="#FFF"/>
+    <text x="0" y="-5" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="bold" fill="#4F46E5">Aa</text>
+  </g>
+  <!-- Stars -->
+  <circle cx="150" cy="140" r="6" fill="rgba(255,255,255,0.6)"/>
+  <circle cx="180" cy="110" r="4" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="130" cy="170" r="3" fill="rgba(255,255,255,0.3)"/>
+</svg>

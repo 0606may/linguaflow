@@ -1,0 +1,136 @@
+{
+  "date": "2026-08-14",
+  "lang": "en",
+  "theme": "daily_news",
+  "title": "China Daily - 2026-08-14",
+  "articles": [
+    {
+      "title": "In pics: Archaeological discovery in heritage-rich Luxor of Egypt",
+      "summary": "Egyptian Minister of Antiquities Khalid El-Anany announced Saturday the discovery of a new tomb and the re-discovery of an older one in the heritage-rich Luxor province in Upper Egypt.",
+      "category": "Middle East",
+      "link": "http://www.chinadaily.com.cn/a/201712/10/WS5a2c84e4a310eefe3e9a1376.html"
+    },
+    {
+      "title": "Chinese, Russian and Indian ministers meet",
+      "summary": "China, Russia and India agreed to maintain regional security and economic architecture in the Asia-Pacific, according to a joint statement issued on Monday after the 15th trilateral meeting of the foreign ministers of the three countries.",
+      "category": "Asia-Pacific",
+      "link": "http://www.chinadaily.com.cn/a/201712/12/WS5a2f0d6ca3108bc8c6721934.html"
+    },
+    {
+      "title": "12 spots given national-level archaeological park status",
+      "summary": "Twelve spots were newly inscribed onto the list of national-level archaeological site park, which was released by the State Administration of Cultural Heritage (SACH), on Saturday.",
+      "category": "Heritage",
+      "link": "http://www.chinadaily.com.cn/culture/2017-12/04/content_35196028.htm"
+    },
+    {
+      "title": "Air China launches first non-stop flight to Brisbane",
+      "summary": "The first non-stop flight connecting China with Brisbane, the habitat of the Great Barrier Reef in Australia, will depart from Beijing on Monday early morning, benefiting tourists from both countries. Air China’s CA 795 will leave Beijing at 2:30 am and arrive about 11 hours later in Brisbane, Queen",
+      "category": "Asia-Pacific",
+      "link": "http://www.chinadaily.com.cn/a/201712/10/WS5a2d301ba310eefe3e9a1438.html"
+    },
+    {
+      "title": "AIIB loans $250m for Beijing coal-to-gas conversion",
+      "summary": "The Asian Infrastructure Investment Bank announced on Monday a $250 million loan for a natural gas project in Beijing, the bank's first such investment in China, to help cut coal use and improve air quality in the capital area.",
+      "category": "Society",
+      "link": "http://www.chinadaily.com.cn/a/201712/12/WS5a2f146aa3108bc8c6721954.html"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "heritage",
+      "meaning": "遗产，传统",
+      "example": "cultural heritage"
+    },
+    {
+      "word": "maintain",
+      "meaning": "维持",
+      "example": "maintain quality"
+    },
+    {
+      "word": "bilateral",
+      "meaning": "双边的",
+      "example": "bilateral trade agreement"
+    },
+    {
+      "word": "infrastructure",
+      "meaning": "基础设施",
+      "example": "transport infrastructure"
+    }
+  ],
+  "sentences": [
+    {
+      "orig": "In pics: Archaeological discovery in heritage-rich Luxor of Egypt",
+      "trans": "[新闻标题] In pics: Archaeological discovery in heritage-rich Luxor of Egypt"
+    },
+    {
+      "orig": "Egyptian Minister of Antiquities Khalid El-Anany announced Saturday the discovery of a new tomb and the re-discovery of an older one in the heritage-rich Luxor province in Upper Egypt.",
+      "trans": "[摘要] Egyptian Minister of Antiquities Khalid El-Anany a..."
+    },
+    {
+      "orig": "Chinese, Russian and Indian ministers meet",
+      "trans": "[新闻标题] Chinese, Russian and Indian ministers meet"
+    },
+    {
+      "orig": "China, Russia and India agreed to maintain regional security and economic architecture in the Asia-Pacific, according to a joint statement issued on Monday after the 15th trilateral meeting of the foreign ministers of the three countries.",
+      "trans": "[摘要] China, Russia and India agreed to maintain regiona..."
+    },
+    {
+      "orig": "12 spots given national-level archaeological park status",
+      "trans": "[新闻标题] 12 spots given national-level archaeological park status"
+    },
+    {
+      "orig": "Twelve spots were newly inscribed onto the list of national-level archaeological site park, which was released by the State Administration of Cultural Heritage (SACH), on Saturday.",
+      "trans": "[摘要] Twelve spots were newly inscribed onto the list of..."
+    },
+    {
+      "orig": "Air China launches first non-stop flight to Brisbane",
+      "trans": "[新闻标题] Air China launches first non-stop flight to Brisbane"
+    },
+    {
+      "orig": "The first non-stop flight connecting China with Brisbane, the habitat of the Great Barrier Reef in Australia, will depart from Beijing on Monday early morning, benefiting tourists from both countries.",
+      "trans": "[摘要] The first non-stop flight connecting China with Br..."
+    },
+    {
+      "orig": "Air China’s CA 795 will leave Beijing at 2:30 am and arrive about 11 hours later in Brisbane, Queensland, at 15:10 local time.",
+      "trans": "[摘要] Air China’s CA 795 will leave Beijing at 2:30 am a..."
+    },
+    {
+      "orig": "China’s flagship carrier will operate four services every week on Monday, Wednesday, Friday and Sunday.",
+      "trans": "[摘要] China’s flagship carrier will operate four service..."
+    },
+    {
+      "orig": "Brisbane will become Air China’s third destination in Australia, after Sydney and Melbourne.",
+      "trans": "[摘要] Brisbane will become Air China’s third destination..."
+    },
+    {
+      "orig": "AIIB loans $250m for Beijing coal-to-gas conversion",
+      "trans": "[新闻标题] AIIB loans $250m for Beijing coal-to-gas conversion"
+    },
+    {
+      "orig": "The Asian Infrastructure Investment Bank announced on Monday a $250 million loan for a natural gas project in Beijing, the bank's first such investment in China, to help cut coal use and improve air quality in the capital area.",
+      "trans": "[摘要] The Asian Infrastructure Investment Bank announced..."
+    }
+  ],
+  "questions": [
+    {
+      "question": "What is the main topic of the leading article?",
+      "options": [
+        "In pics: Archaeological discovery in heritage-rich Luxor of ",
+        "Environmental protection and climate change",
+        "Technology and artificial intelligence",
+        "International sports competition"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What does \"heritage\" mean in Chinese?",
+      "options": [
+        "维持",
+        "基础设施",
+        "双边的",
+        "遗产，传统"
+      ],
+      "answer": 3
+    }
+  ]
+}

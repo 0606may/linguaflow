@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-14",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Öffentliche Verkehrsmittel 公共交通",
+  "sentences": [
+    {
+      "orig": "Entschuldigung, fährt dieser Bus zum Bahnhof?",
+      "trans": "打扰一下，这辆公交车去火车站吗？"
+    },
+    {
+      "orig": "Ja, aber Sie müssen umsteigen.",
+      "trans": "是的，但您需要换乘。"
+    },
+    {
+      "orig": "Wo ist die nächste U-Bahn-Station?",
+      "trans": "最近的地铁站在哪里？"
+    },
+    {
+      "orig": "Gehen Sie geradeaus und dann links.",
+      "trans": "直走然后左转。"
+    },
+    {
+      "orig": "Eine Fahrkarte nach Berlin, bitte.",
+      "trans": "请给我一张去柏林的车票。"
+    },
+    {
+      "orig": "Einfach oder hin und zurück?",
+      "trans": "单程还是往返？"
+    },
+    {
+      "orig": "Hin und zurück, bitte.",
+      "trans": "往返，谢谢。"
+    },
+    {
+      "orig": "Das macht 60 Euro.",
+      "trans": "总共 60 欧元。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "der Bahnhof",
+      "meaning": "火车站"
+    },
+    {
+      "word": "die Fahrkarte",
+      "meaning": "车票"
+    },
+    {
+      "word": "umsteigen",
+      "meaning": "换乘"
+    },
+    {
+      "word": "die U-Bahn",
+      "meaning": "地铁"
+    },
+    {
+      "word": "einfach",
+      "meaning": "单程"
+    },
+    {
+      "word": "hin und zurück",
+      "meaning": "往返"
+    },
+    {
+      "word": "der Bus",
+      "meaning": "公交车"
+    },
+    {
+      "word": "die Haltestelle",
+      "meaning": "车站"
+    },
+    {
+      "word": "abfahren",
+      "meaning": "出发"
+    },
+    {
+      "word": "ankommen",
+      "meaning": "到达"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Wohin möchte die Person fahren?",
+      "options": [
+        "Nach Berlin",
+        "Nach München",
+        "Nach Hamburg",
+        "Nach Köln"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Welche Art von Fahrkarte wird gekauft?",
+      "options": [
+        "Hin und zurück",
+        "Nur einfach",
+        "Tageskarte",
+        "Wochenkarte"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"umsteigen\"?",
+      "options": [
+        "换乘",
+        "下车",
+        "买票",
+        "等车"
+      ],
+      "answer": 0
+    }
+  ]
+}

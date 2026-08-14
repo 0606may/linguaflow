@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-19",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Freizeit und Hobbys 休闲和爱好",
+  "sentences": [
+    {
+      "orig": "Was machst du gern in deiner Freizeit?",
+      "trans": "你业余时间喜欢做什么？"
+    },
+    {
+      "orig": "Ich lese gerne Bücher.",
+      "trans": "我喜欢读书。"
+    },
+    {
+      "orig": "Spielst du ein Instrument?",
+      "trans": "你会演奏乐器吗？"
+    },
+    {
+      "orig": "Ja, ich spiele Gitarre.",
+      "trans": "是的，我会弹吉他。"
+    },
+    {
+      "orig": "Gehen wir am Wochenende ins Kino?",
+      "trans": "我们周末去看电影好吗？"
+    },
+    {
+      "orig": "Gute Idee! Welchen Film möchtest du sehen?",
+      "trans": "好主意！你想看什么电影？"
+    },
+    {
+      "orig": "Ich möchte den neuen Actionfilm sehen.",
+      "trans": "我想看那部新的动作片。"
+    },
+    {
+      "orig": "Perfekt, treffen wir uns um 19 Uhr.",
+      "trans": "完美，我们 19 点见。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "die Freizeit",
+      "meaning": "业余时间"
+    },
+    {
+      "word": "das Hobby",
+      "meaning": "爱好"
+    },
+    {
+      "word": "lesen",
+      "meaning": "阅读"
+    },
+    {
+      "word": "das Kino",
+      "meaning": "电影院"
+    },
+    {
+      "word": "die Gitarre",
+      "meaning": "吉他"
+    },
+    {
+      "word": "das Wochenende",
+      "meaning": "周末"
+    },
+    {
+      "word": "der Film",
+      "meaning": "电影"
+    },
+    {
+      "word": "schwimmen",
+      "meaning": "游泳"
+    },
+    {
+      "word": "wandern",
+      "meaning": "徒步"
+    },
+    {
+      "word": "kochen",
+      "meaning": "做饭"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Was macht die Person gern in der Freizeit?",
+      "options": [
+        "Bücher lesen",
+        "Sport treiben",
+        "Kochen",
+        "Reisen"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Welchen Film möchten sie sehen?",
+      "options": [
+        "Einen Actionfilm",
+        "Einen Komödie",
+        "Einen Horrorfilm",
+        "Einen Dokumentarfilm"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Um wie viel Uhr treffen sie sich?",
+      "options": [
+        "Um 19 Uhr",
+        "Um 18 Uhr",
+        "Um 20 Uhr",
+        "Um 17 Uhr"
+      ],
+      "answer": 0
+    }
+  ]
+}

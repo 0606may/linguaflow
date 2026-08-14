@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-20",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Im Hotel 在酒店",
+  "sentences": [
+    {
+      "orig": "Guten Abend, ich habe eine Reservierung.",
+      "trans": "晚上好，我有一个预订。"
+    },
+    {
+      "orig": "Wie ist Ihr Name, bitte?",
+      "trans": "请问您贵姓？"
+    },
+    {
+      "orig": "Mein Name ist Müller. Zimmer für drei Nächte.",
+      "trans": "我姓穆勒。住三个晚上。"
+    },
+    {
+      "orig": "Hier ist Ihr Zimmerschlüssel, Zimmer 305.",
+      "trans": "这是您的房卡，305 房间。"
+    },
+    {
+      "orig": "Gibt es WLAN im Zimmer?",
+      "trans": "房间里有无线网络吗？"
+    },
+    {
+      "orig": "Ja, das Passwort steht auf der Karte.",
+      "trans": "有的，密码在卡上。"
+    },
+    {
+      "orig": "Könnten Sie mir bitte ein extra Kissen bringen?",
+      "trans": "您能给我多拿一个枕头吗？"
+    },
+    {
+      "orig": "Natürlich, ich bringe es sofort.",
+      "trans": "当然，我马上拿来。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "das Hotel",
+      "meaning": "酒店"
+    },
+    {
+      "word": "die Reservierung",
+      "meaning": "预订"
+    },
+    {
+      "word": "das Zimmer",
+      "meaning": "房间"
+    },
+    {
+      "word": "der Schlüssel",
+      "meaning": "钥匙"
+    },
+    {
+      "word": "das Kissen",
+      "meaning": "枕头"
+    },
+    {
+      "word": "die Decke",
+      "meaning": "被子"
+    },
+    {
+      "word": "das Bad",
+      "meaning": "浴室"
+    },
+    {
+      "word": "das Frühstück",
+      "meaning": "早餐"
+    },
+    {
+      "word": "auschecken",
+      "meaning": "退房"
+    },
+    {
+      "word": "die Nacht",
+      "meaning": "夜晚"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Wie viele Nächte bleibt der Gast?",
+      "options": [
+        "Drei Nächte",
+        "Zwei Nächte",
+        "Vier Nächte",
+        "Eine Woche"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "In welchem Zimmer ist der Gast?",
+      "options": [
+        "Zimmer 305",
+        "Zimmer 205",
+        "Zimmer 405",
+        "Zimmer 315"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"die Reservierung\"?",
+      "options": [
+        "预订",
+        "退房",
+        "入住",
+        "投诉"
+      ],
+      "answer": 0
+    }
+  ]
+}
