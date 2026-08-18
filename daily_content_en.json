@@ -1,134 +1,152 @@
 {
-  "date": "2026-08-14",
+  "date": "2026-08-18",
   "lang": "en",
   "theme": "daily_news",
-  "title": "China Daily - 2026-08-14",
+  "title": "BBC / International News - 2026-08-18",
   "articles": [
     {
-      "title": "In pics: Archaeological discovery in heritage-rich Luxor of Egypt",
-      "summary": "Egyptian Minister of Antiquities Khalid El-Anany announced Saturday the discovery of a new tomb and the re-discovery of an older one in the heritage-rich Luxor province in Upper Egypt.",
-      "category": "Middle East",
-      "link": "http://www.chinadaily.com.cn/a/201712/10/WS5a2c84e4a310eefe3e9a1376.html"
+      "title": "Global leaders gather for climate summit in Geneva",
+      "summary": "World leaders have convened in Geneva for a landmark climate summit aimed at accelerating the transition to renewable energy. The three-day conference brings together representatives from over 150 countries to discuss carbon reduction targets and green technology investment. Scientists have warned t",
+      "category": "World",
+      "link": "https://www.bbc.com/news/example-climate-summit"
     },
     {
-      "title": "Chinese, Russian and Indian ministers meet",
-      "summary": "China, Russia and India agreed to maintain regional security and economic architecture in the Asia-Pacific, according to a joint statement issued on Monday after the 15th trilateral meeting of the foreign ministers of the three countries.",
-      "category": "Asia-Pacific",
-      "link": "http://www.chinadaily.com.cn/a/201712/12/WS5a2f0d6ca3108bc8c6721934.html"
+      "title": "Breakthrough in artificial intelligence enables real-time language translation",
+      "summary": "Researchers at a leading technology institute have developed a new artificial intelligence system capable of translating spoken language in real time with unprecedented accuracy. The system uses advanced neural networks to process speech patterns and deliver translations within milliseconds. Experts",
+      "category": "Technology",
+      "link": "https://www.bbc.com/news/example-ai-translation"
     },
     {
-      "title": "12 spots given national-level archaeological park status",
-      "summary": "Twelve spots were newly inscribed onto the list of national-level archaeological site park, which was released by the State Administration of Cultural Heritage (SACH), on Saturday.",
-      "category": "Heritage",
-      "link": "http://www.chinadaily.com.cn/culture/2017-12/04/content_35196028.htm"
+      "title": "Archaeological discovery reveals ancient trade routes in Central Asia",
+      "summary": "An international team of archaeologists has uncovered evidence of previously unknown trade routes connecting ancient civilizations across Central Asia. The discovery includes pottery, coins, and textiles dating back more than 2,000 years. The findings suggest that commercial exchange between East an",
+      "category": "Science",
+      "link": "https://www.bbc.com/news/example-archaeology"
     },
     {
-      "title": "Air China launches first non-stop flight to Brisbane",
-      "summary": "The first non-stop flight connecting China with Brisbane, the habitat of the Great Barrier Reef in Australia, will depart from Beijing on Monday early morning, benefiting tourists from both countries. Air China’s CA 795 will leave Beijing at 2:30 am and arrive about 11 hours later in Brisbane, Queen",
-      "category": "Asia-Pacific",
-      "link": "http://www.chinadaily.com.cn/a/201712/10/WS5a2d301ba310eefe3e9a1438.html"
+      "title": "New study links regular exercise to improved mental health",
+      "summary": "A comprehensive study involving over 50,000 participants has found that regular physical exercise significantly reduces the risk of depression and anxiety. The research, published in a leading medical journal, shows that even moderate activity such as walking for 30 minutes a day can have a substant",
+      "category": "Health",
+      "link": "https://www.bbc.com/news/example-exercise-mental-health"
     },
     {
-      "title": "AIIB loans $250m for Beijing coal-to-gas conversion",
-      "summary": "The Asian Infrastructure Investment Bank announced on Monday a $250 million loan for a natural gas project in Beijing, the bank's first such investment in China, to help cut coal use and improve air quality in the capital area.",
-      "category": "Society",
-      "link": "http://www.chinadaily.com.cn/a/201712/12/WS5a2f146aa3108bc8c6721954.html"
+      "title": "Renewable energy investment reaches record high globally",
+      "summary": "Global investment in renewable energy sources has reached a record 500 billion dollars this year, driven by falling costs of solar and wind technology. The surge in funding reflects growing commitment from governments and private companies to transition away from fossil fuels. Analysts predict that ",
+      "category": "Business",
+      "link": "https://www.bbc.com/news/example-renewable-energy"
     }
   ],
   "vocabulary": [
     {
-      "word": "heritage",
-      "meaning": "遗产，传统",
-      "example": "cultural heritage"
+      "word": "substantial",
+      "meaning": "大量的，实质的",
+      "example": "substantial investment"
     },
     {
-      "word": "maintain",
-      "meaning": "维持",
-      "example": "maintain quality"
-    },
-    {
-      "word": "bilateral",
-      "meaning": "双边的",
-      "example": "bilateral trade agreement"
-    },
-    {
-      "word": "infrastructure",
-      "meaning": "基础设施",
-      "example": "transport infrastructure"
+      "word": "comprehensive",
+      "meaning": "全面的",
+      "example": "comprehensive review"
     }
   ],
   "sentences": [
     {
-      "orig": "In pics: Archaeological discovery in heritage-rich Luxor of Egypt",
-      "trans": "[新闻标题] In pics: Archaeological discovery in heritage-rich Luxor of Egypt"
+      "orig": "Global leaders gather for climate summit in Geneva",
+      "trans": "[新闻标题] Global leaders gather for climate summit in Geneva"
     },
     {
-      "orig": "Egyptian Minister of Antiquities Khalid El-Anany announced Saturday the discovery of a new tomb and the re-discovery of an older one in the heritage-rich Luxor province in Upper Egypt.",
-      "trans": "[摘要] Egyptian Minister of Antiquities Khalid El-Anany a..."
+      "orig": "World leaders have convened in Geneva for a landmark climate summit aimed at accelerating the transition to renewable energy.",
+      "trans": "[摘要] World leaders have convened in Geneva for a landma..."
     },
     {
-      "orig": "Chinese, Russian and Indian ministers meet",
-      "trans": "[新闻标题] Chinese, Russian and Indian ministers meet"
+      "orig": "The three-day conference brings together representatives from over 150 countries to discuss carbon reduction targets and green technology investment.",
+      "trans": "[摘要] The three-day conference brings together represent..."
     },
     {
-      "orig": "China, Russia and India agreed to maintain regional security and economic architecture in the Asia-Pacific, according to a joint statement issued on Monday after the 15th trilateral meeting of the foreign ministers of the three countries.",
-      "trans": "[摘要] China, Russia and India agreed to maintain regiona..."
+      "orig": "Scientists have warned that immediate action is needed to limit global warming to 1.5 degrees Celsius above pre-industrial levels.",
+      "trans": "[摘要] Scientists have warned that immediate action is ne..."
     },
     {
-      "orig": "12 spots given national-level archaeological park status",
-      "trans": "[新闻标题] 12 spots given national-level archaeological park status"
+      "orig": "Breakthrough in artificial intelligence enables real-time language translation",
+      "trans": "[新闻标题] Breakthrough in artificial intelligence enables real-time language translation"
     },
     {
-      "orig": "Twelve spots were newly inscribed onto the list of national-level archaeological site park, which was released by the State Administration of Cultural Heritage (SACH), on Saturday.",
-      "trans": "[摘要] Twelve spots were newly inscribed onto the list of..."
+      "orig": "Researchers at a leading technology institute have developed a new artificial intelligence system capable of translating spoken language in real time with unprecedented accuracy.",
+      "trans": "[摘要] Researchers at a leading technology institute have..."
     },
     {
-      "orig": "Air China launches first non-stop flight to Brisbane",
-      "trans": "[新闻标题] Air China launches first non-stop flight to Brisbane"
+      "orig": "The system uses advanced neural networks to process speech patterns and deliver translations within milliseconds.",
+      "trans": "[摘要] The system uses advanced neural networks to proces..."
     },
     {
-      "orig": "The first non-stop flight connecting China with Brisbane, the habitat of the Great Barrier Reef in Australia, will depart from Beijing on Monday early morning, benefiting tourists from both countries.",
-      "trans": "[摘要] The first non-stop flight connecting China with Br..."
+      "orig": "Experts say this breakthrough could transform international communication and break down language barriers in business and education.",
+      "trans": "[摘要] Experts say this breakthrough could transform inte..."
     },
     {
-      "orig": "Air China’s CA 795 will leave Beijing at 2:30 am and arrive about 11 hours later in Brisbane, Queensland, at 15:10 local time.",
-      "trans": "[摘要] Air China’s CA 795 will leave Beijing at 2:30 am a..."
+      "orig": "Archaeological discovery reveals ancient trade routes in Central Asia",
+      "trans": "[新闻标题] Archaeological discovery reveals ancient trade routes in Central Asia"
     },
     {
-      "orig": "China’s flagship carrier will operate four services every week on Monday, Wednesday, Friday and Sunday.",
-      "trans": "[摘要] China’s flagship carrier will operate four service..."
+      "orig": "An international team of archaeologists has uncovered evidence of previously unknown trade routes connecting ancient civilizations across Central Asia.",
+      "trans": "[摘要] An international team of archaeologists has uncove..."
     },
     {
-      "orig": "Brisbane will become Air China’s third destination in Australia, after Sydney and Melbourne.",
-      "trans": "[摘要] Brisbane will become Air China’s third destination..."
+      "orig": "The discovery includes pottery, coins, and textiles dating back more than 2,000 years.",
+      "trans": "[摘要] The discovery includes pottery, coins, and textile..."
     },
     {
-      "orig": "AIIB loans $250m for Beijing coal-to-gas conversion",
-      "trans": "[新闻标题] AIIB loans $250m for Beijing coal-to-gas conversion"
+      "orig": "The findings suggest that commercial exchange between East and West was far more extensive than historians had believed.",
+      "trans": "[摘要] The findings suggest that commercial exchange betw..."
     },
     {
-      "orig": "The Asian Infrastructure Investment Bank announced on Monday a $250 million loan for a natural gas project in Beijing, the bank's first such investment in China, to help cut coal use and improve air quality in the capital area.",
-      "trans": "[摘要] The Asian Infrastructure Investment Bank announced..."
+      "orig": "New study links regular exercise to improved mental health",
+      "trans": "[新闻标题] New study links regular exercise to improved mental health"
+    },
+    {
+      "orig": "A comprehensive study involving over 50,000 participants has found that regular physical exercise significantly reduces the risk of depression and anxiety.",
+      "trans": "[摘要] A comprehensive study involving over 50,000 partic..."
+    },
+    {
+      "orig": "The research, published in a leading medical journal, shows that even moderate activity such as walking for 30 minutes a day can have a substantial positive impact on mental wellbeing.",
+      "trans": "[摘要] The research, published in a leading medical journ..."
+    },
+    {
+      "orig": "Health officials are encouraging people to incorporate more movement into their daily routines.",
+      "trans": "[摘要] Health officials are encouraging people to incorpo..."
+    },
+    {
+      "orig": "Renewable energy investment reaches record high globally",
+      "trans": "[新闻标题] Renewable energy investment reaches record high globally"
+    },
+    {
+      "orig": "Global investment in renewable energy sources has reached a record 500 billion dollars this year, driven by falling costs of solar and wind technology.",
+      "trans": "[摘要] Global investment in renewable energy sources has ..."
+    },
+    {
+      "orig": "The surge in funding reflects growing commitment from governments and private companies to transition away from fossil fuels.",
+      "trans": "[摘要] The surge in funding reflects growing commitment f..."
+    },
+    {
+      "orig": "Analysts predict that clean energy will account for the majority of new power generation capacity worldwide within the next decade.",
+      "trans": "[摘要] Analysts predict that clean energy will account fo..."
     }
   ],
   "questions": [
     {
       "question": "What is the main topic of the leading article?",
       "options": [
-        "In pics: Archaeological discovery in heritage-rich Luxor of ",
+        "Global leaders gather for climate summit in Geneva",
+        "International sports competition",
         "Environmental protection and climate change",
-        "Technology and artificial intelligence",
-        "International sports competition"
+        "Technology and artificial intelligence"
       ],
       "answer": 0
     },
     {
-      "question": "What does \"heritage\" mean in Chinese?",
+      "question": "What does \"comprehensive\" mean in Chinese?",
       "options": [
-        "维持",
-        "基础设施",
-        "双边的",
-        "遗产，传统"
+        "未知含义",
+        "未知含义",
+        "大量的，实质的",
+        "全面的"
       ],
       "answer": 3
     }

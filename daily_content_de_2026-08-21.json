@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-21",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Auf dem Markt 在市场上",
+  "sentences": [
+    {
+      "orig": "Guten Morgen! Was ist heute frisch?",
+      "trans": "早上好！今天什么新鲜？"
+    },
+    {
+      "orig": "Das Obst und Gemüse sind alle frisch.",
+      "trans": "水果和蔬菜都是新鲜的。"
+    },
+    {
+      "orig": "Wie viel kostet ein Kilo Äpfel?",
+      "trans": "一公斤苹果多少钱？"
+    },
+    {
+      "orig": "Drei Euro fünfzig das Kilo.",
+      "trans": "一公斤 3 欧元 50。"
+    },
+    {
+      "orig": "Kann ich auch probieren?",
+      "trans": "我可以尝尝吗？"
+    },
+    {
+      "orig": "Ja, bitte! Hier, probieren Sie.",
+      "trans": "当然！来，您尝尝。"
+    },
+    {
+      "orig": "Sehr süß! Ich nehme zwei Kilo.",
+      "trans": "很甜！我要两公斤。"
+    },
+    {
+      "orig": "Hier bitte. Das macht sieben Euro.",
+      "trans": "给您。总共 7 欧元。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "der Markt",
+      "meaning": "市场"
+    },
+    {
+      "word": "frisch",
+      "meaning": "新鲜的"
+    },
+    {
+      "word": "das Kilo",
+      "meaning": "公斤"
+    },
+    {
+      "word": "die Äpfel",
+      "meaning": "苹果"
+    },
+    {
+      "word": "probieren",
+      "meaning": "品尝"
+    },
+    {
+      "word": "süß",
+      "meaning": "甜的"
+    },
+    {
+      "word": "sauer",
+      "meaning": "酸的"
+    },
+    {
+      "word": "das Gemüse",
+      "meaning": "蔬菜"
+    },
+    {
+      "word": "billig",
+      "meaning": "便宜的"
+    },
+    {
+      "word": "das Stück",
+      "meaning": "个/块"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Was kostet ein Kilo Äpfel?",
+      "options": [
+        "3,50 Euro",
+        "2,50 Euro",
+        "4,50 Euro",
+        "5,00 Euro"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Wie viel Kilo kauft die Person?",
+      "options": [
+        "Zwei Kilo",
+        "Ein Kilo",
+        "Drei Kilo",
+        "Vier Kilo"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"probieren\"?",
+      "options": [
+        "品尝/尝试",
+        "购买",
+        "挑选",
+        "包装"
+      ],
+      "answer": 0
+    }
+  ]
+}

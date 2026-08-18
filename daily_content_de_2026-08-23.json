@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-23",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Telefonieren 打电话",
+  "sentences": [
+    {
+      "orig": "Hallo, hier ist Anna. Kann ich bitte mit Herrn Wang sprechen?",
+      "trans": "你好，我是安娜。我可以和王先生通话吗？"
+    },
+    {
+      "orig": "Einen Moment, bitte. Ich verbinde Sie.",
+      "trans": "请稍等。我为您转接。"
+    },
+    {
+      "orig": "Leider ist er gerade nicht im Büro.",
+      "trans": "很遗憾他现在不在办公室。"
+    },
+    {
+      "orig": "Kann ich eine Nachricht hinterlassen?",
+      "trans": "我可以留言吗？"
+    },
+    {
+      "orig": "Ja, natürlich. Ich höre zu.",
+      "trans": "好的，请说。"
+    },
+    {
+      "orig": "Bitte rufen Sie mich vor 14 Uhr zurück.",
+      "trans": "请在下午两点前给我回电。"
+    },
+    {
+      "orig": "Meine Nummer ist 0176-12345678.",
+      "trans": "我的号码是 0176-12345678。"
+    },
+    {
+      "orig": "Alles klar, ich gebe die Nachricht weiter.",
+      "trans": "好的，我会转告他。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "telefonieren",
+      "meaning": "打电话"
+    },
+    {
+      "word": "die Nachricht",
+      "meaning": "消息/留言"
+    },
+    {
+      "word": "zurückrufen",
+      "meaning": "回电"
+    },
+    {
+      "word": "verbinden",
+      "meaning": "转接"
+    },
+    {
+      "word": "das Büro",
+      "meaning": "办公室"
+    },
+    {
+      "word": "die Nummer",
+      "meaning": "号码"
+    },
+    {
+      "word": "sprechen",
+      "meaning": "说话/通话"
+    },
+    {
+      "word": "weitergeben",
+      "meaning": "转告"
+    },
+    {
+      "word": "anklingeln",
+      "meaning": "打电话给"
+    },
+    {
+      "word": "das Gespräch",
+      "meaning": "通话"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Mit wem möchte Anna sprechen?",
+      "options": [
+        "Mit Herrn Wang",
+        "Mit Frau Wang",
+        "Mit Herrn Li",
+        "Mit Frau Li"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Bis wann soll zurückgerufen werden?",
+      "options": [
+        "Vor 14 Uhr",
+        "Vor 12 Uhr",
+        "Vor 16 Uhr",
+        "Vor 18 Uhr"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"zurückrufen\"?",
+      "options": [
+        "回电",
+        "挂断",
+        "留言",
+        "转接"
+      ],
+      "answer": 0
+    }
+  ]
+}

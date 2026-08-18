@@ -1,112 +1,112 @@
 {
-  "date": "2026-08-14",
+  "date": "2026-08-18",
   "lang": "de",
   "theme": "daily",
-  "title": "Öffentliche Verkehrsmittel 公共交通",
+  "title": "Wetter und Jahreszeiten 天气和季节",
   "sentences": [
     {
-      "orig": "Entschuldigung, fährt dieser Bus zum Bahnhof?",
-      "trans": "打扰一下，这辆公交车去火车站吗？"
+      "orig": "Wie ist das Wetter heute?",
+      "trans": "今天天气怎么样？"
     },
     {
-      "orig": "Ja, aber Sie müssen umsteigen.",
-      "trans": "是的，但您需要换乘。"
+      "orig": "Es ist sonnig und warm.",
+      "trans": "阳光明媚，很暖和。"
     },
     {
-      "orig": "Wo ist die nächste U-Bahn-Station?",
-      "trans": "最近的地铁站在哪里？"
+      "orig": "Morgen soll es regnen.",
+      "trans": "明天据说要下雨。"
     },
     {
-      "orig": "Gehen Sie geradeaus und dann links.",
-      "trans": "直走然后左转。"
+      "orig": "Vergiss nicht den Regenschirm!",
+      "trans": "别忘了带伞！"
     },
     {
-      "orig": "Eine Fahrkarte nach Berlin, bitte.",
-      "trans": "请给我一张去柏林的车票。"
+      "orig": "Im Winter ist es oft sehr kalt.",
+      "trans": "冬天经常很冷。"
     },
     {
-      "orig": "Einfach oder hin und zurück?",
-      "trans": "单程还是往返？"
+      "orig": "Ich mag den Frühling am liebsten.",
+      "trans": "我最喜欢春天。"
     },
     {
-      "orig": "Hin und zurück, bitte.",
-      "trans": "往返，谢谢。"
+      "orig": "Die Blumen blühen überall.",
+      "trans": "到处都是盛开的花朵。"
     },
     {
-      "orig": "Das macht 60 Euro.",
-      "trans": "总共 60 欧元。"
+      "orig": "Das ist eine schöne Jahreszeit.",
+      "trans": "这是一个美丽的季节。"
     }
   ],
   "vocabulary": [
     {
-      "word": "der Bahnhof",
-      "meaning": "火车站"
+      "word": "das Wetter",
+      "meaning": "天气"
     },
     {
-      "word": "die Fahrkarte",
-      "meaning": "车票"
+      "word": "die Jahreszeit",
+      "meaning": "季节"
     },
     {
-      "word": "umsteigen",
-      "meaning": "换乘"
+      "word": "der Frühling",
+      "meaning": "春天"
     },
     {
-      "word": "die U-Bahn",
-      "meaning": "地铁"
+      "word": "der Sommer",
+      "meaning": "夏天"
     },
     {
-      "word": "einfach",
-      "meaning": "单程"
+      "word": "der Herbst",
+      "meaning": "秋天"
     },
     {
-      "word": "hin und zurück",
-      "meaning": "往返"
+      "word": "der Winter",
+      "meaning": "冬天"
     },
     {
-      "word": "der Bus",
-      "meaning": "公交车"
+      "word": "der Regen",
+      "meaning": "雨"
     },
     {
-      "word": "die Haltestelle",
-      "meaning": "车站"
+      "word": "der Schnee",
+      "meaning": "雪"
     },
     {
-      "word": "abfahren",
-      "meaning": "出发"
+      "word": "warm",
+      "meaning": "温暖的"
     },
     {
-      "word": "ankommen",
-      "meaning": "到达"
+      "word": "kalt",
+      "meaning": "寒冷的"
     }
   ],
   "questions": [
     {
-      "question": "Wohin möchte die Person fahren?",
+      "question": "Wie ist das Wetter heute?",
       "options": [
-        "Nach Berlin",
-        "Nach München",
-        "Nach Hamburg",
-        "Nach Köln"
+        "Sonnig und warm",
+        "Regnerisch",
+        "Schnee",
+        "Stürmisch"
       ],
       "answer": 0
     },
     {
-      "question": "Welche Art von Fahrkarte wird gekauft?",
+      "question": "Welche Jahreszeit mag die Person am liebsten?",
       "options": [
-        "Hin und zurück",
-        "Nur einfach",
-        "Tageskarte",
-        "Wochenkarte"
+        "Den Frühling",
+        "Den Sommer",
+        "Den Herbst",
+        "Den Winter"
       ],
       "answer": 0
     },
     {
-      "question": "Was bedeutet \"umsteigen\"?",
+      "question": "Was bedeutet \"der Regenschirm\"?",
       "options": [
-        "换乘",
-        "下车",
-        "买票",
-        "等车"
+        "雨伞",
+        "太阳帽",
+        "外套",
+        "围巾"
       ],
       "answer": 0
     }

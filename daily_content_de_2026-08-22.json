@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-22",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Bei der Post 在邮局",
+  "sentences": [
+    {
+      "orig": "Guten Tag! Ich möchte ein Paket schicken.",
+      "trans": "您好！我想寄一个包裹。"
+    },
+    {
+      "orig": "Wohin soll das Paket gehen?",
+      "trans": "包裹寄到哪里？"
+    },
+    {
+      "orig": "Nach China, bitte.",
+      "trans": "请寄到中国。"
+    },
+    {
+      "orig": "Wie schwer ist das Paket?",
+      "trans": "包裹有多重？"
+    },
+    {
+      "orig": "Etwa zwei Kilo.",
+      "trans": "大约两公斤。"
+    },
+    {
+      "orig": "Das kostet 15 Euro für Luftpost.",
+      "trans": "航空邮费 15 欧元。"
+    },
+    {
+      "orig": "Wie lange dauert es?",
+      "trans": "需要多长时间？"
+    },
+    {
+      "orig": "Etwa eine Woche bis zehn Tage.",
+      "trans": "大约一周到十天。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "die Post",
+      "meaning": "邮局"
+    },
+    {
+      "word": "das Paket",
+      "meaning": "包裹"
+    },
+    {
+      "word": "schicken",
+      "meaning": "寄送"
+    },
+    {
+      "word": "die Briefmarke",
+      "meaning": "邮票"
+    },
+    {
+      "word": "der Brief",
+      "meaning": "信"
+    },
+    {
+      "word": "die Luftpost",
+      "meaning": "航空邮件"
+    },
+    {
+      "word": "das Gewicht",
+      "meaning": "重量"
+    },
+    {
+      "word": "die Adresse",
+      "meaning": "地址"
+    },
+    {
+      "word": "dauern",
+      "meaning": "持续/花费时间"
+    },
+    {
+      "word": "die Sendung",
+      "meaning": "邮件/快递"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Wohin wird das Paket geschickt?",
+      "options": [
+        "Nach China",
+        "Nach Japan",
+        "Nach Korea",
+        "Nach Indien"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Wie viel kostet das Porto?",
+      "options": [
+        "15 Euro",
+        "10 Euro",
+        "20 Euro",
+        "25 Euro"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"die Briefmarke\"?",
+      "options": [
+        "邮票",
+        "信封",
+        "明信片",
+        "包裹"
+      ],
+      "answer": 0
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-24",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Umzug und Wohnen 搬家与住房",
+  "sentences": [
+    {
+      "orig": "Ich suche eine Wohnung in der Stadt.",
+      "trans": "我在找市区的公寓。"
+    },
+    {
+      "orig": "Wie viele Zimmer brauchen Sie?",
+      "trans": "您需要几个房间？"
+    },
+    {
+      "orig": "Zwei Zimmer und ein Balkon, wenn möglich.",
+      "trans": "两间房和一个阳台，如果可以的话。"
+    },
+    {
+      "orig": "Die Miete beträgt 800 Euro im Monat.",
+      "trans": "月租 800 欧元。"
+    },
+    {
+      "orig": "Ist die Heizung im Preis enthalten?",
+      "trans": "暖气费包含在价格里吗？"
+    },
+    {
+      "orig": "Ja, Heizung und Wasser sind inklusive.",
+      "trans": "是的，暖气和水费包含在内。"
+    },
+    {
+      "orig": "Wann kann ich einziehen?",
+      "trans": "我什么时候可以入住？"
+    },
+    {
+      "orig": "Ab dem ersten nächsten Monats.",
+      "trans": "从下个月一号开始。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "die Wohnung",
+      "meaning": "公寓"
+    },
+    {
+      "word": "der Umzug",
+      "meaning": "搬家"
+    },
+    {
+      "word": "die Miete",
+      "meaning": "租金"
+    },
+    {
+      "word": "der Balkon",
+      "meaning": "阳台"
+    },
+    {
+      "word": "einziehen",
+      "meaning": "入住"
+    },
+    {
+      "word": "ausziehen",
+      "meaning": "搬出"
+    },
+    {
+      "word": "die Heizung",
+      "meaning": "暖气"
+    },
+    {
+      "word": "der Vermieter",
+      "meaning": "房东"
+    },
+    {
+      "word": "der Mietvertrag",
+      "meaning": "租赁合同"
+    },
+    {
+      "word": "inklusive",
+      "meaning": "包含在内"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Wie viel beträgt die Miete?",
+      "options": [
+        "800 Euro",
+        "600 Euro",
+        "1000 Euro",
+        "700 Euro"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Wie viele Zimmer sucht die Person?",
+      "options": [
+        "Zwei Zimmer",
+        "Drei Zimmer",
+        "Ein Zimmer",
+        "Vier Zimmer"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"einziehen\"?",
+      "options": [
+        "入住/搬入",
+        "搬出",
+        "参观",
+        "签约"
+      ],
+      "answer": 0
+    }
+  ]
+}

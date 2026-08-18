@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 LinguaFlow Daily Content Generator
-从 China Daily RSS 获取英语文章，生成每日学习内容
-德语内容使用预生成内容库轮换
+从 BBC / VOA / DW 等国际媒体 RSS 获取英语文章，生成每日学习内容
+德语内容使用预生成内容库轮换（基础德语 + 日常使用场景）
 """
 
 import json
@@ -15,11 +15,16 @@ import urllib.request
 import urllib.parse
 import os
 
-# China Daily RSS feeds (accessible in China)
+# ── 英语 RSS 源（BBC / VOA / DW 等国际媒体）──
+# 多个源互为备份，任一可用即可生成内容
 RSS_FEEDS = {
-    'china': 'http://www.chinadaily.com.cn/rss/china_rss.xml',
-    'world': 'http://www.chinadaily.com.cn/rss/world_rss.xml',
-    'culture': 'http://www.chinadaily.com.cn/rss/culture_rss.xml',
+    'bbc_world':    'https://feeds.bbci.co.uk/news/world/rss.xml',
+    'bbc_top':      'https://feeds.bbci.co.uk/news/rss.xml',
+    'bbc_tech':     'https://feeds.bbci.co.uk/news/technology/rss.xml',
+    'bbc_science':  'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
+    'voa_world':    'https://learningenglish.voanews.com/z/1131',
+    'dw_world':     'https://rss.dw.com/rdf/rss-en-world',
+    'guardian':     'https://www.theguardian.com/world/rss',
 }
 
 # IELTS 核心词汇表 — 人文社科 / 商务英语 / 社会科学
@@ -125,6 +130,75 @@ IELTS_VOCABULARY = {
 
 
 # ──────────────────────────────────────────────
+# 英语精选备用内容（RSS 全部不可用时使用）
+# 来源风格：BBC / The Guardian / VOA Learning English
+# ──────────────────────────────────────────────
+
+EN_CURATED_ARTICLES = [
+    {
+        'title': 'Global leaders gather for climate summit in Geneva',
+        'description': 'World leaders have convened in Geneva for a landmark climate summit aimed at accelerating the transition to renewable energy. The three-day conference brings together representatives from over 150 countries to discuss carbon reduction targets and green technology investment. Scientists have warned that immediate action is needed to limit global warming to 1.5 degrees Celsius above pre-industrial levels.',
+        'category': 'World',
+        'link': 'https://www.bbc.com/news/example-climate-summit',
+    },
+    {
+        'title': 'Breakthrough in artificial intelligence enables real-time language translation',
+        'description': 'Researchers at a leading technology institute have developed a new artificial intelligence system capable of translating spoken language in real time with unprecedented accuracy. The system uses advanced neural networks to process speech patterns and deliver translations within milliseconds. Experts say this breakthrough could transform international communication and break down language barriers in business and education.',
+        'category': 'Technology',
+        'link': 'https://www.bbc.com/news/example-ai-translation',
+    },
+    {
+        'title': 'Archaeological discovery reveals ancient trade routes in Central Asia',
+        'description': 'An international team of archaeologists has uncovered evidence of previously unknown trade routes connecting ancient civilizations across Central Asia. The discovery includes pottery, coins, and textiles dating back more than 2,000 years. The findings suggest that commercial exchange between East and West was far more extensive than historians had believed.',
+        'category': 'Science',
+        'link': 'https://www.bbc.com/news/example-archaeology',
+    },
+    {
+        'title': 'New study links regular exercise to improved mental health',
+        'description': 'A comprehensive study involving over 50,000 participants has found that regular physical exercise significantly reduces the risk of depression and anxiety. The research, published in a leading medical journal, shows that even moderate activity such as walking for 30 minutes a day can have a substantial positive impact on mental wellbeing. Health officials are encouraging people to incorporate more movement into their daily routines.',
+        'category': 'Health',
+        'link': 'https://www.bbc.com/news/example-exercise-mental-health',
+    },
+    {
+        'title': 'Renewable energy investment reaches record high globally',
+        'description': 'Global investment in renewable energy sources has reached a record 500 billion dollars this year, driven by falling costs of solar and wind technology. The surge in funding reflects growing commitment from governments and private companies to transition away from fossil fuels. Analysts predict that clean energy will account for the majority of new power generation capacity worldwide within the next decade.',
+        'category': 'Business',
+        'link': 'https://www.bbc.com/news/example-renewable-energy',
+    },
+    {
+        'title': 'UNESCO adds 15 new sites to World Heritage List',
+        'description': 'The United Nations cultural agency has inscribed 15 new locations on its prestigious World Heritage List, including ancient temples, natural reserves, and historic city centres. The decision was made at the annual committee meeting attended by representatives from 21 countries. The new sites span four continents and include both cultural and natural landmarks of outstanding universal value.',
+        'category': 'Culture',
+        'link': 'https://www.bbc.com/news/example-unesco',
+    },
+    {
+        'title': 'Space agency launches mission to study distant asteroids',
+        'description': 'A new space mission has been launched with the aim of studying asteroids in the outer solar system. The spacecraft will travel for six years before reaching its target, a belt of rocky bodies between Mars and Jupiter. Scientists hope the mission will provide insights into the formation of the solar system and the origins of water on Earth.',
+        'category': 'Science',
+        'link': 'https://www.bbc.com/news/example-asteroid-mission',
+    },
+    {
+        'title': 'International film festival celebrates diverse storytelling',
+        'description': 'The annual international film festival opened this week with screenings of movies from over 40 countries. This year\'s programme highlights diverse voices and stories from underrepresented communities. Directors and actors from around the world have gathered to showcase their work and attend workshops. The festival runs for ten days and includes both competition and non-competition sections.',
+        'category': 'Culture',
+        'link': 'https://www.bbc.com/news/example-film-festival',
+    },
+    {
+        'title': 'Major infrastructure project to connect rural communities',
+        'description': 'A large-scale infrastructure project has been announced to improve transport links between rural communities and urban centres. The project includes building new roads, bridges, and railway stations in underserved regions. Government officials say the initiative will create thousands of jobs and boost economic development in areas that have historically lacked adequate transport connections.',
+        'category': 'Society',
+        'link': 'https://www.bbc.com/news/example-infrastructure',
+    },
+    {
+        'title': 'Ocean conservation efforts show promising results',
+        'description': 'Marine biologists report that ocean conservation programmes implemented over the past decade have led to a significant recovery of fish populations in several key regions. The establishment of marine protected areas and stricter fishing regulations have contributed to the positive trend. Researchers say continued international cooperation is essential to maintain and expand these gains.',
+        'category': 'Environment',
+        'link': 'https://www.bbc.com/news/example-ocean-conservation',
+    },
+]
+
+
+# ──────────────────────────────────────────────
 # 工具函数
 # ──────────────────────────────────────────────
 
@@ -160,10 +234,13 @@ def translate_en_to_zh(text, max_len=500):
 
 
 def fetch_rss_feed(url):
-    """获取 RSS feed 内容"""
+    """获取 RSS feed 内容（超时 8 秒）"""
     try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=15) as response:
+        req = urllib.request.Request(url, headers={
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) LinguaFlow/1.0',
+            'Accept': 'application/rss+xml, application/xml, text/xml',
+        })
+        with urllib.request.urlopen(req, timeout=8) as response:
             return response.read().decode('utf-8', errors='ignore')
     except Exception as e:
         print(f"  [WARN] Error fetching {url}: {e}")
@@ -367,7 +444,7 @@ def generate_english_daily_content(articles):
         'date': datetime.now().strftime('%Y-%m-%d'),
         'lang': 'en',
         'theme': 'daily_news',
-        'title': f"China Daily - {datetime.now().strftime('%Y-%m-%d')}",
+        'title': f"BBC / International News - {datetime.now().strftime('%Y-%m-%d')}",
         'articles': [],
         'vocabulary': [],
         'sentences': [],
@@ -404,10 +481,112 @@ def generate_english_daily_content(articles):
 
 
 # ──────────────────────────────────────────────
-# 德语内容生成（16 个场景轮换）
+# 德语内容生成（20 个场景轮换：4 基础 + 16 日常）
 # ──────────────────────────────────────────────
 
 GERMAN_SCENARIOS = [
+    # ── 基础德语 (Grunddeutsch) ──
+    {
+        'theme': 'basic', 'title': 'Begrüßung und Vorstellung 自我介绍与问候',
+        'sentences': [
+            {'orig': 'Guten Tag! Mein Name ist Li Ming.', 'trans': '你好！我叫李明。'},
+            {'orig': 'Freut mich, Sie kennenzulernen.', 'trans': '很高兴认识您。'},
+            {'orig': 'Woher kommen Sie?', 'trans': '您从哪里来？'},
+            {'orig': 'Ich komme aus China.', 'trans': '我来自中国。'},
+            {'orig': 'Wie alt sind Sie?', 'trans': '您多大了？'},
+            {'orig': 'Ich bin fünfundzwanzig Jahre alt.', 'trans': '我二十五岁。'},
+            {'orig': 'Was machen Sie beruflich?', 'trans': '您做什么工作？'},
+            {'orig': 'Ich bin Student an der Universität.', 'trans': '我是大学生。'},
+        ],
+        'vocabulary': [
+            {'word': 'der Name', 'meaning': '名字'}, {'word': 'das Alter', 'meaning': '年龄'},
+            {'word': 'beruflich', 'meaning': '职业的'}, {'word': 'der Student', 'meaning': '大学生'},
+            {'word': 'kennenlernen', 'meaning': '认识'}, {'word': 'freuen', 'meaning': '高兴'},
+            {'word': 'woher', 'meaning': '从哪里'}, {'word': 'die Universität', 'meaning': '大学'},
+            {'word': 'heißen', 'meaning': '叫做'}, {'word': 'ich bin', 'meaning': '我是'},
+        ],
+        'questions': [
+            {'question': 'Woher kommt die Person?', 'options': ['Aus China', 'Aus Japan', 'Aus Korea', 'Aus Indien'], 'answer': 0},
+            {'question': 'Was ist der Beruf?', 'options': ['Student', 'Lehrer', 'Arzt', 'Ingenieur'], 'answer': 0},
+            {'question': 'Was bedeutet "Freut mich"?', 'options': ['很高兴', '对不起', '再见', '谢谢'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'basic', 'title': 'Zahlen, Zeit und Datum 数字、时间与日期',
+        'sentences': [
+            {'orig': 'Wie spät ist es?', 'trans': '现在几点了？'},
+            {'orig': 'Es ist halb drei.', 'trans': '现在两点半。'},
+            {'orig': 'Wann beginnt der Kurs?', 'trans': '课程什么时候开始？'},
+            {'orig': 'Der Kurs beginnt um neun Uhr morgens.', 'trans': '课程早上九点开始。'},
+            {'orig': 'Heute ist der fünfzehnte August.', 'trans': '今天是八月十五号。'},
+            {'orig': 'Mein Geburtstag ist im März.', 'trans': '我的生日在三月。'},
+            {'orig': 'Wie viel kostet das?', 'trans': '这个多少钱？'},
+            {'orig': 'Das kostet zwanzig Euro fünfzig.', 'trans': '这个 20 欧元 50。'},
+        ],
+        'vocabulary': [
+            {'word': 'die Zeit', 'meaning': '时间'}, {'word': 'die Uhr', 'meaning': '钟/点'},
+            {'word': 'der Morgen', 'meaning': '早上'}, {'word': 'der Abend', 'meaning': '晚上'},
+            {'word': 'heute', 'meaning': '今天'}, {'word': 'morgen', 'meaning': '明天'},
+            {'word': 'gestern', 'meaning': '昨天'}, {'word': 'die Woche', 'meaning': '周/星期'},
+            {'word': 'der Monat', 'meaning': '月/月份'}, {'word': 'das Jahr', 'meaning': '年'},
+        ],
+        'questions': [
+            {'question': 'Wann beginnt der Kurs?', 'options': ['Um 9 Uhr morgens', 'Um 10 Uhr', 'Um 8 Uhr', 'Um 14 Uhr'], 'answer': 0},
+            {'question': 'Was bedeutet "halb drei"?', 'options': ['两点半', '三点整', '两点整', '三点半'], 'answer': 0},
+            {'question': 'Wann ist der Geburtstag?', 'options': ['Im März', 'Im Mai', 'Im Januar', 'Im Juli'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'basic', 'title': 'Familie und Beschreibung 家庭与描述',
+        'sentences': [
+            {'orig': 'Ich habe eine kleine Familie.', 'trans': '我有一个小家庭。'},
+            {'orig': 'Mein Vater ist Ingenieur.', 'trans': '我爸爸是工程师。'},
+            {'orig': 'Meine Mutter ist Lehrerin.', 'trans': '我妈妈是老师。'},
+            {'orig': 'Ich habe eine ältere Schwester.', 'trans': '我有一个姐姐。'},
+            {'orig': 'Meine Schwester ist sehr nett.', 'trans': '我姐姐人很好。'},
+            {'orig': 'Wir wohnen zusammen in Beijing.', 'trans': '我们一起住在北京。'},
+            {'orig': 'Am Wochenende besuchen wir oft die Großeltern.', 'trans': '周末我们经常去看望祖父母。'},
+            {'orig': 'Meine Familie ist mir sehr wichtig.', 'trans': '家庭对我来说很重要。'},
+        ],
+        'vocabulary': [
+            {'word': 'die Familie', 'meaning': '家庭'}, {'word': 'der Vater', 'meaning': '爸爸'},
+            {'word': 'die Mutter', 'meaning': '妈妈'}, {'word': 'die Schwester', 'meaning': '姐妹'},
+            {'word': 'der Bruder', 'meaning': '兄弟'}, {'word': 'die Großeltern', 'meaning': '祖父母'},
+            {'word': 'ältere', 'meaning': '年长的'}, {'word': 'nett', 'meaning': '友善的'},
+            {'word': 'wichtig', 'meaning': '重要的'}, {'word': 'zusammen', 'meaning': '一起'},
+        ],
+        'questions': [
+            {'question': 'Was macht der Vater?', 'options': ['Ingenieur', 'Lehrer', 'Arzt', 'Koch'], 'answer': 0},
+            {'question': 'Was macht die Mutter?', 'options': ['Lehrerin', 'Ärztin', 'Köchin', 'Studentin'], 'answer': 0},
+            {'question': 'Was bedeutet "zusammen"?', 'options': ['一起', '分开', '附近', '对面'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'basic', 'title': 'Wegbeschreibung und Orientierung 问路与方向',
+        'sentences': [
+            {'orig': 'Entschuldigung, können Sie mir helfen?', 'trans': '打扰一下，您能帮我吗？'},
+            {'orig': 'Ich suche den Hauptbahnhof.', 'trans': '我在找中央火车站。'},
+            {'orig': 'Gehen Sie geradeaus und dann rechts.', 'trans': '直走然后右转。'},
+            {'orig': 'Es ist etwa fünf Minuten zu Fuß.', 'trans': '步行大约五分钟。'},
+            {'orig': 'Ist es weit von hier?', 'trans': '离这里远吗？'},
+            {'orig': 'Nein, es ist ganz in der Nähe.', 'trans': '不远，就在附近。'},
+            {'orig': 'Können Sie mir das auf der Karte zeigen?', 'trans': '您能在地图上指给我看吗？'},
+            {'orig': 'Vielen Dank für Ihre Hilfe!', 'trans': '非常感谢您的帮助！'},
+        ],
+        'vocabulary': [
+            {'word': 'der Weg', 'meaning': '路/方向'}, {'word': 'geradeaus', 'meaning': '直走'},
+            {'word': 'links', 'meaning': '左边'}, {'word': 'rechts', 'meaning': '右边'},
+            {'word': 'in der Nähe', 'meaning': '在附近'}, {'word': 'weit', 'meaning': '远的'},
+            {'word': 'die Karte', 'meaning': '地图'}, {'word': 'zu Fuß', 'meaning': '步行'},
+            {'word': 'suchen', 'meaning': '寻找'}, {'word': 'helfen', 'meaning': '帮助'},
+        ],
+        'questions': [
+            {'question': 'Was sucht die Person?', 'options': ['Den Hauptbahnhof', 'Den Flughafen', 'Das Hotel', 'Das Museum'], 'answer': 0},
+            {'question': 'Wie weit ist es?', 'options': ['Fünf Minuten zu Fuß', 'Zehn Minuten mit dem Bus', 'Eine halbe Stunde', 'Sehr weit'], 'answer': 0},
+            {'question': 'Was bedeutet "geradeaus"?', 'options': ['直走', '左转', '右转', '回头'], 'answer': 0},
+        ],
+    },
+    # ── 日常德语使用场景 (Alltagsszenarien) ──
     {
         'theme': 'daily', 'title': 'Im Supermarkt 在超市',
         'sentences': [
@@ -849,18 +1028,61 @@ def main():
             all_articles.extend(articles)
 
     if all_articles:
-        print(f"  Total articles before filtering: {len(all_articles)}")
+        print(f"  Total articles from RSS: {len(all_articles)}")
         en_content = generate_english_daily_content(all_articles)
-        en_file = os.path.join(output_dir, 'daily_content_en.json')
-        with open(en_file, 'w', encoding='utf-8') as f:
-            json.dump(en_content, f, ensure_ascii=False, indent=2)
-        print(f"  Saved to {en_file}")
-        print(f"    Articles: {len(en_content['articles'])}")
-        print(f"    Vocabulary: {len(en_content['vocabulary'])}")
-        print(f"    Sentences: {len(en_content['sentences'])}")
-        print(f"    Questions: {len(en_content['questions'])}")
     else:
-        print("  [WARN] No articles found, skipping English content")
+        # ── RSS 全部不可用，使用精选备用内容 ──
+        print("  [INFO] All RSS feeds unavailable, using curated fallback content")
+        today = datetime.now()
+        # 按日期轮换，每天选不同的文章组合
+        day_idx = today.timetuple().tm_yday
+        n = len(EN_CURATED_ARTICLES)
+        # 选 5 篇，按日期偏移轮换
+        start = day_idx % n
+        selected_indices = [(start + i) % n for i in range(min(5, n))]
+        selected = [EN_CURATED_ARTICLES[i] for i in selected_indices]
+
+        en_content = {
+            'date': today.strftime('%Y-%m-%d'),
+            'lang': 'en',
+            'theme': 'daily_news',
+            'title': f"BBC / International News - {today.strftime('%Y-%m-%d')}",
+            'articles': [],
+            'vocabulary': [],
+            'sentences': [],
+            'questions': []
+        }
+
+        for article in selected:
+            vocab = extract_key_vocabulary(article['title'] + ' ' + article['description'])
+            en_content['vocabulary'].extend(vocab)
+            pairs = create_sentence_pairs(article)
+            en_content['sentences'].extend(pairs)
+            en_content['articles'].append({
+                'title': article['title'],
+                'summary': article['description'][:300],
+                'category': article.get('category', 'General'),
+                'link': article.get('link', '')
+            })
+
+        # 去重词汇
+        seen = set()
+        unique = []
+        for v in en_content['vocabulary']:
+            if v['word'] not in seen:
+                seen.add(v['word'])
+                unique.append(v)
+        en_content['vocabulary'] = unique[:15]
+        en_content['questions'] = generate_comprehension_questions(selected)
+
+    en_file = os.path.join(output_dir, 'daily_content_en.json')
+    with open(en_file, 'w', encoding='utf-8') as f:
+        json.dump(en_content, f, ensure_ascii=False, indent=2)
+    print(f"  Saved to {en_file}")
+    print(f"    Articles: {len(en_content['articles'])}")
+    print(f"    Vocabulary: {len(en_content['vocabulary'])}")
+    print(f"    Sentences: {len(en_content['sentences'])}")
+    print(f"    Questions: {len(en_content['questions'])}")
 
     # ── 德语内容（今天 + 未来 6 天，共 7 天）──
     print("\nGenerating German daily content...")
