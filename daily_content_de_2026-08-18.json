@@ -1,112 +1,112 @@
 {
   "date": "2026-08-18",
   "lang": "de",
-  "theme": "daily",
-  "title": "Wetter und Jahreszeiten 天气和季节",
+  "theme": "basic",
+  "title": "Wegbeschreibung und Orientierung 问路与方向",
   "sentences": [
     {
-      "orig": "Wie ist das Wetter heute?",
-      "trans": "今天天气怎么样？"
+      "orig": "Entschuldigung, können Sie mir helfen?",
+      "trans": "打扰一下，您能帮我吗？"
     },
     {
-      "orig": "Es ist sonnig und warm.",
-      "trans": "阳光明媚，很暖和。"
+      "orig": "Ich suche den Hauptbahnhof.",
+      "trans": "我在找中央火车站。"
     },
     {
-      "orig": "Morgen soll es regnen.",
-      "trans": "明天据说要下雨。"
+      "orig": "Gehen Sie geradeaus und dann rechts.",
+      "trans": "直走然后右转。"
     },
     {
-      "orig": "Vergiss nicht den Regenschirm!",
-      "trans": "别忘了带伞！"
+      "orig": "Es ist etwa fünf Minuten zu Fuß.",
+      "trans": "步行大约五分钟。"
     },
     {
-      "orig": "Im Winter ist es oft sehr kalt.",
-      "trans": "冬天经常很冷。"
+      "orig": "Ist es weit von hier?",
+      "trans": "离这里远吗？"
     },
     {
-      "orig": "Ich mag den Frühling am liebsten.",
-      "trans": "我最喜欢春天。"
+      "orig": "Nein, es ist ganz in der Nähe.",
+      "trans": "不远，就在附近。"
     },
     {
-      "orig": "Die Blumen blühen überall.",
-      "trans": "到处都是盛开的花朵。"
+      "orig": "Können Sie mir das auf der Karte zeigen?",
+      "trans": "您能在地图上指给我看吗？"
     },
     {
-      "orig": "Das ist eine schöne Jahreszeit.",
-      "trans": "这是一个美丽的季节。"
+      "orig": "Vielen Dank für Ihre Hilfe!",
+      "trans": "非常感谢您的帮助！"
     }
   ],
   "vocabulary": [
     {
-      "word": "das Wetter",
-      "meaning": "天气"
+      "word": "der Weg",
+      "meaning": "路/方向"
     },
     {
-      "word": "die Jahreszeit",
-      "meaning": "季节"
+      "word": "geradeaus",
+      "meaning": "直走"
     },
     {
-      "word": "der Frühling",
-      "meaning": "春天"
+      "word": "links",
+      "meaning": "左边"
     },
     {
-      "word": "der Sommer",
-      "meaning": "夏天"
+      "word": "rechts",
+      "meaning": "右边"
     },
     {
-      "word": "der Herbst",
-      "meaning": "秋天"
+      "word": "in der Nähe",
+      "meaning": "在附近"
     },
     {
-      "word": "der Winter",
-      "meaning": "冬天"
+      "word": "weit",
+      "meaning": "远的"
     },
     {
-      "word": "der Regen",
-      "meaning": "雨"
+      "word": "die Karte",
+      "meaning": "地图"
     },
     {
-      "word": "der Schnee",
-      "meaning": "雪"
+      "word": "zu Fuß",
+      "meaning": "步行"
     },
     {
-      "word": "warm",
-      "meaning": "温暖的"
+      "word": "suchen",
+      "meaning": "寻找"
     },
     {
-      "word": "kalt",
-      "meaning": "寒冷的"
+      "word": "helfen",
+      "meaning": "帮助"
     }
   ],
   "questions": [
     {
-      "question": "Wie ist das Wetter heute?",
+      "question": "Was sucht die Person?",
       "options": [
-        "Sonnig und warm",
-        "Regnerisch",
-        "Schnee",
-        "Stürmisch"
+        "Den Hauptbahnhof",
+        "Den Flughafen",
+        "Das Hotel",
+        "Das Museum"
       ],
       "answer": 0
     },
     {
-      "question": "Welche Jahreszeit mag die Person am liebsten?",
+      "question": "Wie weit ist es?",
       "options": [
-        "Den Frühling",
-        "Den Sommer",
-        "Den Herbst",
-        "Den Winter"
+        "Fünf Minuten zu Fuß",
+        "Zehn Minuten mit dem Bus",
+        "Eine halbe Stunde",
+        "Sehr weit"
       ],
       "answer": 0
     },
     {
-      "question": "Was bedeutet \"der Regenschirm\"?",
+      "question": "Was bedeutet \"geradeaus\"?",
       "options": [
-        "雨伞",
-        "太阳帽",
-        "外套",
-        "围巾"
+        "直走",
+        "左转",
+        "右转",
+        "回头"
       ],
       "answer": 0
     }

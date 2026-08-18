@@ -134,19 +134,19 @@
       "question": "What is the main topic of the leading article?",
       "options": [
         "Global leaders gather for climate summit in Geneva",
-        "International sports competition",
         "Environmental protection and climate change",
+        "International sports competition",
         "Technology and artificial intelligence"
       ],
       "answer": 0
     },
     {
-      "question": "What does \"comprehensive\" mean in Chinese?",
+      "question": "What does \"substantial\" mean in Chinese?",
       "options": [
+        "全面的",
         "未知含义",
         "未知含义",
-        "大量的，实质的",
-        "全面的"
+        "大量的，实质的"
       ],
       "answer": 3
     }

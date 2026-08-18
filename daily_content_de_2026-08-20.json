@@ -1,112 +1,112 @@
 {
   "date": "2026-08-20",
   "lang": "de",
-  "theme": "daily",
-  "title": "Im Hotel 在酒店",
+  "theme": "basic",
+  "title": "Begrüßung und Vorstellung 自我介绍与问候",
   "sentences": [
     {
-      "orig": "Guten Abend, ich habe eine Reservierung.",
-      "trans": "晚上好，我有一个预订。"
+      "orig": "Guten Tag! Mein Name ist Li Ming.",
+      "trans": "你好！我叫李明。"
     },
     {
-      "orig": "Wie ist Ihr Name, bitte?",
-      "trans": "请问您贵姓？"
+      "orig": "Freut mich, Sie kennenzulernen.",
+      "trans": "很高兴认识您。"
     },
     {
-      "orig": "Mein Name ist Müller. Zimmer für drei Nächte.",
-      "trans": "我姓穆勒。住三个晚上。"
+      "orig": "Woher kommen Sie?",
+      "trans": "您从哪里来？"
     },
     {
-      "orig": "Hier ist Ihr Zimmerschlüssel, Zimmer 305.",
-      "trans": "这是您的房卡，305 房间。"
+      "orig": "Ich komme aus China.",
+      "trans": "我来自中国。"
     },
     {
-      "orig": "Gibt es WLAN im Zimmer?",
-      "trans": "房间里有无线网络吗？"
+      "orig": "Wie alt sind Sie?",
+      "trans": "您多大了？"
     },
     {
-      "orig": "Ja, das Passwort steht auf der Karte.",
-      "trans": "有的，密码在卡上。"
+      "orig": "Ich bin fünfundzwanzig Jahre alt.",
+      "trans": "我二十五岁。"
     },
     {
-      "orig": "Könnten Sie mir bitte ein extra Kissen bringen?",
-      "trans": "您能给我多拿一个枕头吗？"
+      "orig": "Was machen Sie beruflich?",
+      "trans": "您做什么工作？"
     },
     {
-      "orig": "Natürlich, ich bringe es sofort.",
-      "trans": "当然，我马上拿来。"
+      "orig": "Ich bin Student an der Universität.",
+      "trans": "我是大学生。"
     }
   ],
   "vocabulary": [
     {
-      "word": "das Hotel",
-      "meaning": "酒店"
+      "word": "der Name",
+      "meaning": "名字"
     },
     {
-      "word": "die Reservierung",
-      "meaning": "预订"
+      "word": "das Alter",
+      "meaning": "年龄"
     },
     {
-      "word": "das Zimmer",
-      "meaning": "房间"
+      "word": "beruflich",
+      "meaning": "职业的"
     },
     {
-      "word": "der Schlüssel",
-      "meaning": "钥匙"
+      "word": "der Student",
+      "meaning": "大学生"
     },
     {
-      "word": "das Kissen",
-      "meaning": "枕头"
+      "word": "kennenlernen",
+      "meaning": "认识"
     },
     {
-      "word": "die Decke",
-      "meaning": "被子"
+      "word": "freuen",
+      "meaning": "高兴"
     },
     {
-      "word": "das Bad",
-      "meaning": "浴室"
+      "word": "woher",
+      "meaning": "从哪里"
     },
     {
-      "word": "das Frühstück",
-      "meaning": "早餐"
+      "word": "die Universität",
+      "meaning": "大学"
     },
     {
-      "word": "auschecken",
-      "meaning": "退房"
+      "word": "heißen",
+      "meaning": "叫做"
     },
     {
-      "word": "die Nacht",
-      "meaning": "夜晚"
+      "word": "ich bin",
+      "meaning": "我是"
     }
   ],
   "questions": [
     {
-      "question": "Wie viele Nächte bleibt der Gast?",
+      "question": "Woher kommt die Person?",
       "options": [
-        "Drei Nächte",
-        "Zwei Nächte",
-        "Vier Nächte",
-        "Eine Woche"
+        "Aus China",
+        "Aus Japan",
+        "Aus Korea",
+        "Aus Indien"
       ],
       "answer": 0
     },
     {
-      "question": "In welchem Zimmer ist der Gast?",
+      "question": "Was ist der Beruf?",
       "options": [
-        "Zimmer 305",
-        "Zimmer 205",
-        "Zimmer 405",
-        "Zimmer 315"
+        "Student",
+        "Lehrer",
+        "Arzt",
+        "Ingenieur"
       ],
       "answer": 0
     },
     {
-      "question": "Was bedeutet \"die Reservierung\"?",
+      "question": "Was bedeutet \"Freut mich\"?",
       "options": [
-        "预订",
-        "退房",
-        "入住",
-        "投诉"
+        "很高兴",
+        "对不起",
+        "再见",
+        "谢谢"
       ],
       "answer": 0
     }

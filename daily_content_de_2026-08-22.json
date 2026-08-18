@@ -1,112 +1,112 @@
 {
   "date": "2026-08-22",
   "lang": "de",
-  "theme": "daily",
-  "title": "Bei der Post 在邮局",
+  "theme": "basic",
+  "title": "Zahlen, Zeit und Datum 数字、时间与日期",
   "sentences": [
     {
-      "orig": "Guten Tag! Ich möchte ein Paket schicken.",
-      "trans": "您好！我想寄一个包裹。"
+      "orig": "Wie spät ist es?",
+      "trans": "现在几点了？"
     },
     {
-      "orig": "Wohin soll das Paket gehen?",
-      "trans": "包裹寄到哪里？"
+      "orig": "Es ist halb drei.",
+      "trans": "现在两点半。"
     },
     {
-      "orig": "Nach China, bitte.",
-      "trans": "请寄到中国。"
+      "orig": "Wann beginnt der Kurs?",
+      "trans": "课程什么时候开始？"
     },
     {
-      "orig": "Wie schwer ist das Paket?",
-      "trans": "包裹有多重？"
+      "orig": "Der Kurs beginnt um neun Uhr morgens.",
+      "trans": "课程早上九点开始。"
     },
     {
-      "orig": "Etwa zwei Kilo.",
-      "trans": "大约两公斤。"
+      "orig": "Heute ist der fünfzehnte August.",
+      "trans": "今天是八月十五号。"
     },
     {
-      "orig": "Das kostet 15 Euro für Luftpost.",
-      "trans": "航空邮费 15 欧元。"
+      "orig": "Mein Geburtstag ist im März.",
+      "trans": "我的生日在三月。"
     },
     {
-      "orig": "Wie lange dauert es?",
-      "trans": "需要多长时间？"
+      "orig": "Wie viel kostet das?",
+      "trans": "这个多少钱？"
     },
     {
-      "orig": "Etwa eine Woche bis zehn Tage.",
-      "trans": "大约一周到十天。"
+      "orig": "Das kostet zwanzig Euro fünfzig.",
+      "trans": "这个 20 欧元 50。"
     }
   ],
   "vocabulary": [
     {
-      "word": "die Post",
-      "meaning": "邮局"
+      "word": "die Zeit",
+      "meaning": "时间"
     },
     {
-      "word": "das Paket",
-      "meaning": "包裹"
+      "word": "die Uhr",
+      "meaning": "钟/点"
     },
     {
-      "word": "schicken",
-      "meaning": "寄送"
+      "word": "der Morgen",
+      "meaning": "早上"
     },
     {
-      "word": "die Briefmarke",
-      "meaning": "邮票"
+      "word": "der Abend",
+      "meaning": "晚上"
     },
     {
-      "word": "der Brief",
-      "meaning": "信"
+      "word": "heute",
+      "meaning": "今天"
     },
     {
-      "word": "die Luftpost",
-      "meaning": "航空邮件"
+      "word": "morgen",
+      "meaning": "明天"
     },
     {
-      "word": "das Gewicht",
-      "meaning": "重量"
+      "word": "gestern",
+      "meaning": "昨天"
     },
     {
-      "word": "die Adresse",
-      "meaning": "地址"
+      "word": "die Woche",
+      "meaning": "周/星期"
     },
     {
-      "word": "dauern",
-      "meaning": "持续/花费时间"
+      "word": "der Monat",
+      "meaning": "月/月份"
     },
     {
-      "word": "die Sendung",
-      "meaning": "邮件/快递"
+      "word": "das Jahr",
+      "meaning": "年"
     }
   ],
   "questions": [
     {
-      "question": "Wohin wird das Paket geschickt?",
+      "question": "Wann beginnt der Kurs?",
       "options": [
-        "Nach China",
-        "Nach Japan",
-        "Nach Korea",
-        "Nach Indien"
+        "Um 9 Uhr morgens",
+        "Um 10 Uhr",
+        "Um 8 Uhr",
+        "Um 14 Uhr"
       ],
       "answer": 0
     },
     {
-      "question": "Wie viel kostet das Porto?",
+      "question": "Was bedeutet \"halb drei\"?",
       "options": [
-        "15 Euro",
-        "10 Euro",
-        "20 Euro",
-        "25 Euro"
+        "两点半",
+        "三点整",
+        "两点整",
+        "三点半"
       ],
       "answer": 0
     },
     {
-      "question": "Was bedeutet \"die Briefmarke\"?",
+      "question": "Wann ist der Geburtstag?",
       "options": [
-        "邮票",
-        "信封",
-        "明信片",
-        "包裹"
+        "Im März",
+        "Im Mai",
+        "Im Januar",
+        "Im Juli"
       ],
       "answer": 0
     }

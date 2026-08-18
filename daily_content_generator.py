@@ -991,11 +991,20 @@ GERMAN_SCENARIOS = [
 ]
 
 
+BASIC_SCENARIOS = [s for s in GERMAN_SCENARIOS if s.get('theme') == 'basic']
+DAILY_SCENARIOS = [s for s in GERMAN_SCENARIOS if s.get('theme') == 'daily']
+
+
 def generate_german_daily_content(day_offset=0):
-    """生成德语每日学习内容（16 个场景按日轮换）"""
+    """生成德语每日学习内容（基础德语 / 日常场景交替轮换，保证两类内容均衡出现）"""
     today = datetime.now() + timedelta(days=day_offset)
-    day_index = today.timetuple().tm_yday % len(GERMAN_SCENARIOS)
-    scenario = GERMAN_SCENARIOS[day_index]
+    day_index = today.timetuple().tm_yday
+    # 奇偶交替：偶数天 → 基础德语场景，奇数天 → 日常使用场景
+    # 这样用户每天都能看到不同类别的内容，基础场景每隔一天出现一次
+    if day_index % 2 == 0:
+        scenario = BASIC_SCENARIOS[(day_index // 2) % len(BASIC_SCENARIOS)]
+    else:
+        scenario = DAILY_SCENARIOS[(day_index // 2) % len(DAILY_SCENARIOS)]
 
     return {
         'date': today.strftime('%Y-%m-%d'),

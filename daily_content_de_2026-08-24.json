@@ -1,112 +1,112 @@
 {
   "date": "2026-08-24",
   "lang": "de",
-  "theme": "daily",
-  "title": "Umzug und Wohnen 搬家与住房",
+  "theme": "basic",
+  "title": "Familie und Beschreibung 家庭与描述",
   "sentences": [
     {
-      "orig": "Ich suche eine Wohnung in der Stadt.",
-      "trans": "我在找市区的公寓。"
+      "orig": "Ich habe eine kleine Familie.",
+      "trans": "我有一个小家庭。"
     },
     {
-      "orig": "Wie viele Zimmer brauchen Sie?",
-      "trans": "您需要几个房间？"
+      "orig": "Mein Vater ist Ingenieur.",
+      "trans": "我爸爸是工程师。"
     },
     {
-      "orig": "Zwei Zimmer und ein Balkon, wenn möglich.",
-      "trans": "两间房和一个阳台，如果可以的话。"
+      "orig": "Meine Mutter ist Lehrerin.",
+      "trans": "我妈妈是老师。"
     },
     {
-      "orig": "Die Miete beträgt 800 Euro im Monat.",
-      "trans": "月租 800 欧元。"
+      "orig": "Ich habe eine ältere Schwester.",
+      "trans": "我有一个姐姐。"
     },
     {
-      "orig": "Ist die Heizung im Preis enthalten?",
-      "trans": "暖气费包含在价格里吗？"
+      "orig": "Meine Schwester ist sehr nett.",
+      "trans": "我姐姐人很好。"
     },
     {
-      "orig": "Ja, Heizung und Wasser sind inklusive.",
-      "trans": "是的，暖气和水费包含在内。"
+      "orig": "Wir wohnen zusammen in Beijing.",
+      "trans": "我们一起住在北京。"
     },
     {
-      "orig": "Wann kann ich einziehen?",
-      "trans": "我什么时候可以入住？"
+      "orig": "Am Wochenende besuchen wir oft die Großeltern.",
+      "trans": "周末我们经常去看望祖父母。"
     },
     {
-      "orig": "Ab dem ersten nächsten Monats.",
-      "trans": "从下个月一号开始。"
+      "orig": "Meine Familie ist mir sehr wichtig.",
+      "trans": "家庭对我来说很重要。"
     }
   ],
   "vocabulary": [
     {
-      "word": "die Wohnung",
-      "meaning": "公寓"
+      "word": "die Familie",
+      "meaning": "家庭"
     },
     {
-      "word": "der Umzug",
-      "meaning": "搬家"
+      "word": "der Vater",
+      "meaning": "爸爸"
     },
     {
-      "word": "die Miete",
-      "meaning": "租金"
+      "word": "die Mutter",
+      "meaning": "妈妈"
     },
     {
-      "word": "der Balkon",
-      "meaning": "阳台"
+      "word": "die Schwester",
+      "meaning": "姐妹"
     },
     {
-      "word": "einziehen",
-      "meaning": "入住"
+      "word": "der Bruder",
+      "meaning": "兄弟"
     },
     {
-      "word": "ausziehen",
-      "meaning": "搬出"
+      "word": "die Großeltern",
+      "meaning": "祖父母"
     },
     {
-      "word": "die Heizung",
-      "meaning": "暖气"
+      "word": "ältere",
+      "meaning": "年长的"
     },
     {
-      "word": "der Vermieter",
-      "meaning": "房东"
+      "word": "nett",
+      "meaning": "友善的"
     },
     {
-      "word": "der Mietvertrag",
-      "meaning": "租赁合同"
+      "word": "wichtig",
+      "meaning": "重要的"
     },
     {
-      "word": "inklusive",
-      "meaning": "包含在内"
+      "word": "zusammen",
+      "meaning": "一起"
     }
   ],
   "questions": [
     {
-      "question": "Wie viel beträgt die Miete?",
+      "question": "Was macht der Vater?",
       "options": [
-        "800 Euro",
-        "600 Euro",
-        "1000 Euro",
-        "700 Euro"
+        "Ingenieur",
+        "Lehrer",
+        "Arzt",
+        "Koch"
       ],
       "answer": 0
     },
     {
-      "question": "Wie viele Zimmer sucht die Person?",
+      "question": "Was macht die Mutter?",
       "options": [
-        "Zwei Zimmer",
-        "Drei Zimmer",
-        "Ein Zimmer",
-        "Vier Zimmer"
+        "Lehrerin",
+        "Ärztin",
+        "Köchin",
+        "Studentin"
       ],
       "answer": 0
     },
     {
-      "question": "Was bedeutet \"einziehen\"?",
+      "question": "Was bedeutet \"zusammen\"?",
       "options": [
-        "入住/搬入",
-        "搬出",
-        "参观",
-        "签约"
+        "一起",
+        "分开",
+        "附近",
+        "对面"
       ],
       "answer": 0
     }
