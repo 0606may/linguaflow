@@ -446,6 +446,16 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
   .query-panel{position:fixed;top:0;right:0;bottom:0;width:100vw;max-width:100vw;min-width:0;z-index:200;transform:translateX(100%);transition:transform .25s ease}
   .query-panel.open{transform:translateX(0)}
   .query-toggle-btn{display:inline-flex;font-size:12px;padding:5px 10px}
+  /* Mobile: 语言切换与模块快捷栏 */
+  .mobile-lang-switch{display:flex;margin-right:8px;border-radius:6px;overflow:hidden;border:1px solid var(--border);background:var(--card);flex-shrink:0}
+  .mobile-lang-switch .ml-btn{display:inline-flex;align-items:center;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-secondary);user-select:none}
+  .mobile-lang-switch .ml-btn.active{background:var(--primary);color:#f5f2ed}
+  .lang-switch{display:none}
+  .mobile-module-bar{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:var(--card);border-bottom:1px solid var(--border);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .mobile-module-bar::-webkit-scrollbar{display:none}
+  .mm-item{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:8px;font-size:10px;line-height:1.2;color:var(--text-secondary);cursor:pointer;border:1px solid var(--border);background:var(--bg);user-select:none;transition:all .15s}
+  .mm-item .mm-icon{font-size:17px}
+  .mm-item.active{background:var(--primary);color:#f5f2ed;border-color:var(--primary)}
 }
 /* iPhone X+ safe area */
 @supports(padding:max(0px)){
@@ -552,6 +562,10 @@ function loadTesseract(){
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle">🎧 听力训练</div>
     <div class="topbar-right">
+      <div class="mobile-lang-switch" id="mobileLangSwitch">
+        <div class="ml-btn active" data-lang="en" onclick="switchLang('en')">EN</div>
+        <div class="ml-btn" data-lang="de" onclick="switchLang('de')">DE</div>
+      </div>
       <button class="query-toggle-btn" id="queryToggleBtn" onclick="toggleQueryPanel()">🔍 AI 查询</button>
       <div class="control-row" style="margin:0">
         <span class="control-label">语音</span>
@@ -563,6 +577,17 @@ function loadTesseract(){
         <span class="speed-val" id="speedVal">0.8x</span>
       </div>
     </div>
+  </div>
+  <div class="mobile-module-bar" id="mobileModuleBar">
+    <div class="mm-item active" data-module="listening" onclick="switchModule('listening')"><span class="mm-icon">🎧</span><span>听力</span></div>
+    <div class="mm-item" data-module="speaking" onclick="switchModule('speaking')"><span class="mm-icon">🗣️</span><span>口语</span></div>
+    <div class="mm-item" data-module="reading" onclick="switchModule('reading')"><span class="mm-icon">📖</span><span>阅读</span></div>
+    <div class="mm-item" data-module="grammar" onclick="switchModule('grammar')"><span class="mm-icon">📐</span><span>语法</span></div>
+    <div class="mm-item" data-module="daily" onclick="switchModule('daily')"><span class="mm-icon">📰</span><span>每日</span></div>
+    <div class="mm-item" data-module="notes" onclick="switchModule('notes')"><span class="mm-icon">📒</span><span>笔记</span></div>
+    <div class="mm-item" data-module="quiz" onclick="switchModule('quiz')"><span class="mm-icon">📝</span><span>听写</span></div>
+    <div class="mm-item" data-module="import" onclick="switchModule('import')"><span class="mm-icon">📂</span><span>素材</span></div>
+    <div class="mm-item" onclick="openCamera()"><span class="mm-icon">📸</span><span>拍照</span></div>
   </div>
   <div class="content" id="contentArea"></div>
 </div>
@@ -2561,7 +2586,7 @@ function getRecommendations(lang){
 let synth = window.speechSynthesis;
 let recognition = null;
 let currentAudio = null;
-let ttsEngine = 'google'; // 'google' or 'browser'
+let ttsEngine = 'browser'; // 'google' or 'browser'（默认浏览器语音：Google TTS 在部分网络不可用）
 
 function initVoices(){
   state.voices = synth.getVoices();
@@ -2629,6 +2654,16 @@ function splitTextForTTS(text, maxLen){
 // Browser SpeechSynthesis - fallback
 function browserTTS(text, onEnd){
   synth.cancel();
+  // iOS Safari/PWA 首次 speak 可能无声：先播一个空句预热
+  if(!window.__ttsWarmed){
+    window.__ttsWarmed = true;
+    try{
+      const warm = new SpeechSynthesisUtterance(' ');
+      warm.volume = 0;
+      synth.speak(warm);
+      synth.cancel();
+    }catch(e){}
+  }
   const u = new SpeechSynthesisUtterance(text);
   u.lang = state.lang === 'en' ? 'en-US' : 'de-DE';
   u.rate = state.speed;
@@ -6034,7 +6069,7 @@ function switchLang(lang){
   state.lang = lang;
   state.currentMaterial = null;
   stopSpeaking();
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  document.querySelectorAll('.lang-btn, .ml-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   populateVoiceSelect();
   renderCurrentModule();
 }
@@ -6044,6 +6079,7 @@ function switchModule(mod){
     stopSpeaking();
     _grammarDetail = null;
     document.querySelectorAll('.sidebar-item').forEach(el => el.classList.toggle('active', el.dataset.module === mod));
+    document.querySelectorAll('.mm-item[data-module]').forEach(el => el.classList.toggle('active', el.dataset.module === mod));
     const titles = {listening:'🎧 听力训练',speaking:'🗣️ 口语跟读',reading:'📖 阅读查词',grammar:'📐 语法学习',daily:'📰 每日更新',quiz:'📝 听写测试',import:'📂 导入素材',progress:'📊 学习进度',activity:'📅 学习记录',query:'🔍 AI 查询',notes:'📒 学习笔记'};
     document.getElementById('topbarTitle').textContent = titles[mod] || mod;
     renderCurrentModule();
@@ -6052,6 +6088,20 @@ function switchModule(mod){
     const area = document.getElementById('contentArea');
     if(area) area.innerHTML = '<div class="card"><div class="empty-state"><div class="es-icon">⚠️</div><div class="es-text">模块加载出错，请刷新页面重试</div></div></div>';
   }
+}
+
+// 手机端快捷入口：直接调起相机拍照识别（智能解析）
+function openCamera(){
+  switchModule('import');
+  setTimeout(() => {
+    const inp = document.getElementById('uploadInput');
+    if(inp) inp.click();
+    else{
+      // 上传区尚未渲染时兜底：直接滚动到上传区
+      const zone = document.getElementById('uploadZone');
+      if(zone) zone.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  }, 450);
 }
 function renderCurrentModule(){
   const renderers = {listening:renderListening,speaking:renderSpeaking,reading:renderReading,grammar:renderGrammar,daily:renderDaily,quiz:renderQuiz,import:renderImport,progress:renderProgress,activity:renderActivity,query:renderQuery,notes:renderNotes};
