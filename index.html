@@ -140,6 +140,8 @@ select.ctrl-select{padding:6px 10px;border:1px solid var(--border);border-radius
 /* Grid */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+/* 移动端专属控件：桌面端默认隐藏（手机宽度由下方媒体查询重新显示） */
+.mobile-lang-switch,.mobile-module-bar{display:none}
 /* Responsive */
 @media(max-width:768px){
   .sidebar{width:60px}.sidebar-brand small,.sidebar-item span,.sidebar-section{display:none}.sidebar-brand{font-size:14px;padding:14px 4px}.sidebar-item{padding:12px;justify-content:center;border-left:none;border-right:3px solid transparent}.sidebar-item.active{border-left:none;border-right-color:var(--accent)}.lang-switch{flex-direction:column;margin:4px 8px}.grid-2{grid-template-columns:1fr}
