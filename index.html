@@ -1779,6 +1779,8 @@ function renderDailyContent(data, lang){
   const area = document.getElementById('contentArea');
   const dateStr = data.date || new Date().toISOString().slice(0,10);
   const langLabel = lang === 'en' ? '英语' : '德语';
+  const themeLabels = {news:'新闻英语', work:'工作/日常英语', daily_news:'新闻英语', basic:'基础德语', daily:'日常场景'};
+  const themeLabel = themeLabels[data.theme] || data.theme || 'daily';
 
   // Tab bar
   const tabs = [
@@ -1800,7 +1802,7 @@ function renderDailyContent(data, lang){
   area.innerHTML = `<div class="fade-in">
     <div class="daily-header">
       <div class="daily-date">📅 ${dateStr} · ${langLabel}每日内容</div>
-      <div style="font-size:12px;color:var(--text-secondary)">${data.theme || 'daily'}</div>
+      <div style="font-size:12px;color:var(--text-secondary)">${themeLabel}</div>
     </div>
     ${tabBar}
     ${content}

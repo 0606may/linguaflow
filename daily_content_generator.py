@@ -199,8 +199,431 @@ EN_CURATED_ARTICLES = [
 
 
 # ──────────────────────────────────────────────
-# 工具函数
+# 英语雅思7级主题内容（RSS 不可用时使用，与德语场景轮换机制一致）
+# 难度对标 IELTS 7 / TEM-8：高级词汇、复杂句式、推理型题目
+# 8 个新闻类 + 8 个工作/日常类，共 16 个主题，按日期奇偶交替轮换
 # ──────────────────────────────────────────────
+
+ENGLISH_TOPICS = [
+    # ══ 新闻英语类（news）══
+    {
+        'theme': 'news', 'category': 'World', 'title': 'International Relations 国际关系',
+        'summary': 'Diplomatic dialogue, territorial disputes and peace negotiations between nations.',
+        'sentences': [
+            {'orig': 'The two nations have agreed to resume diplomatic dialogue after months of escalating tensions over territorial disputes in the region.', 'trans': '两国在数月因地区领土争端而关系紧张后，同意恢复外交对话。'},
+            {'orig': 'The proposed treaty is intended to facilitate mutual understanding and pave the way for sustained economic cooperation.', 'trans': '该拟议条约旨在促进相互理解，为持续的经济合作铺平道路。'},
+            {'orig': 'Critics argue that the agreement, while ambitious in scope, lacks enforceable mechanisms to guarantee compliance.', 'trans': '批评者认为，该协议尽管规模宏大，却缺乏可执行的机制来确保遵守。'},
+            {'orig': 'The ambassador emphasised that unilateral sanctions would only exacerbate the crisis and undermine diplomatic efforts.', 'trans': '大使强调，单边制裁只会加剧危机，破坏外交努力。'},
+            {'orig': 'A fragile ceasefire has taken effect along the contested border, raising cautious hopes of a lasting peace.', 'trans': '有争议的边境沿线已实施脆弱的停火，给持久和平带来了谨慎的希望。'},
+            {'orig': 'The summit served as a platform for dialogue between rival powers, albeit with limited tangible outcomes.', 'trans': '此次峰会为敌对大国提供了对话平台，尽管实际成果有限。'},
+            {'orig': 'Negotiators are reportedly close to a compromise that would address the core grievances of both parties.', 'trans': '据报道，谈判代表即将达成一项能解决双方核心不满的妥协方案。'},
+            {'orig': 'International observers have called for greater transparency in the peace process to build public trust.', 'trans': '国际观察员呼吁和平进程提高透明度，以建立公众信任。'},
+        ],
+        'vocabulary': [
+            {'word': 'diplomatic', 'meaning': '外交的'}, {'word': 'territorial dispute', 'meaning': '领土争端'},
+            {'word': 'mutual understanding', 'meaning': '相互理解'}, {'word': 'enforceable', 'meaning': '可执行的'},
+            {'word': 'compliance', 'meaning': '遵守，合规'}, {'word': 'unilateral sanctions', 'meaning': '单边制裁'},
+            {'word': 'exacerbate', 'meaning': '加剧'}, {'word': 'ceasefire', 'meaning': '停火'},
+            {'word': 'tangible', 'meaning': '实际的，切实的'}, {'word': 'transparency', 'meaning': '透明度'},
+        ],
+        'questions': [
+            {'question': 'What is the main obstacle to the proposed treaty?', 'options': ['It lacks enforceable mechanisms', 'It is too small in scope', 'It was rejected by critics', 'It promotes sanctions'], 'answer': 0},
+            {'question': 'What does "unilateral sanctions" mean?', 'options': ['制裁由单方实施', '双方联合制裁', '经济援助', '军事干预'], 'answer': 0},
+            {'question': 'How does the ambassador view unilateral sanctions?', 'options': ['They would worsen the crisis', 'They are the best solution', 'They should be expanded', 'They are unnecessary'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'news', 'category': 'Environment', 'title': 'Climate Change & Environment 气候变化与环境',
+        'summary': 'Global warming, renewable energy transition and climate policy debates.',
+        'sentences': [
+            {'orig': 'Scientists have issued an urgent warning that global temperatures are on track to exceed the critical threshold of 1.5 degrees Celsius within two decades.', 'trans': '科学家发出紧急警告：全球气温将在二十年内突破1.5摄氏度的临界阈值。'},
+            {'orig': 'The transition to renewable energy sources is gaining momentum, driven by both environmental concerns and falling production costs.', 'trans': '在环境关切和生产成本下降的双重推动下，向可再生能源的转型正在加速。'},
+            {'orig': 'Developing nations argue that they should not bear the disproportionate burden of emission reductions historically caused by industrialised countries.', 'trans': '发展中国家认为，它们不应承担由工业化国家历史上造成的过重减排负担。'},
+            {'orig': 'The latest climate report underscores the urgent need for carbon neutrality, with governments urged to commit to ambitious targets.', 'trans': '最新气候报告强调了实现碳中和的紧迫性，敦促各国政府承诺宏伟目标。'},
+            {'orig': 'Despite international pledges, greenhouse gas emissions continue to rise, highlighting the gap between rhetoric and action.', 'trans': '尽管有国际承诺，温室气体排放仍在上升，凸显了言论与行动之间的差距。'},
+            {'orig': 'Adaptation measures, such as flood defences and drought-resistant crops, are becoming increasingly vital for vulnerable regions.', 'trans': '防洪设施和抗旱作物等适应措施，对脆弱地区正变得日益重要。'},
+            {'orig': 'The concept of a circular economy, which emphasises reuse and recycling, has gained traction among policymakers worldwide.', 'trans': '强调再利用和回收的循环经济理念，已获得全球政策制定者的青睐。'},
+            {'orig': 'Critics contend that voluntary corporate commitments are insufficient and that binding legislation is the only viable solution.', 'trans': '批评者认为，企业的自愿承诺远远不够，具有约束力的立法才是唯一可行的解决方案。'},
+        ],
+        'vocabulary': [
+            {'word': 'critical threshold', 'meaning': '临界阈值'}, {'word': 'momentum', 'meaning': '势头'},
+            {'word': 'disproportionate', 'meaning': '不成比例的'}, {'word': 'carbon neutrality', 'meaning': '碳中和'},
+            {'word': 'greenhouse gas', 'meaning': '温室气体'}, {'word': 'rhetoric', 'meaning': '空谈，修辞'},
+            {'word': 'adaptation', 'meaning': '适应（措施）'}, {'word': 'circular economy', 'meaning': '循环经济'},
+            {'word': 'viable', 'meaning': '可行的'}, {'word': 'binding legislation', 'meaning': '有约束力的立法'},
+        ],
+        'questions': [
+            {'question': 'What do developing nations argue about emission reductions?', 'options': ['They should not bear a disproportionate burden', 'They welcome the responsibility', 'They have achieved carbon neutrality', 'They reject renewable energy'], 'answer': 0},
+            {'question': 'What does "the gap between rhetoric and action" refer to?', 'options': ['承诺与实际措施之间的差距', '语言障碍', '科学不确定性', '资金短缺'], 'answer': 0},
+            {'question': 'According to critics, what is the only viable solution?', 'options': ['Binding legislation', 'Voluntary commitments', 'Technological innovation', 'Public campaigns'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'news', 'category': 'Business', 'title': 'Global Economy & Finance 全球经济与金融',
+        'summary': 'Interest rates, inflation, trade and economic outlook analysis.',
+        'sentences': [
+            {'orig': 'Global markets have responded cautiously to the central bank\'s decision to raise interest rates in an effort to curb inflation.', 'trans': '全球市场对央行旨在抑制通胀的加息决定反应谨慎。'},
+            {'orig': 'The country\'s economy is projected to grow by 4.2 per cent this year, driven largely by robust domestic consumption.', 'trans': '该国经济预计今年增长4.2%，主要由强劲的国内消费推动。'},
+            {'orig': 'Economists warn that prolonged supply chain disruptions could trigger a global recession and widespread job losses.', 'trans': '经济学家警告，长期供应链中断可能引发全球衰退和大规模失业。'},
+            {'orig': 'Foreign direct investment has surged, reflecting investors\' confidence in the region\'s long-term growth prospects.', 'trans': '外国直接投资激增，反映出投资者对该地区长期增长前景的信心。'},
+            {'orig': 'The government unveiled a comprehensive fiscal package aimed at stimulating small and medium-sized enterprises.', 'trans': '政府公布了旨在刺激中小企业的全面财政方案。'},
+            {'orig': 'Currency fluctuations have posed significant challenges for exporters, eroding profit margins across the sector.', 'trans': '汇率波动给出口商带来重大挑战，侵蚀了整个行业的利润率。'},
+            {'orig': 'Trade agreements between major economies are reshaping global supply chains, with companies diversifying their production bases.', 'trans': '主要经济体之间的贸易协定正在重塑全球供应链，企业纷纷实现生产基地多元化。'},
+            {'orig': 'While the outlook remains uncertain, economists remain cautiously optimistic about a gradual recovery in the second half of the year.', 'trans': '尽管前景仍不确定，经济学家对下半年逐步复苏保持谨慎乐观。'},
+        ],
+        'vocabulary': [
+            {'word': 'curb', 'meaning': '抑制'}, {'word': 'inflation', 'meaning': '通货膨胀'},
+            {'word': 'robust', 'meaning': '强劲的'}, {'word': 'supply chain', 'meaning': '供应链'},
+            {'word': 'recession', 'meaning': '衰退'}, {'word': 'foreign direct investment', 'meaning': '外国直接投资'},
+            {'word': 'fiscal package', 'meaning': '财政方案'}, {'word': 'fluctuation', 'meaning': '波动'},
+            {'word': 'erode', 'meaning': '侵蚀'}, {'word': 'cautiously optimistic', 'meaning': '谨慎乐观'},
+        ],
+        'questions': [
+            {'question': 'Why did the central bank raise interest rates?', 'options': ['To curb inflation', 'To boost exports', 'To reduce unemployment', 'To attract investment'], 'answer': 0},
+            {'question': 'What could trigger a global recession according to economists?', 'options': ['Prolonged supply chain disruptions', 'High domestic consumption', 'Foreign investment', 'Currency stability'], 'answer': 0},
+            {'question': 'What does "eroding profit margins" mean?', 'options': ['利润空间被压缩', '利润大幅增长', '价格持续下跌', '成本保持不变'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'news', 'category': 'Technology', 'title': 'Technology & Artificial Intelligence 科技与人工智能',
+        'summary': 'AI breakthroughs, regulation, automation and digital ethics.',
+        'sentences': [
+            {'orig': 'The rapid advancement of artificial intelligence has sparked a global debate over its implications for employment and privacy.', 'trans': '人工智能的快速发展引发了关于其对就业和隐私影响的全球辩论。'},
+            {'orig': 'Regulators are grappling with how to oversee emerging technologies that evolve faster than existing legal frameworks.', 'trans': '监管机构正在艰难应对如何监管比现有法律框架发展更快的新兴技术。'},
+            {'orig': 'Machine learning algorithms are now capable of diagnosing medical conditions with accuracy comparable to experienced physicians.', 'trans': '机器学习算法现在能够以与经验丰富的医生相当的高准确度诊断疾病。'},
+            {'orig': 'Critics warn that unchecked automation could exacerbate social inequality by displacing workers in low-skilled industries.', 'trans': '批评者警告，不受约束的自动化可能取代低技能行业工人，从而加剧社会不平等。'},
+            {'orig': 'The company has pledged to implement robust safeguards to protect user data and ensure algorithmic transparency.', 'trans': '该公司承诺实施强有力的保障措施，保护用户数据并确保算法透明。'},
+            {'orig': 'Breakthroughs in quantum computing promise to revolutionise fields ranging from cryptography to drug discovery.', 'trans': '量子计算的突破有望彻底改变从密码学到药物发现等各个领域。'},
+            {'orig': 'Digital literacy has emerged as an essential skill, enabling individuals to navigate an increasingly complex online landscape.', 'trans': '数字素养已成为一项基本技能，使个人能够驾驭日益复杂的网络环境。'},
+            {'orig': 'Ethical guidelines for artificial intelligence remain fragmented, with no universally accepted standard yet established.', 'trans': '人工智能的伦理准则仍然支离破碎，尚未建立普遍接受的标准。'},
+        ],
+        'vocabulary': [
+            {'word': 'implications', 'meaning': '影响，含义'}, {'word': 'regulator', 'meaning': '监管机构'},
+            {'word': 'emerging technology', 'meaning': '新兴技术'}, {'word': 'algorithm', 'meaning': '算法'},
+            {'word': 'displace', 'meaning': '取代'}, {'word': 'safeguard', 'meaning': '保障措施'},
+            {'word': 'algorithmic transparency', 'meaning': '算法透明'}, {'word': 'quantum computing', 'meaning': '量子计算'},
+            {'word': 'digital literacy', 'meaning': '数字素养'}, {'word': 'fragmented', 'meaning': '零散的，不统一的'},
+        ],
+        'questions': [
+            {'question': 'What has the rapid advancement of AI sparked?', 'options': ['A global debate', 'A new industry', 'A legal crisis', 'A scientific breakthrough'], 'answer': 0},
+            {'question': 'Why do regulators find it difficult to oversee new technologies?', 'options': ['它们比法律框架发展更快', '它们太昂贵', '它们是保密的', '它们缺乏公众支持'], 'answer': 0},
+            {'question': 'What do critics warn about unchecked automation?', 'options': ['It could worsen social inequality', 'It will boost the economy', 'It is impossible', 'It improves job quality'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'news', 'category': 'Health', 'title': 'Health & Medicine 健康与医学',
+        'summary': 'Vaccination, chronic disease research and public health policy.',
+        'sentences': [
+            {'orig': 'Public health officials have launched a nationwide vaccination campaign aimed at curbing the spread of infectious diseases.', 'trans': '公共卫生官员发起了全国性疫苗接种运动，旨在遏制传染病的传播。'},
+            {'orig': 'Researchers have identified a potential breakthrough in the treatment of chronic diseases, offering hope to millions of patients.', 'trans': '研究人员在慢性病治疗方面发现了潜在突破，为数百万患者带来希望。'},
+            {'orig': 'Mental health awareness has gained significant traction, with schools and workplaces introducing support programmes.', 'trans': '心理健康意识获得显著关注，学校和工作场所纷纷引入支持计划。'},
+            {'orig': 'The healthcare system faces mounting pressure from an ageing population and rising medical costs.', 'trans': '医疗体系面临人口老龄化和医疗成本上升带来的日益增长的压力。'},
+            {'orig': 'Clinical trials have demonstrated that the new drug significantly reduces recovery time with minimal side effects.', 'trans': '临床试验表明，新药能显著缩短恢复时间，且副作用极小。'},
+            {'orig': 'Preventive medicine, including regular screenings and healthy lifestyles, is increasingly recognised as the cornerstone of public health.', 'trans': '包括定期筛查和健康生活方式在内的预防医学，日益被视为公共卫生的基石。'},
+            {'orig': 'Health experts caution that the overuse of antibiotics has accelerated the emergence of drug-resistant bacteria.', 'trans': '健康专家警告，抗生素的过度使用加速了耐药细菌的出现。'},
+            {'orig': 'The pandemic has underscored the critical importance of global cooperation in addressing health emergencies.', 'trans': '疫情凸显了全球合作应对突发卫生事件的关键重要性。'},
+        ],
+        'vocabulary': [
+            {'word': 'vaccination campaign', 'meaning': '疫苗接种运动'}, {'word': 'infectious disease', 'meaning': '传染病'},
+            {'word': 'chronic disease', 'meaning': '慢性病'}, {'word': 'traction', 'meaning': '关注度，进展'},
+            {'word': 'ageing population', 'meaning': '老龄化人口'}, {'word': 'clinical trial', 'meaning': '临床试验'},
+            {'word': 'side effects', 'meaning': '副作用'}, {'word': 'preventive medicine', 'meaning': '预防医学'},
+            {'word': 'drug-resistant', 'meaning': '耐药的'}, {'word': 'underscore', 'meaning': '强调，凸显'},
+        ],
+        'questions': [
+            {'question': 'What is the purpose of the vaccination campaign?', 'options': ['To curb infectious diseases', 'To reduce medical costs', 'To train doctors', 'To fund research'], 'answer': 0},
+            {'question': 'What has the overuse of antibiotics accelerated?', 'options': ['耐药细菌的出现', '恢复时间', '医疗成本', '医院容量'], 'answer': 0},
+            {'question': 'What is increasingly recognised as the cornerstone of public health?', 'options': ['Preventive medicine', 'Emergency care', 'Private hospitals', 'Medical insurance'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'news', 'category': 'Society', 'title': 'Education & Society 教育与社会',
+        'summary': 'Technology in classrooms, tuition fees and the future of learning.',
+        'sentences': [
+            {'orig': 'The debate over the role of technology in classrooms has intensified, with proponents praising personalised learning and critics citing distraction.', 'trans': '关于技术在课堂中作用的争论愈演愈烈，支持者称赞个性化学习，批评者则指出分心问题。'},
+            {'orig': 'University tuition fees have risen sharply over the past decade, placing an increasing financial burden on students and families.', 'trans': '过去十年大学学费大幅上涨，给学生和家庭带来了日益沉重的经济负担。'},
+            {'orig': 'Governments are investing heavily in vocational training to bridge the widening skills gap in the labour market.', 'trans': '各国政府大力投资职业培训，以弥合劳动力市场日益扩大的技能差距。'},
+            {'orig': 'Research suggests that early childhood education has a profound and lasting impact on cognitive development.', 'trans': '研究表明，幼儿教育对认知发展具有深远而持久的影响。'},
+            {'orig': 'The digital divide remains a formidable barrier, preventing millions of students from accessing quality education.', 'trans': '数字鸿沟仍然是一道难以逾越的障碍，使数百万学生无法获得优质教育。'},
+            {'orig': 'Educators advocate a shift away from rote memorisation towards critical thinking and problem-solving skills.', 'trans': '教育工作者主张从死记硬背转向批判性思维和解决问题能力的培养。'},
+            {'orig': 'Lifelong learning has become a necessity in a rapidly evolving job market, where skills become obsolete within a decade.', 'trans': '在技能十年内就会过时的快速变化就业市场中，终身学习已成为必要。'},
+            {'orig': 'Policymakers face the challenge of balancing academic excellence with equitable access to educational opportunities.', 'trans': '政策制定者面临在学术卓越与教育机会公平之间取得平衡的挑战。'},
+        ],
+        'vocabulary': [
+            {'word': 'intensify', 'meaning': '加剧'}, {'word': 'personalised learning', 'meaning': '个性化学习'},
+            {'word': 'tuition fees', 'meaning': '学费'}, {'word': 'vocational training', 'meaning': '职业培训'},
+            {'word': 'skills gap', 'meaning': '技能差距'}, {'word': 'cognitive development', 'meaning': '认知发展'},
+            {'word': 'digital divide', 'meaning': '数字鸿沟'}, {'word': 'formidable', 'meaning': '难以克服的'},
+            {'word': 'rote memorisation', 'meaning': '死记硬背'}, {'word': 'equitable', 'meaning': '公平的'},
+        ],
+        'questions': [
+            {'question': 'What do critics say about technology in classrooms?', 'options': ['It causes distraction', 'It is too expensive', 'It improves grades', 'It reduces teaching time'], 'answer': 0},
+            {'question': 'What is the digital divide preventing?', 'options': ['数百万学生获得优质教育', '教师培训', '学校建设', '毕业生就业'], 'answer': 0},
+            {'question': 'Why has lifelong learning become a necessity?', 'options': ['技能过时很快', '学校在关闭', '大学很贵', '雇主要求学位'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'news', 'category': 'Culture', 'title': 'Culture & Arts 文化与艺术',
+        'summary': 'Heritage preservation, digital museums and cultural exchange.',
+        'sentences': [
+            {'orig': 'The restoration of the ancient monument, a project spanning nearly a decade, has been hailed as a triumph of cultural preservation.', 'trans': '这座古老纪念碑的修复工程历时近十年，被誉为文化遗产保护的胜利。'},
+            {'orig': 'Museums are embracing digital technology, offering virtual tours that make their collections accessible to a global audience.', 'trans': '博物馆正在拥抱数字技术，提供虚拟参观，让全球观众都能欣赏其藏品。'},
+            {'orig': 'The film industry has undergone profound transformation, with streaming platforms reshaping how audiences consume content.', 'trans': '电影业经历了深刻变革，流媒体平台正在重塑观众的消费方式。'},
+            {'orig': 'Cultural heritage, from traditional crafts to intangible practices, plays a vital role in shaping national identity.', 'trans': '从传统工艺到非物质文化遗产，文化遗产在塑造民族认同方面发挥着重要作用。'},
+            {'orig': 'The government has allocated substantial funding to support emerging artists and independent cultural initiatives.', 'trans': '政府已拨出大量资金支持新兴艺术家和独立文化项目。'},
+            {'orig': 'Critics argue that commercialisation threatens the authenticity of traditional art forms, reducing them to tourist attractions.', 'trans': '批评者认为，商业化威胁传统艺术形式的真实性，使其沦为旅游景点。'},
+            {'orig': 'International cultural exchanges foster mutual understanding and serve as a bridge between diverse societies.', 'trans': '国际文化交流增进相互理解，成为连接不同社会的桥梁。'},
+            {'orig': 'The literary world has witnessed a resurgence of interest in translated fiction, broadening readers\' horizons beyond national borders.', 'trans': '文学界见证了翻译小说兴趣的复苏，拓宽了读者的国际视野。'},
+        ],
+        'vocabulary': [
+            {'word': 'restoration', 'meaning': '修复'}, {'word': 'monument', 'meaning': '纪念碑，古迹'},
+            {'word': 'preservation', 'meaning': '保护'}, {'word': 'virtual tours', 'meaning': '虚拟参观'},
+            {'word': 'transformation', 'meaning': '变革'}, {'word': 'intangible', 'meaning': '无形的'},
+            {'word': 'national identity', 'meaning': '民族认同'}, {'word': 'authenticity', 'meaning': '真实性'},
+            {'word': 'resurgence', 'meaning': '复苏'}, {'word': 'horizons', 'meaning': '视野'},
+        ],
+        'questions': [
+            {'question': 'How have museums made collections accessible globally?', 'options': ['Through virtual tours', 'By lowering prices', 'By building branches', 'Through radio broadcasts'], 'answer': 0},
+            {'question': 'What do critics say commercialisation threatens?', 'options': ['传统艺术形式的真实性', '博物馆收入', '旅游发展', '艺术家薪酬'], 'answer': 0},
+            {'question': 'What has broadened readers\' horizons?', 'options': ['Translated fiction', 'New printing methods', 'Cheaper books', 'Online reviews'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'news', 'category': 'Science', 'title': 'Science & Space Exploration 科学与太空探索',
+        'summary': 'Space missions, astronomical discoveries and scientific frontiers.',
+        'sentences': [
+            {'orig': 'Astronomers have detected a distant exoplanet whose atmosphere contains traces of water vapour, a tantalising hint of habitability.', 'trans': '天文学家探测到一颗遥远系外行星的大气中含有水蒸气痕迹，这是宜居性的诱人线索。'},
+            {'orig': 'The successful landing of the rover marked a significant milestone in the exploration of the Red Planet.', 'trans': '火星车的成功着陆标志着这颗红色星球探索的重要里程碑。'},
+            {'orig': 'Scientists are developing advanced propulsion systems that could shorten interstellar travel from centuries to decades.', 'trans': '科学家正在开发先进推进系统，可将星际旅行从数百年缩短至数十年。'},
+            {'orig': 'The detection of gravitational waves has opened an entirely new window on the universe, enabling observation of cosmic collisions.', 'trans': '引力波的探测为观测宇宙打开了一扇全新窗口，使观测宇宙碰撞成为可能。'},
+            {'orig': 'Space agencies are collaborating on ambitious projects, recognising that the frontiers of science transcend national boundaries.', 'trans': '航天机构正在合作开展宏伟项目，认识到科学前沿超越国界。'},
+            {'orig': 'The orbiting telescope has captured unprecedented images of galaxies formed over 13 billion years ago.', 'trans': '轨道望远镜捕捉到了130多亿年前形成星系的空前图像。'},
+            {'orig': 'Private companies are revolutionising space exploration, dramatically reducing the cost of launching payloads into orbit.', 'trans': '私营公司正在彻底改变太空探索，大幅降低将有效载荷送入轨道的成本。'},
+            {'orig': 'Concerns over space debris have intensified, prompting international efforts to develop sustainable practices for orbital operations.', 'trans': '对太空垃圾的担忧加剧，促使国际社会努力为轨道运行制定可持续规范。'},
+        ],
+        'vocabulary': [
+            {'word': 'exoplanet', 'meaning': '系外行星'}, {'word': 'water vapour', 'meaning': '水蒸气'},
+            {'word': 'habitability', 'meaning': '宜居性'}, {'word': 'milestone', 'meaning': '里程碑'},
+            {'word': 'propulsion system', 'meaning': '推进系统'}, {'word': 'interstellar', 'meaning': '星际的'},
+            {'word': 'gravitational waves', 'meaning': '引力波'}, {'word': 'transcend', 'meaning': '超越'},
+            {'word': 'unprecedented', 'meaning': '前所未有的'}, {'word': 'space debris', 'meaning': '太空垃圾'},
+        ],
+        'questions': [
+            {'question': 'What makes the exoplanet potentially habitable?', 'options': ['Traces of water vapour', 'Its large size', 'Its close orbit', 'Its magnetic field'], 'answer': 0},
+            {'question': 'What could new propulsion systems shorten?', 'options': ['Interstellar travel time', 'Satellite lifespan', 'Rocket assembly', 'Mission planning'], 'answer': 0},
+            {'question': 'How are private companies revolutionising space exploration?', 'options': ['By reducing launch costs', 'By building larger rockets', 'By banning government projects', 'By focusing on tourism'], 'answer': 0},
+        ],
+    },
+    # ══ 工作/日常英语类（work）══
+    {
+        'theme': 'work', 'category': 'Business', 'title': 'Business Meetings 商务会议',
+        'summary': 'Key expressions for professional meetings, agendas and decision-making.',
+        'sentences': [
+            {'orig': 'Before we proceed, I\'d like to touch base on the key deliverables we agreed upon in our previous meeting.', 'trans': '在我们继续之前，我想简要确认上次会议商定的关键交付成果。'},
+            {'orig': 'Could you elaborate on the projected revenue figures? Some of us feel the assumptions may be overly optimistic.', 'trans': '您能详细说明一下预计收入数据吗？我们中有些人认为这些假设可能过于乐观。'},
+            {'orig': 'Let\'s put this item on the agenda for next week so that all stakeholders have sufficient time to prepare.', 'trans': '让我们把这个事项列入下周议程，以便所有利益相关者有充足时间准备。'},
+            {'orig': 'I appreciate your input, but we need to weigh the short-term costs against the long-term strategic benefits.', 'trans': '感谢您的意见，但我们需要权衡短期成本与长期战略利益。'},
+            {'orig': 'To be frank, we\'re running behind schedule, and unless we streamline the process, we\'ll miss the deadline.', 'trans': '坦率地说，我们的进度落后了，除非简化流程，否则将错过截止日期。'},
+            {'orig': 'The consensus appears to be that we should prioritise the European market before expanding into Asia.', 'trans': '共识似乎是，我们应该优先开拓欧洲市场，然后再扩展到亚洲。'},
+            {'orig': 'Could we take a moment to clarify the scope of responsibilities for each department involved in this project?', 'trans': '我们能花点时间澄清参与此项目的各部门职责范围吗？'},
+            {'orig': 'I\'d like to propose that we form a task force to investigate the feasibility of the partnership.', 'trans': '我提议成立一个工作组，调查该合作关系的可行性。'},
+        ],
+        'vocabulary': [
+            {'word': 'touch base', 'meaning': '简要沟通'}, {'word': 'deliverables', 'meaning': '交付成果'},
+            {'word': 'elaborate', 'meaning': '详细说明'}, {'word': 'projected', 'meaning': '预计的'},
+            {'word': 'stakeholders', 'meaning': '利益相关者'}, {'word': 'weigh', 'meaning': '权衡'},
+            {'word': 'streamline', 'meaning': '简化流程'}, {'word': 'consensus', 'meaning': '共识'},
+            {'word': 'scope of responsibilities', 'meaning': '职责范围'}, {'word': 'task force', 'meaning': '工作组'},
+        ],
+        'questions': [
+            {'question': 'What does "touch base" mean in a business context?', 'options': ['简要沟通', '达成交易', '结束会议', '修改合同'], 'answer': 0},
+            {'question': 'Why does the speaker want to clarify department responsibilities?', 'options': ['To define each party\'s scope', 'To assign blame', 'To reduce staff', 'To end the meeting'], 'answer': 0},
+            {'question': 'What should the team do before expanding into Asia?', 'options': ['Prioritise the European market', 'Hire more staff', 'Raise prices', 'Cancel the project'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'work', 'category': 'Business', 'title': 'Business Emails & Correspondence 商务邮件',
+        'summary': 'Professional email phrases for formal written communication.',
+        'sentences': [
+            {'orig': 'I am writing to follow up on our recent correspondence regarding the outstanding invoice for the third quarter.', 'trans': '我写信是想跟进我们最近关于第三季度未付发票的通信。'},
+            {'orig': 'Please find attached the revised proposal, incorporating all the feedback we received during last week\'s review.', 'trans': '随附修订后的提案，其中已纳入上周评审中收到的所有反馈。'},
+            {'orig': 'We would appreciate it if you could confirm receipt of this document by the end of the business day.', 'trans': '如果您能在工作日结束前确认收到此文件，我们将不胜感激。'},
+            {'orig': 'Kindly note that the deadline for submission has been extended to the 30th of this month.', 'trans': '请注意，提交截止日期已延长至本月30日。'},
+            {'orig': 'I regret to inform you that we are unable to accommodate your request due to unforeseen circumstances.', 'trans': '很遗憾地通知您，由于不可预见的情况，我们无法满足您的请求。'},
+            {'orig': 'Should you have any further queries, please do not hesitate to contact me at your earliest convenience.', 'trans': '如果您有任何进一步疑问，请随时在方便时尽快联系我。'},
+            {'orig': 'We are delighted to confirm our participation in the upcoming trade fair and look forward to fruitful collaboration.', 'trans': '我们很高兴确认参加即将举行的贸易博览会，期待富有成效的合作。'},
+            {'orig': 'Please be advised that our office will be closed for the national holiday from August 15th to 18th.', 'trans': '谨此通知，我们的办公室将于8月15日至18日国庆假期期间关闭。'},
+        ],
+        'vocabulary': [
+            {'word': 'follow up', 'meaning': '跟进'}, {'word': 'correspondence', 'meaning': '通信'},
+            {'word': 'outstanding invoice', 'meaning': '未付发票'}, {'word': 'attached', 'meaning': '随附的'},
+            {'word': 'incorporate', 'meaning': '纳入'}, {'word': 'receipt', 'meaning': '收到，收据'},
+            {'word': 'deadline', 'meaning': '截止日期'}, {'word': 'accommodate', 'meaning': '满足，容纳'},
+            {'word': 'unforeseen', 'meaning': '不可预见的'}, {'word': 'fruitful', 'meaning': '富有成效的'},
+        ],
+        'questions': [
+            {'question': 'What does "follow up on correspondence" mean?', 'options': ['就通信内容进一步跟进', '删除旧邮件', '转发邮件', '取消订阅'], 'answer': 0},
+            {'question': 'Why was the proposal revised?', 'options': ['To incorporate feedback', 'To reduce costs', 'To change the team', 'To cancel the project'], 'answer': 0},
+            {'question': 'What does "accommodate your request" mean?', 'options': ['满足您的请求', '拒绝您的请求', '延迟您的请求', '忽略您的请求'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'work', 'category': 'Business', 'title': 'Negotiation & Deals 商务谈判',
+        'summary': 'Persuasive language for deals, pricing and partnerships.',
+        'sentences': [
+            {'orig': 'Our initial offer is based on a thorough analysis of market conditions and our production costs.', 'trans': '我们的初始报价基于对市场状况和生产成本的深入分析。'},
+            {'orig': 'We\'re willing to be flexible on the delivery timeline, provided that the payment terms are adjusted accordingly.', 'trans': '如果付款条件相应调整，我们愿意在交付时间表上保持灵活。'},
+            {'orig': 'I\'m afraid your proposal exceeds our budget by a considerable margin, and we would need to revisit the pricing structure.', 'trans': '恐怕您的提案大大超出了我们的预算，我们需要重新审视定价结构。'},
+            {'orig': 'Both parties should approach these discussions with a spirit of compromise if we are to reach a mutually beneficial agreement.', 'trans': '要想达成互利协议，双方都应以妥协精神进行讨论。'},
+            {'orig': 'We could offer a volume discount of ten per cent in exchange for a three-year supply agreement.', 'trans': '我们可以提供10%的批量折扣，以换取三年期供货协议。'},
+            {'orig': 'I understand your position, but walking away from the table would be a missed opportunity for both companies.', 'trans': '我理解您的立场，但退出谈判对两家公司都是错失良机。'},
+            {'orig': 'The ball is in your court regarding the revised terms; we look forward to your counterproposal.', 'trans': '关于修订条款，球在您那边，我们期待您的还价。'},
+            {'orig': 'Let\'s not lose sight of the bigger picture; the strategic value of this partnership outweighs the immediate financial concerns.', 'trans': '我们不要忽视大局；这一合作关系的战略价值超过眼前的财务顾虑。'},
+        ],
+        'vocabulary': [
+            {'word': 'initial offer', 'meaning': '初始报价'}, {'word': 'flexible', 'meaning': '灵活的'},
+            {'word': 'delivery timeline', 'meaning': '交付时间表'}, {'word': 'payment terms', 'meaning': '付款条件'},
+            {'word': 'considerable margin', 'meaning': '相当大的幅度'}, {'word': 'pricing structure', 'meaning': '定价结构'},
+            {'word': 'mutually beneficial', 'meaning': '互利的'}, {'word': 'volume discount', 'meaning': '批量折扣'},
+            {'word': 'counterproposal', 'meaning': '还价，反提案'}, {'word': 'outweigh', 'meaning': '超过，重于'},
+        ],
+        'questions': [
+            {'question': 'Under what condition is the speaker willing to be flexible?', 'options': ['If payment terms are adjusted', 'If delivery is extended', 'If prices rise', 'If quantities increase'], 'answer': 0},
+            {'question': 'What does "the ball is in your court" mean?', 'options': ['轮到您回应了', '比赛开始了', '谈判失败了', '合同已签署'], 'answer': 0},
+            {'question': 'What is the strategic value described as?', 'options': ['Overweighing financial concerns', 'Equal to costs', 'Less important', 'Unrelated to profit'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'work', 'category': 'Career', 'title': 'Job Interviews & Career 求职面试',
+        'summary': 'Answering questions and showcasing strengths in interviews.',
+        'sentences': [
+            {'orig': 'Could you walk me through your most significant professional achievement and the role you played in it?', 'trans': '您能谈谈您最重要的职业成就以及您在其中扮演的角色吗？'},
+            {'orig': 'I believe my experience in cross-functional team management aligns well with the requirements of this position.', 'trans': '我相信我在跨职能团队管理方面的经验与该职位的要求高度契合。'},
+            {'orig': 'One of my key strengths is the ability to adapt quickly to changing circumstances while maintaining a high standard of work.', 'trans': '我的一个关键优势是能够快速适应变化的环境，同时保持高标准的工作质量。'},
+            {'orig': 'The challenge I faced taught me the importance of resilience and proactive problem-solving under pressure.', 'trans': '我面临的挑战教会了我在压力下保持韧性并主动解决问题的重要性。'},
+            {'orig': 'I\'m particularly drawn to this opportunity because it aligns with my long-term career aspirations in international business.', 'trans': '我特别看重这个机会，因为它与我在国际商务领域的长期职业抱负相契合。'},
+            {'orig': 'Could you elaborate on the career progression opportunities available within the organisation?', 'trans': '您能详细说明组织内的职业发展机会吗？'},
+            {'orig': 'My previous role equipped me with strong analytical skills, which I believe are essential for success in this position.', 'trans': '之前的职位使我具备了强大的分析能力，我认为这些能力对在该职位取得成功至关重要。'},
+            {'orig': 'I\'ve always been proactive in seeking feedback and continuously improving my performance.', 'trans': '我一直主动寻求反馈，不断改进自己的工作表现。'},
+        ],
+        'vocabulary': [
+            {'word': 'walk me through', 'meaning': '带我回顾'}, {'word': 'significant', 'meaning': '重要的'},
+            {'word': 'cross-functional', 'meaning': '跨职能的'}, {'word': 'align with', 'meaning': '与…一致'},
+            {'word': 'key strengths', 'meaning': '核心优势'}, {'word': 'resilience', 'meaning': '韧性'},
+            {'word': 'proactive', 'meaning': '主动的'}, {'word': 'drawn to', 'meaning': '被吸引'},
+            {'word': 'career aspirations', 'meaning': '职业抱负'}, {'word': 'analytical skills', 'meaning': '分析能力'},
+        ],
+        'questions': [
+            {'question': 'What does "walk me through" mean in an interview?', 'options': ['请带我回顾/讲述', '带我散步', '通过考试', '面试结束'], 'answer': 0},
+            {'question': 'Why is the candidate drawn to the opportunity?', 'options': ['It aligns with career aspirations', 'It offers high salary', 'It is close to home', 'It requires no travel'], 'answer': 0},
+            {'question': 'What skills did the previous role equip the candidate with?', 'options': ['Analytical skills', 'Cooking skills', 'Driving skills', 'Language skills'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'work', 'category': 'Career', 'title': 'Workplace Communication 职场沟通',
+        'summary': 'Common phrases for collaboration, feedback and issue escalation.',
+        'sentences': [
+            {'orig': 'I\'d appreciate it if you could keep me in the loop regarding any changes to the project timeline.', 'trans': '如果项目时间表有任何变化，希望您能让我随时了解情况。'},
+            {'orig': 'Let\'s schedule a follow-up meeting to address the concerns raised by the client\'s feedback.', 'trans': '让我们安排一次后续会议，处理客户反馈中提出的问题。'},
+            {'orig': 'I think there may have been a misunderstanding regarding the allocation of resources between our teams.', 'trans': '我认为我们团队之间在资源分配上可能存在误解。'},
+            {'orig': 'Could you please prioritise this task, as it has a direct impact on the upcoming product launch?', 'trans': '您能否优先处理这项任务，因为它直接影响到即将到来的产品发布？'},
+            {'orig': 'I\'m concerned that we might be underestimating the scope of work involved in this project.', 'trans': '我担心我们可能低估了这个项目的工作量。'},
+            {'orig': 'Let me play devil\'s advocate for a moment: is there any risk that the client will reject the proposed solution?', 'trans': '让我暂时唱唱反调：客户有没有可能拒绝拟议的方案？'},
+            {'orig': 'I think we should flag this issue to senior management before it escalates into a bigger problem.', 'trans': '我认为我们应该在问题升级之前向高层管理汇报。'},
+            {'orig': 'Thanks for the constructive feedback; I\'ll incorporate it into my approach going forward.', 'trans': '感谢您的建设性反馈；我会将其纳入我今后的工作方法中。'},
+        ],
+        'vocabulary': [
+            {'word': 'keep me in the loop', 'meaning': '让我知情'}, {'word': 'follow-up meeting', 'meaning': '后续会议'},
+            {'word': 'misunderstanding', 'meaning': '误解'}, {'word': 'allocation', 'meaning': '分配'},
+            {'word': 'prioritise', 'meaning': '优先处理'}, {'word': 'underestimate', 'meaning': '低估'},
+            {'word': 'devil\'s advocate', 'meaning': '唱反调的人'}, {'word': 'escalate', 'meaning': '升级'},
+            {'word': 'flag', 'meaning': '标记，提出'}, {'word': 'constructive feedback', 'meaning': '建设性反馈'},
+        ],
+        'questions': [
+            {'question': 'What does "keep me in the loop" mean?', 'options': ['让我随时知情', '让我离开会议', '帮我预订座位', '帮我发送邮件'], 'answer': 0},
+            {'question': 'Why does the speaker play devil\'s advocate?', 'options': ['To examine possible risks', 'To support the proposal', 'To end the discussion', 'To change the subject'], 'answer': 0},
+            {'question': 'What should happen before the issue escalates?', 'options': ['Flag it to senior management', 'Ignore it', 'Cancel the project', 'Blame the client'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'work', 'category': 'Career', 'title': 'Professional Presentations 职业演讲',
+        'summary': 'Structuring talks, presenting data and engaging an audience.',
+        'sentences': [
+            {'orig': 'Good morning, everyone. Thank you for taking the time to attend today\'s presentation on our quarterly performance.', 'trans': '大家早上好。感谢各位抽出时间参加今天的季度业绩演示。'},
+            {'orig': 'Let me begin by outlining the key objectives of our strategy for the coming fiscal year.', 'trans': '首先，让我概述我们下一财年战略的主要目标。'},
+            {'orig': 'As you can see from this chart, our market share has grown steadily over the past three quarters.', 'trans': '从这个图表可以看出，过去三个季度我们的市场份额稳步增长。'},
+            {'orig': 'I\'d like to draw your attention to a critical finding that emerged from our latest consumer survey.', 'trans': '我想提请各位注意我们最新消费者调查中得出的一个关键发现。'},
+            {'orig': 'To sum up, our strong financial position provides a solid foundation for aggressive expansion next year.', 'trans': '总而言之，我们强劲的财务状况为明年的积极扩张提供了坚实基础。'},
+            {'orig': 'If you have any questions, I\'ll be happy to address them at the end of the presentation.', 'trans': '如果各位有任何问题，我很乐意在演示结束时解答。'},
+            {'orig': 'Looking ahead, we anticipate significant growth opportunities in emerging markets.', 'trans': '展望未来，我们预计新兴市场存在重大增长机遇。'},
+            {'orig': 'I want to emphasise that this initiative would not have been possible without the dedication of our entire team.', 'trans': '我想强调，没有整个团队的奉献，这一计划是不可能实现的。'},
+        ],
+        'vocabulary': [
+            {'word': 'outline', 'meaning': '概述'}, {'word': 'objectives', 'meaning': '目标'},
+            {'word': 'fiscal year', 'meaning': '财政年度'}, {'word': 'market share', 'meaning': '市场份额'},
+            {'word': 'steadily', 'meaning': '稳步地'}, {'word': 'draw your attention to', 'meaning': '提请关注'},
+            {'word': 'emerging markets', 'meaning': '新兴市场'}, {'word': 'anticipate', 'meaning': '预期'},
+            {'word': 'solid foundation', 'meaning': '坚实基础'}, {'word': 'dedication', 'meaning': '奉献'},
+        ],
+        'questions': [
+            {'question': 'What is the presentation about?', 'options': ['Quarterly performance', 'Company history', 'Staff training', 'Office relocation'], 'answer': 0},
+            {'question': 'What has grown steadily over three quarters?', 'options': ['Market share', 'Staff numbers', 'Office space', 'Travel expenses'], 'answer': 0},
+            {'question': 'What provides a solid foundation for expansion?', 'options': ['Strong financial position', 'New offices', 'More staff', 'Lower prices'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'work', 'category': 'Daily', 'title': 'Advanced Daily Conversation 高级日常对话',
+        'summary': 'Idioms and nuanced expressions for natural, fluent conversation.',
+        'sentences': [
+            {'orig': 'I\'ve been meaning to get in touch with you — how have things been since we last caught up?', 'trans': '我一直想联系您——自从上次见面后您过得怎么样？'},
+            {'orig': 'It\'s a bit of a grey area, so I\'d rather not speculate without knowing all the facts.', 'trans': '这有点模棱两可，在了解全部事实之前，我不愿妄加猜测。'},
+            {'orig': 'I\'m quite taken aback by the news; I never expected the situation to unfold this way.', 'trans': '这个消息让我大吃一惊；我从没料到情况会这样发展。'},
+            {'orig': 'Let\'s agree to disagree on this point and move on to something more productive.', 'trans': '让我们在这个问题上求同存异，继续讨论更有建设性的话题吧。'},
+            {'orig': 'I\'ve been burning the midnight oil lately, trying to wrap up the project before the deadline.', 'trans': '我最近一直在开夜车，想在截止日期前完成这个项目。'},
+            {'orig': 'To be perfectly honest, I\'m having second thoughts about whether this is the right approach.', 'trans': '老实说，我对此方法是否正确开始有所迟疑。'},
+            {'orig': 'It goes without saying that we should respect each other\'s boundaries in any professional relationship.', 'trans': '不言而喻，在任何职业关系中我们都应尊重彼此的界限。'},
+            {'orig': 'That\'s easier said than done, especially when you\'re juggling multiple priorities at once.', 'trans': '这说起来容易做起来难，尤其是当你同时处理多项优先事务时。'},
+        ],
+        'vocabulary': [
+            {'word': 'get in touch', 'meaning': '联系'}, {'word': 'grey area', 'meaning': '灰色地带，模糊地带'},
+            {'word': 'speculate', 'meaning': '推测'}, {'word': 'taken aback', 'meaning': '吃惊'},
+            {'word': 'unfold', 'meaning': '展现，发展'}, {'word': 'agree to disagree', 'meaning': '求同存异'},
+            {'word': 'burn the midnight oil', 'meaning': '熬夜工作'}, {'word': 'wrap up', 'meaning': '完成，收尾'},
+            {'word': 'second thoughts', 'meaning': '迟疑，重新考虑'}, {'word': 'easier said than done', 'meaning': '说起来容易做起来难'},
+        ],
+        'questions': [
+            {'question': 'What does "burning the midnight oil" mean?', 'options': ['熬夜工作', '烧油取暖', '深夜聚会', '浪费资源'], 'answer': 0},
+            {'question': 'What does "grey area" refer to?', 'options': ['模糊不清的情况', '灰色建筑', '天气状况', '老年社区'], 'answer': 0},
+            {'question': 'What does the speaker feel about the approach?', 'options': ['Having doubts', 'Complete confidence', 'Total rejection', 'No opinion'], 'answer': 0},
+        ],
+    },
+    {
+        'theme': 'work', 'category': 'Daily', 'title': 'Digital & Social Life 数字与社交生活',
+        'summary': 'Talking about social media, online trends and digital habits.',
+        'sentences': [
+            {'orig': 'Social media platforms have fundamentally transformed the way we consume news and engage in public discourse.', 'trans': '社交媒体平台从根本上改变了我们消费新闻和参与公共讨论的方式。'},
+            {'orig': 'Many users are concerned about the extent to which their personal data is being collected and monetised.', 'trans': '许多用户担心他们的个人数据被收集和商业化的程度。'},
+            {'orig': 'The rise of short-form video has reshaped digital marketing, forcing brands to adapt their strategies rapidly.', 'trans': '短视频的兴起重塑了数字营销，迫使品牌迅速调整策略。'},
+            {'orig': 'Online communities provide a sense of belonging, yet they can also foster echo chambers that reinforce existing beliefs.', 'trans': '网络社区提供归属感，但也可能助长强化既有信念的信息茧房。'},
+            {'orig': 'Digital detoxes have become increasingly popular as people seek respite from constant connectivity.', 'trans': '随着人们寻求摆脱持续在线的状态，数字戒断日益流行。'},
+            {'orig': 'The gig economy, facilitated by digital platforms, offers flexibility but often lacks job security.', 'trans': '由数字平台推动的零工经济提供了灵活性，但往往缺乏工作保障。'},
+            {'orig': 'Content creators are navigating an increasingly competitive landscape to capture audiences\' fleeting attention.', 'trans': '内容创作者正在日益激烈的竞争中争夺用户转瞬即逝的注意力。'},
+            {'orig': 'Cybersecurity awareness has become indispensable, as online threats grow more sophisticated by the day.', 'trans': '随着网络威胁日益复杂，网络安全意识已变得不可或缺。'},
+        ],
+        'vocabulary': [
+            {'word': 'fundamentally', 'meaning': '根本上'}, {'word': 'public discourse', 'meaning': '公共讨论'},
+            {'word': 'monetise', 'meaning': '商业化盈利'}, {'word': 'short-form video', 'meaning': '短视频'},
+            {'word': 'echo chamber', 'meaning': '信息茧房'}, {'word': 'digital detox', 'meaning': '数字戒断'},
+            {'word': 'gig economy', 'meaning': '零工经济'}, {'word': 'job security', 'meaning': '工作保障'},
+            {'word': 'fleeting', 'meaning': '转瞬即逝的'}, {'word': 'cybersecurity', 'meaning': '网络安全'},
+        ],
+        'questions': [
+            {'question': 'What can online communities also foster?', 'options': ['信息茧房', '体育锻炼', '经济增长', '语言多样性'], 'answer': 0},
+            {'question': 'What does the gig economy often lack?', 'options': ['Job security', 'Digital platforms', 'Flexibility', 'Workers'], 'answer': 0},
+            {'question': 'Why is cybersecurity awareness indispensable?', 'options': ['网络威胁日益复杂', '电脑很贵', '网速很慢', '软件过时'], 'answer': 0},
+        ],
+    },
+]
 
 def strip_cdata(text):
     """清除残留的 CDATA 标记"""
@@ -995,6 +1418,35 @@ BASIC_SCENARIOS = [s for s in GERMAN_SCENARIOS if s.get('theme') == 'basic']
 DAILY_SCENARIOS = [s for s in GERMAN_SCENARIOS if s.get('theme') == 'daily']
 
 
+def generate_english_topic_content(day_offset=0):
+    """生成英语雅思7级主题内容（新闻 / 工作日常交替轮换，与德语机制一致）
+    偶数天 → 新闻英语主题，奇数天 → 工作/日常英语主题"""
+    today = datetime.now() + timedelta(days=day_offset)
+    day_index = today.timetuple().tm_yday
+    news_topics = [t for t in ENGLISH_TOPICS if t.get('theme') == 'news']
+    work_topics = [t for t in ENGLISH_TOPICS if t.get('theme') == 'work']
+    if day_index % 2 == 0:
+        topic = news_topics[(day_index // 2) % len(news_topics)]
+    else:
+        topic = work_topics[(day_index // 2) % len(work_topics)]
+
+    return {
+        'date': today.strftime('%Y-%m-%d'),
+        'lang': 'en',
+        'theme': topic['theme'],
+        'title': topic['title'],
+        'articles': [{
+            'title': topic['title'],
+            'summary': topic.get('summary', ''),
+            'category': topic.get('category', 'IELTS'),
+            'link': ''
+        }],
+        'vocabulary': topic['vocabulary'],
+        'sentences': topic['sentences'],
+        'questions': topic['questions'],
+    }
+
+
 def generate_german_daily_content(day_offset=0):
     """生成德语每日学习内容（基础德语 / 日常场景交替轮换，保证两类内容均衡出现）"""
     today = datetime.now() + timedelta(days=day_offset)
@@ -1040,49 +1492,9 @@ def main():
         print(f"  Total articles from RSS: {len(all_articles)}")
         en_content = generate_english_daily_content(all_articles)
     else:
-        # ── RSS 全部不可用，使用精选备用内容 ──
-        print("  [INFO] All RSS feeds unavailable, using curated fallback content")
-        today = datetime.now()
-        # 按日期轮换，每天选不同的文章组合
-        day_idx = today.timetuple().tm_yday
-        n = len(EN_CURATED_ARTICLES)
-        # 选 5 篇，按日期偏移轮换
-        start = day_idx % n
-        selected_indices = [(start + i) % n for i in range(min(5, n))]
-        selected = [EN_CURATED_ARTICLES[i] for i in selected_indices]
-
-        en_content = {
-            'date': today.strftime('%Y-%m-%d'),
-            'lang': 'en',
-            'theme': 'daily_news',
-            'title': f"BBC / International News - {today.strftime('%Y-%m-%d')}",
-            'articles': [],
-            'vocabulary': [],
-            'sentences': [],
-            'questions': []
-        }
-
-        for article in selected:
-            vocab = extract_key_vocabulary(article['title'] + ' ' + article['description'])
-            en_content['vocabulary'].extend(vocab)
-            pairs = create_sentence_pairs(article)
-            en_content['sentences'].extend(pairs)
-            en_content['articles'].append({
-                'title': article['title'],
-                'summary': article['description'][:300],
-                'category': article.get('category', 'General'),
-                'link': article.get('link', '')
-            })
-
-        # 去重词汇
-        seen = set()
-        unique = []
-        for v in en_content['vocabulary']:
-            if v['word'] not in seen:
-                seen.add(v['word'])
-                unique.append(v)
-        en_content['vocabulary'] = unique[:15]
-        en_content['questions'] = generate_comprehension_questions(selected)
+        # ── RSS 全部不可用，使用雅思7级主题内容轮换（与德语机制一致）──
+        print("  [INFO] All RSS feeds unavailable, using IELTS-level curated topics")
+        en_content = generate_english_topic_content(day_offset=0)
 
     en_file = os.path.join(output_dir, 'daily_content_en.json')
     with open(en_file, 'w', encoding='utf-8') as f:
@@ -1092,6 +1504,16 @@ def main():
     print(f"    Vocabulary: {len(en_content['vocabulary'])}")
     print(f"    Sentences: {len(en_content['sentences'])}")
     print(f"    Questions: {len(en_content['questions'])}")
+
+    # ── 英语内容（今天 + 未来 6 天，共 7 天，主题轮换预生成）──
+    print("\nGenerating English topic content (next 7 days)...")
+    for i in range(7):
+        en_topic = generate_english_topic_content(day_offset=i)
+        date_str = en_topic['date']
+        en_topic_file = os.path.join(output_dir, f'daily_content_en_{date_str}.json')
+        with open(en_topic_file, 'w', encoding='utf-8') as f:
+            json.dump(en_topic, f, ensure_ascii=False, indent=2)
+        print(f"  Saved {date_str}: {en_topic['title']}")
 
     # ── 德语内容（今天 + 未来 6 天，共 7 天）──
     print("\nGenerating German daily content...")

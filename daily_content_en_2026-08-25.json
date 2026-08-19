@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-25",
+  "lang": "en",
+  "theme": "work",
+  "title": "Advanced Daily Conversation 高级日常对话",
+  "articles": [
+    {
+      "title": "Advanced Daily Conversation 高级日常对话",
+      "summary": "Idioms and nuanced expressions for natural, fluent conversation.",
+      "category": "Daily",
+      "link": ""
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "get in touch",
+      "meaning": "联系"
+    },
+    {
+      "word": "grey area",
+      "meaning": "灰色地带，模糊地带"
+    },
+    {
+      "word": "speculate",
+      "meaning": "推测"
+    },
+    {
+      "word": "taken aback",
+      "meaning": "吃惊"
+    },
+    {
+      "word": "unfold",
+      "meaning": "展现，发展"
+    },
+    {
+      "word": "agree to disagree",
+      "meaning": "求同存异"
+    },
+    {
+      "word": "burn the midnight oil",
+      "meaning": "熬夜工作"
+    },
+    {
+      "word": "wrap up",
+      "meaning": "完成，收尾"
+    },
+    {
+      "word": "second thoughts",
+      "meaning": "迟疑，重新考虑"
+    },
+    {
+      "word": "easier said than done",
+      "meaning": "说起来容易做起来难"
+    }
+  ],
+  "sentences": [
+    {
+      "orig": "I've been meaning to get in touch with you — how have things been since we last caught up?",
+      "trans": "我一直想联系您——自从上次见面后您过得怎么样？"
+    },
+    {
+      "orig": "It's a bit of a grey area, so I'd rather not speculate without knowing all the facts.",
+      "trans": "这有点模棱两可，在了解全部事实之前，我不愿妄加猜测。"
+    },
+    {
+      "orig": "I'm quite taken aback by the news; I never expected the situation to unfold this way.",
+      "trans": "这个消息让我大吃一惊；我从没料到情况会这样发展。"
+    },
+    {
+      "orig": "Let's agree to disagree on this point and move on to something more productive.",
+      "trans": "让我们在这个问题上求同存异，继续讨论更有建设性的话题吧。"
+    },
+    {
+      "orig": "I've been burning the midnight oil lately, trying to wrap up the project before the deadline.",
+      "trans": "我最近一直在开夜车，想在截止日期前完成这个项目。"
+    },
+    {
+      "orig": "To be perfectly honest, I'm having second thoughts about whether this is the right approach.",
+      "trans": "老实说，我对此方法是否正确开始有所迟疑。"
+    },
+    {
+      "orig": "It goes without saying that we should respect each other's boundaries in any professional relationship.",
+      "trans": "不言而喻，在任何职业关系中我们都应尊重彼此的界限。"
+    },
+    {
+      "orig": "That's easier said than done, especially when you're juggling multiple priorities at once.",
+      "trans": "这说起来容易做起来难，尤其是当你同时处理多项优先事务时。"
+    }
+  ],
+  "questions": [
+    {
+      "question": "What does \"burning the midnight oil\" mean?",
+      "options": [
+        "熬夜工作",
+        "烧油取暖",
+        "深夜聚会",
+        "浪费资源"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What does \"grey area\" refer to?",
+      "options": [
+        "模糊不清的情况",
+        "灰色建筑",
+        "天气状况",
+        "老年社区"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What does the speaker feel about the approach?",
+      "options": [
+        "Having doubts",
+        "Complete confidence",
+        "Total rejection",
+        "No opinion"
+      ],
+      "answer": 0
+    }
+  ]
+}

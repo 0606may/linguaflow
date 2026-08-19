@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-22",
+  "lang": "en",
+  "theme": "news",
+  "title": "Education & Society 教育与社会",
+  "articles": [
+    {
+      "title": "Education & Society 教育与社会",
+      "summary": "Technology in classrooms, tuition fees and the future of learning.",
+      "category": "Society",
+      "link": ""
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "intensify",
+      "meaning": "加剧"
+    },
+    {
+      "word": "personalised learning",
+      "meaning": "个性化学习"
+    },
+    {
+      "word": "tuition fees",
+      "meaning": "学费"
+    },
+    {
+      "word": "vocational training",
+      "meaning": "职业培训"
+    },
+    {
+      "word": "skills gap",
+      "meaning": "技能差距"
+    },
+    {
+      "word": "cognitive development",
+      "meaning": "认知发展"
+    },
+    {
+      "word": "digital divide",
+      "meaning": "数字鸿沟"
+    },
+    {
+      "word": "formidable",
+      "meaning": "难以克服的"
+    },
+    {
+      "word": "rote memorisation",
+      "meaning": "死记硬背"
+    },
+    {
+      "word": "equitable",
+      "meaning": "公平的"
+    }
+  ],
+  "sentences": [
+    {
+      "orig": "The debate over the role of technology in classrooms has intensified, with proponents praising personalised learning and critics citing distraction.",
+      "trans": "关于技术在课堂中作用的争论愈演愈烈，支持者称赞个性化学习，批评者则指出分心问题。"
+    },
+    {
+      "orig": "University tuition fees have risen sharply over the past decade, placing an increasing financial burden on students and families.",
+      "trans": "过去十年大学学费大幅上涨，给学生和家庭带来了日益沉重的经济负担。"
+    },
+    {
+      "orig": "Governments are investing heavily in vocational training to bridge the widening skills gap in the labour market.",
+      "trans": "各国政府大力投资职业培训，以弥合劳动力市场日益扩大的技能差距。"
+    },
+    {
+      "orig": "Research suggests that early childhood education has a profound and lasting impact on cognitive development.",
+      "trans": "研究表明，幼儿教育对认知发展具有深远而持久的影响。"
+    },
+    {
+      "orig": "The digital divide remains a formidable barrier, preventing millions of students from accessing quality education.",
+      "trans": "数字鸿沟仍然是一道难以逾越的障碍，使数百万学生无法获得优质教育。"
+    },
+    {
+      "orig": "Educators advocate a shift away from rote memorisation towards critical thinking and problem-solving skills.",
+      "trans": "教育工作者主张从死记硬背转向批判性思维和解决问题能力的培养。"
+    },
+    {
+      "orig": "Lifelong learning has become a necessity in a rapidly evolving job market, where skills become obsolete within a decade.",
+      "trans": "在技能十年内就会过时的快速变化就业市场中，终身学习已成为必要。"
+    },
+    {
+      "orig": "Policymakers face the challenge of balancing academic excellence with equitable access to educational opportunities.",
+      "trans": "政策制定者面临在学术卓越与教育机会公平之间取得平衡的挑战。"
+    }
+  ],
+  "questions": [
+    {
+      "question": "What do critics say about technology in classrooms?",
+      "options": [
+        "It causes distraction",
+        "It is too expensive",
+        "It improves grades",
+        "It reduces teaching time"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What is the digital divide preventing?",
+      "options": [
+        "数百万学生获得优质教育",
+        "教师培训",
+        "学校建设",
+        "毕业生就业"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Why has lifelong learning become a necessity?",
+      "options": [
+        "技能过时很快",
+        "学校在关闭",
+        "大学很贵",
+        "雇主要求学位"
+      ],
+      "answer": 0
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-23",
+  "lang": "en",
+  "theme": "work",
+  "title": "Professional Presentations 职业演讲",
+  "articles": [
+    {
+      "title": "Professional Presentations 职业演讲",
+      "summary": "Structuring talks, presenting data and engaging an audience.",
+      "category": "Career",
+      "link": ""
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "outline",
+      "meaning": "概述"
+    },
+    {
+      "word": "objectives",
+      "meaning": "目标"
+    },
+    {
+      "word": "fiscal year",
+      "meaning": "财政年度"
+    },
+    {
+      "word": "market share",
+      "meaning": "市场份额"
+    },
+    {
+      "word": "steadily",
+      "meaning": "稳步地"
+    },
+    {
+      "word": "draw your attention to",
+      "meaning": "提请关注"
+    },
+    {
+      "word": "emerging markets",
+      "meaning": "新兴市场"
+    },
+    {
+      "word": "anticipate",
+      "meaning": "预期"
+    },
+    {
+      "word": "solid foundation",
+      "meaning": "坚实基础"
+    },
+    {
+      "word": "dedication",
+      "meaning": "奉献"
+    }
+  ],
+  "sentences": [
+    {
+      "orig": "Good morning, everyone. Thank you for taking the time to attend today's presentation on our quarterly performance.",
+      "trans": "大家早上好。感谢各位抽出时间参加今天的季度业绩演示。"
+    },
+    {
+      "orig": "Let me begin by outlining the key objectives of our strategy for the coming fiscal year.",
+      "trans": "首先，让我概述我们下一财年战略的主要目标。"
+    },
+    {
+      "orig": "As you can see from this chart, our market share has grown steadily over the past three quarters.",
+      "trans": "从这个图表可以看出，过去三个季度我们的市场份额稳步增长。"
+    },
+    {
+      "orig": "I'd like to draw your attention to a critical finding that emerged from our latest consumer survey.",
+      "trans": "我想提请各位注意我们最新消费者调查中得出的一个关键发现。"
+    },
+    {
+      "orig": "To sum up, our strong financial position provides a solid foundation for aggressive expansion next year.",
+      "trans": "总而言之，我们强劲的财务状况为明年的积极扩张提供了坚实基础。"
+    },
+    {
+      "orig": "If you have any questions, I'll be happy to address them at the end of the presentation.",
+      "trans": "如果各位有任何问题，我很乐意在演示结束时解答。"
+    },
+    {
+      "orig": "Looking ahead, we anticipate significant growth opportunities in emerging markets.",
+      "trans": "展望未来，我们预计新兴市场存在重大增长机遇。"
+    },
+    {
+      "orig": "I want to emphasise that this initiative would not have been possible without the dedication of our entire team.",
+      "trans": "我想强调，没有整个团队的奉献，这一计划是不可能实现的。"
+    }
+  ],
+  "questions": [
+    {
+      "question": "What is the presentation about?",
+      "options": [
+        "Quarterly performance",
+        "Company history",
+        "Staff training",
+        "Office relocation"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What has grown steadily over three quarters?",
+      "options": [
+        "Market share",
+        "Staff numbers",
+        "Office space",
+        "Travel expenses"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What provides a solid foundation for expansion?",
+      "options": [
+        "Strong financial position",
+        "New offices",
+        "More staff",
+        "Lower prices"
+      ],
+      "answer": 0
+    }
+  ]
+}

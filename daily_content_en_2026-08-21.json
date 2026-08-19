@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-21",
+  "lang": "en",
+  "theme": "work",
+  "title": "Workplace Communication 职场沟通",
+  "articles": [
+    {
+      "title": "Workplace Communication 职场沟通",
+      "summary": "Common phrases for collaboration, feedback and issue escalation.",
+      "category": "Career",
+      "link": ""
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "keep me in the loop",
+      "meaning": "让我知情"
+    },
+    {
+      "word": "follow-up meeting",
+      "meaning": "后续会议"
+    },
+    {
+      "word": "misunderstanding",
+      "meaning": "误解"
+    },
+    {
+      "word": "allocation",
+      "meaning": "分配"
+    },
+    {
+      "word": "prioritise",
+      "meaning": "优先处理"
+    },
+    {
+      "word": "underestimate",
+      "meaning": "低估"
+    },
+    {
+      "word": "devil's advocate",
+      "meaning": "唱反调的人"
+    },
+    {
+      "word": "escalate",
+      "meaning": "升级"
+    },
+    {
+      "word": "flag",
+      "meaning": "标记，提出"
+    },
+    {
+      "word": "constructive feedback",
+      "meaning": "建设性反馈"
+    }
+  ],
+  "sentences": [
+    {
+      "orig": "I'd appreciate it if you could keep me in the loop regarding any changes to the project timeline.",
+      "trans": "如果项目时间表有任何变化，希望您能让我随时了解情况。"
+    },
+    {
+      "orig": "Let's schedule a follow-up meeting to address the concerns raised by the client's feedback.",
+      "trans": "让我们安排一次后续会议，处理客户反馈中提出的问题。"
+    },
+    {
+      "orig": "I think there may have been a misunderstanding regarding the allocation of resources between our teams.",
+      "trans": "我认为我们团队之间在资源分配上可能存在误解。"
+    },
+    {
+      "orig": "Could you please prioritise this task, as it has a direct impact on the upcoming product launch?",
+      "trans": "您能否优先处理这项任务，因为它直接影响到即将到来的产品发布？"
+    },
+    {
+      "orig": "I'm concerned that we might be underestimating the scope of work involved in this project.",
+      "trans": "我担心我们可能低估了这个项目的工作量。"
+    },
+    {
+      "orig": "Let me play devil's advocate for a moment: is there any risk that the client will reject the proposed solution?",
+      "trans": "让我暂时唱唱反调：客户有没有可能拒绝拟议的方案？"
+    },
+    {
+      "orig": "I think we should flag this issue to senior management before it escalates into a bigger problem.",
+      "trans": "我认为我们应该在问题升级之前向高层管理汇报。"
+    },
+    {
+      "orig": "Thanks for the constructive feedback; I'll incorporate it into my approach going forward.",
+      "trans": "感谢您的建设性反馈；我会将其纳入我今后的工作方法中。"
+    }
+  ],
+  "questions": [
+    {
+      "question": "What does \"keep me in the loop\" mean?",
+      "options": [
+        "让我随时知情",
+        "让我离开会议",
+        "帮我预订座位",
+        "帮我发送邮件"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Why does the speaker play devil's advocate?",
+      "options": [
+        "To examine possible risks",
+        "To support the proposal",
+        "To end the discussion",
+        "To change the subject"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What should happen before the issue escalates?",
+      "options": [
+        "Flag it to senior management",
+        "Ignore it",
+        "Cancel the project",
+        "Blame the client"
+      ],
+      "answer": 0
+    }
+  ]
+}

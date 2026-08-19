@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-20",
+  "lang": "en",
+  "theme": "news",
+  "title": "Health & Medicine 健康与医学",
+  "articles": [
+    {
+      "title": "Health & Medicine 健康与医学",
+      "summary": "Vaccination, chronic disease research and public health policy.",
+      "category": "Health",
+      "link": ""
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "vaccination campaign",
+      "meaning": "疫苗接种运动"
+    },
+    {
+      "word": "infectious disease",
+      "meaning": "传染病"
+    },
+    {
+      "word": "chronic disease",
+      "meaning": "慢性病"
+    },
+    {
+      "word": "traction",
+      "meaning": "关注度，进展"
+    },
+    {
+      "word": "ageing population",
+      "meaning": "老龄化人口"
+    },
+    {
+      "word": "clinical trial",
+      "meaning": "临床试验"
+    },
+    {
+      "word": "side effects",
+      "meaning": "副作用"
+    },
+    {
+      "word": "preventive medicine",
+      "meaning": "预防医学"
+    },
+    {
+      "word": "drug-resistant",
+      "meaning": "耐药的"
+    },
+    {
+      "word": "underscore",
+      "meaning": "强调，凸显"
+    }
+  ],
+  "sentences": [
+    {
+      "orig": "Public health officials have launched a nationwide vaccination campaign aimed at curbing the spread of infectious diseases.",
+      "trans": "公共卫生官员发起了全国性疫苗接种运动，旨在遏制传染病的传播。"
+    },
+    {
+      "orig": "Researchers have identified a potential breakthrough in the treatment of chronic diseases, offering hope to millions of patients.",
+      "trans": "研究人员在慢性病治疗方面发现了潜在突破，为数百万患者带来希望。"
+    },
+    {
+      "orig": "Mental health awareness has gained significant traction, with schools and workplaces introducing support programmes.",
+      "trans": "心理健康意识获得显著关注，学校和工作场所纷纷引入支持计划。"
+    },
+    {
+      "orig": "The healthcare system faces mounting pressure from an ageing population and rising medical costs.",
+      "trans": "医疗体系面临人口老龄化和医疗成本上升带来的日益增长的压力。"
+    },
+    {
+      "orig": "Clinical trials have demonstrated that the new drug significantly reduces recovery time with minimal side effects.",
+      "trans": "临床试验表明，新药能显著缩短恢复时间，且副作用极小。"
+    },
+    {
+      "orig": "Preventive medicine, including regular screenings and healthy lifestyles, is increasingly recognised as the cornerstone of public health.",
+      "trans": "包括定期筛查和健康生活方式在内的预防医学，日益被视为公共卫生的基石。"
+    },
+    {
+      "orig": "Health experts caution that the overuse of antibiotics has accelerated the emergence of drug-resistant bacteria.",
+      "trans": "健康专家警告，抗生素的过度使用加速了耐药细菌的出现。"
+    },
+    {
+      "orig": "The pandemic has underscored the critical importance of global cooperation in addressing health emergencies.",
+      "trans": "疫情凸显了全球合作应对突发卫生事件的关键重要性。"
+    }
+  ],
+  "questions": [
+    {
+      "question": "What is the purpose of the vaccination campaign?",
+      "options": [
+        "To curb infectious diseases",
+        "To reduce medical costs",
+        "To train doctors",
+        "To fund research"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What has the overuse of antibiotics accelerated?",
+      "options": [
+        "耐药细菌的出现",
+        "恢复时间",
+        "医疗成本",
+        "医院容量"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What is increasingly recognised as the cornerstone of public health?",
+      "options": [
+        "Preventive medicine",
+        "Emergency care",
+        "Private hospitals",
+        "Medical insurance"
+      ],
+      "answer": 0
+    }
+  ]
+}

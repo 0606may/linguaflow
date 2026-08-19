@@ -1,0 +1,114 @@
+{
+  "date": "2026-08-25",
+  "lang": "de",
+  "theme": "daily",
+  "title": "Wetter und Jahreszeiten 天气和季节",
+  "sentences": [
+    {
+      "orig": "Wie ist das Wetter heute?",
+      "trans": "今天天气怎么样？"
+    },
+    {
+      "orig": "Es ist sonnig und warm.",
+      "trans": "阳光明媚，很暖和。"
+    },
+    {
+      "orig": "Morgen soll es regnen.",
+      "trans": "明天据说要下雨。"
+    },
+    {
+      "orig": "Vergiss nicht den Regenschirm!",
+      "trans": "别忘了带伞！"
+    },
+    {
+      "orig": "Im Winter ist es oft sehr kalt.",
+      "trans": "冬天经常很冷。"
+    },
+    {
+      "orig": "Ich mag den Frühling am liebsten.",
+      "trans": "我最喜欢春天。"
+    },
+    {
+      "orig": "Die Blumen blühen überall.",
+      "trans": "到处都是盛开的花朵。"
+    },
+    {
+      "orig": "Das ist eine schöne Jahreszeit.",
+      "trans": "这是一个美丽的季节。"
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "das Wetter",
+      "meaning": "天气"
+    },
+    {
+      "word": "die Jahreszeit",
+      "meaning": "季节"
+    },
+    {
+      "word": "der Frühling",
+      "meaning": "春天"
+    },
+    {
+      "word": "der Sommer",
+      "meaning": "夏天"
+    },
+    {
+      "word": "der Herbst",
+      "meaning": "秋天"
+    },
+    {
+      "word": "der Winter",
+      "meaning": "冬天"
+    },
+    {
+      "word": "der Regen",
+      "meaning": "雨"
+    },
+    {
+      "word": "der Schnee",
+      "meaning": "雪"
+    },
+    {
+      "word": "warm",
+      "meaning": "温暖的"
+    },
+    {
+      "word": "kalt",
+      "meaning": "寒冷的"
+    }
+  ],
+  "questions": [
+    {
+      "question": "Wie ist das Wetter heute?",
+      "options": [
+        "Sonnig und warm",
+        "Regnerisch",
+        "Schnee",
+        "Stürmisch"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Welche Jahreszeit mag die Person am liebsten?",
+      "options": [
+        "Den Frühling",
+        "Den Sommer",
+        "Den Herbst",
+        "Den Winter"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Was bedeutet \"der Regenschirm\"?",
+      "options": [
+        "雨伞",
+        "太阳帽",
+        "外套",
+        "围巾"
+      ],
+      "answer": 0
+    }
+  ]
+}

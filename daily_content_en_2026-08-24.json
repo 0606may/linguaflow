@@ -1,0 +1,122 @@
+{
+  "date": "2026-08-24",
+  "lang": "en",
+  "theme": "news",
+  "title": "Culture & Arts 文化与艺术",
+  "articles": [
+    {
+      "title": "Culture & Arts 文化与艺术",
+      "summary": "Heritage preservation, digital museums and cultural exchange.",
+      "category": "Culture",
+      "link": ""
+    }
+  ],
+  "vocabulary": [
+    {
+      "word": "restoration",
+      "meaning": "修复"
+    },
+    {
+      "word": "monument",
+      "meaning": "纪念碑，古迹"
+    },
+    {
+      "word": "preservation",
+      "meaning": "保护"
+    },
+    {
+      "word": "virtual tours",
+      "meaning": "虚拟参观"
+    },
+    {
+      "word": "transformation",
+      "meaning": "变革"
+    },
+    {
+      "word": "intangible",
+      "meaning": "无形的"
+    },
+    {
+      "word": "national identity",
+      "meaning": "民族认同"
+    },
+    {
+      "word": "authenticity",
+      "meaning": "真实性"
+    },
+    {
+      "word": "resurgence",
+      "meaning": "复苏"
+    },
+    {
+      "word": "horizons",
+      "meaning": "视野"
+    }
+  ],
+  "sentences": [
+    {
+      "orig": "The restoration of the ancient monument, a project spanning nearly a decade, has been hailed as a triumph of cultural preservation.",
+      "trans": "这座古老纪念碑的修复工程历时近十年，被誉为文化遗产保护的胜利。"
+    },
+    {
+      "orig": "Museums are embracing digital technology, offering virtual tours that make their collections accessible to a global audience.",
+      "trans": "博物馆正在拥抱数字技术，提供虚拟参观，让全球观众都能欣赏其藏品。"
+    },
+    {
+      "orig": "The film industry has undergone profound transformation, with streaming platforms reshaping how audiences consume content.",
+      "trans": "电影业经历了深刻变革，流媒体平台正在重塑观众的消费方式。"
+    },
+    {
+      "orig": "Cultural heritage, from traditional crafts to intangible practices, plays a vital role in shaping national identity.",
+      "trans": "从传统工艺到非物质文化遗产，文化遗产在塑造民族认同方面发挥着重要作用。"
+    },
+    {
+      "orig": "The government has allocated substantial funding to support emerging artists and independent cultural initiatives.",
+      "trans": "政府已拨出大量资金支持新兴艺术家和独立文化项目。"
+    },
+    {
+      "orig": "Critics argue that commercialisation threatens the authenticity of traditional art forms, reducing them to tourist attractions.",
+      "trans": "批评者认为，商业化威胁传统艺术形式的真实性，使其沦为旅游景点。"
+    },
+    {
+      "orig": "International cultural exchanges foster mutual understanding and serve as a bridge between diverse societies.",
+      "trans": "国际文化交流增进相互理解，成为连接不同社会的桥梁。"
+    },
+    {
+      "orig": "The literary world has witnessed a resurgence of interest in translated fiction, broadening readers' horizons beyond national borders.",
+      "trans": "文学界见证了翻译小说兴趣的复苏，拓宽了读者的国际视野。"
+    }
+  ],
+  "questions": [
+    {
+      "question": "How have museums made collections accessible globally?",
+      "options": [
+        "Through virtual tours",
+        "By lowering prices",
+        "By building branches",
+        "Through radio broadcasts"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What do critics say commercialisation threatens?",
+      "options": [
+        "传统艺术形式的真实性",
+        "博物馆收入",
+        "旅游发展",
+        "艺术家薪酬"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "What has broadened readers' horizons?",
+      "options": [
+        "Translated fiction",
+        "New printing methods",
+        "Cheaper books",
+        "Online reviews"
+      ],
+      "answer": 0
+    }
+  ]
+}

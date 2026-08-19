@@ -1,112 +1,112 @@
 {
-  "date": "2026-08-18",
+  "date": "2026-08-19",
   "lang": "de",
-  "theme": "basic",
-  "title": "Wegbeschreibung und Orientierung 问路与方向",
+  "theme": "daily",
+  "title": "Beim Arzt 看医生",
   "sentences": [
     {
-      "orig": "Entschuldigung, können Sie mir helfen?",
-      "trans": "打扰一下，您能帮我吗？"
+      "orig": "Ich fühle mich nicht gut.",
+      "trans": "我感觉不舒服。"
     },
     {
-      "orig": "Ich suche den Hauptbahnhof.",
-      "trans": "我在找中央火车站。"
+      "orig": "Was fehlt Ihnen?",
+      "trans": "您哪里不舒服？"
     },
     {
-      "orig": "Gehen Sie geradeaus und dann rechts.",
-      "trans": "直走然后右转。"
+      "orig": "Ich habe Kopfschmerzen und Fieber.",
+      "trans": "我头痛和发烧。"
     },
     {
-      "orig": "Es ist etwa fünf Minuten zu Fuß.",
-      "trans": "步行大约五分钟。"
+      "orig": "Seit wann haben Sie diese Symptome?",
+      "trans": "您什么时候开始有这些症状的？"
     },
     {
-      "orig": "Ist es weit von hier?",
-      "trans": "离这里远吗？"
+      "orig": "Seit gestern Abend.",
+      "trans": "从昨天晚上开始。"
     },
     {
-      "orig": "Nein, es ist ganz in der Nähe.",
-      "trans": "不远，就在附近。"
+      "orig": "Ich verschreibe Ihnen Medikamente.",
+      "trans": "我给您开一些药。"
     },
     {
-      "orig": "Können Sie mir das auf der Karte zeigen?",
-      "trans": "您能在地图上指给我看吗？"
+      "orig": "Nehmen Sie die Tabletten dreimal täglich.",
+      "trans": "每天吃三次药片。"
     },
     {
-      "orig": "Vielen Dank für Ihre Hilfe!",
-      "trans": "非常感谢您的帮助！"
+      "orig": "Gute Besserung!",
+      "trans": "祝您早日康复！"
     }
   ],
   "vocabulary": [
     {
-      "word": "der Weg",
-      "meaning": "路/方向"
+      "word": "der Arzt",
+      "meaning": "医生"
     },
     {
-      "word": "geradeaus",
-      "meaning": "直走"
+      "word": "die Schmerzen",
+      "meaning": "疼痛"
     },
     {
-      "word": "links",
-      "meaning": "左边"
+      "word": "das Fieber",
+      "meaning": "发烧"
     },
     {
-      "word": "rechts",
-      "meaning": "右边"
+      "word": "die Tablette",
+      "meaning": "药片"
     },
     {
-      "word": "in der Nähe",
-      "meaning": "在附近"
+      "word": "das Rezept",
+      "meaning": "处方"
     },
     {
-      "word": "weit",
-      "meaning": "远的"
+      "word": "die Apotheke",
+      "meaning": "药店"
     },
     {
-      "word": "die Karte",
-      "meaning": "地图"
+      "word": "krank",
+      "meaning": "生病的"
     },
     {
-      "word": "zu Fuß",
-      "meaning": "步行"
+      "word": "gesund",
+      "meaning": "健康的"
     },
     {
-      "word": "suchen",
-      "meaning": "寻找"
+      "word": "die Symptome",
+      "meaning": "症状"
     },
     {
-      "word": "helfen",
-      "meaning": "帮助"
+      "word": "verschreiben",
+      "meaning": "开处方"
     }
   ],
   "questions": [
     {
-      "question": "Was sucht die Person?",
+      "question": "Welche Symptome hat der Patient?",
       "options": [
-        "Den Hauptbahnhof",
-        "Den Flughafen",
-        "Das Hotel",
-        "Das Museum"
+        "Kopfschmerzen und Fieber",
+        "Bauchschmerzen",
+        "Husten und Schnupfen",
+        "Rückenschmerzen"
       ],
       "answer": 0
     },
     {
-      "question": "Wie weit ist es?",
+      "question": "Wie oft soll der Patient die Tabletten nehmen?",
       "options": [
-        "Fünf Minuten zu Fuß",
-        "Zehn Minuten mit dem Bus",
-        "Eine halbe Stunde",
-        "Sehr weit"
+        "Dreimal täglich",
+        "Zweimal täglich",
+        "Einmal täglich",
+        "Viermal täglich"
       ],
       "answer": 0
     },
     {
-      "question": "Was bedeutet \"geradeaus\"?",
+      "question": "Was bedeutet \"Gute Besserung\"?",
       "options": [
-        "直走",
-        "左转",
-        "右转",
-        "回头"
+        "祝早日康复",
+        "早上好",
+        "再见",
+        "谢谢"
       ],
       "answer": 0
     }
