@@ -1,4 +1,4 @@
-const CACHE_NAME = 'linguaflow-v4';
+const CACHE_NAME = 'linguaflow-v5';
 const DAILY_CACHE = 'linguaflow-daily';
 const ASSETS = [
   './',
@@ -60,6 +60,25 @@ self.addEventListener('fetch', (event) => {
         return response;
       }).catch(() => {
         // Offline: try daily cache, then fall back to main page
+        return caches.match(request).then((cached) => {
+          return cached || caches.match('./index.html');
+        });
+      })
+    );
+    return;
+  }
+
+  // Network-first for page navigations (always get latest version)
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).then((response) => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+        }
+        return response;
+      }).catch(() => {
+        // Offline: fall back to cached page
         return caches.match(request).then((cached) => {
           return cached || caches.match('./index.html');
         });

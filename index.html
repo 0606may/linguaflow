@@ -4457,16 +4457,19 @@ function lookupWordOnline(word){
 function analyzeGrammar(text){
   const lower = text.toLowerCase();
   const words = lower.split(/\s+/);
+  const isEn = state.lang === 'en';
+  const refs = isEn ? EN_GRAMMAR_REF : GRAMMAR_REF;
   let hits = [];
   let hitIds = new Set();
 
-  // Keyword matching
-  GRAMMAR_REF.forEach(g => {
+  // Keyword matching（拉丁关键词用词边界匹配，避免子串误命中如 would 里的 wo）
+  refs.forEach(g => {
     let score = 0;
     g.keywords.forEach(kw => {
       const kwLower = kw.toLowerCase();
       if(words.includes(kwLower)) score += 3;
-      else if(lower.includes(kwLower)) score += 1;
+      else if(/^[a-z]+(?:[ -][a-z]+)*$/.test(kwLower) && new RegExp('\\b' + kwLower.replace(/\s+/g,'\\s+') + '\\b').test(lower)) score += 1;
+      else if(/[\u4e00-\u9fa5]/.test(kwLower) && lower.includes(kwLower)) score += 1;
     });
     if(score > 0 && !hitIds.has(g.id)){
       hits.push({...g, score});
@@ -4474,8 +4477,7 @@ function analyzeGrammar(text){
     }
   });
 
-  // Pattern-based detection
-  // Detect verb forms
+  // Pattern-based detection（按语言选择模式库）
   const deVerbPatterns = [
     {pattern:/\b(ich bin|du bist|er ist|wir sind|ihr seid|sie sind)\b/i, id:'verb-conj'},
     {pattern:/\b(ich habe|du hast|er hat|wir haben)\b/i, id:'verb-conj'},
@@ -4495,9 +4497,21 @@ function analyzeGrammar(text){
     {pattern:/\b(in |an |auf |über |unter |vor |hinter |neben |zwischen )\b/i, id:'prepositions'},
     {pattern:/\b(war|hatte|wurde|konnte|musste|durfte|sollte|wollte)\b/i, id:'simple-past'},
   ];
-  deVerbPatterns.forEach(p => {
+  const enPatterns = [
+    {pattern:/\b(would|will|shall|can|could|may|might|must|should)\b/i, id:'en-modals'},
+    {pattern:/\b(if|unless|provided that|even if)\b/i, id:'en-conditionals'},
+    {pattern:/\b(am|is|are|was|were)\s+\w+ing\b/i, id:'en-tenses'},
+    {pattern:/\b(has|have|had)\s+(been\s+)?\w+(ed|en)\b/i, id:'en-tenses'},
+    {pattern:/\b(who|whom|whose|which|that|where|when)\b/i, id:'en-relative'},
+    {pattern:/\b(although|though|even though|while|whereas|unless)\b/i, id:'en-linkers'},
+    {pattern:/\b(enjoy|finish|avoid|mind|consider|suggest|practice|keep|imagine)\s+\w+ing\b/i, id:'en-gerund-infinitive'},
+    {pattern:/\b(want|decide|hope|plan|promise|agree|refuse|learn|afford)\s+to\b/i, id:'en-gerund-infinitive'},
+    {pattern:/\b(look after|give up|put off|turn down|look forward to|carry out|come across|bring up|run out of)\b/i, id:'en-phrasal'}
+  ];
+  const patterns = isEn ? enPatterns : deVerbPatterns;
+  patterns.forEach(p => {
     if(p.pattern.test(text) && !hitIds.has(p.id)){
-      const g = GRAMMAR_REF.find(gr => gr.id === p.id);
+      const g = refs.find(gr => gr.id === p.id);
       if(g){ hits.push({...g, score:2}); hitIds.add(p.id); }
     }
   });
@@ -4685,7 +4699,8 @@ function renderSpotQuiz(){
       <div class="spot-question">「${item.content}」<br>属于哪个语法点？</div>`;
     // Generate options: correct + 3 random grammar topics
     const correctTitle = item.content;
-    const otherTopics = GRAMMAR_REF.filter(g => g.title !== correctTitle).sort(() => Math.random()-0.5).slice(0,3).map(g => g.title);
+    const grammarRef = state.lang === 'en' ? EN_GRAMMAR_REF : GRAMMAR_REF;
+    const otherTopics = grammarRef.filter(g => g.title !== correctTitle).sort(() => Math.random()-0.5).slice(0,3).map(g => g.title);
     const options = [correctTitle, ...otherTopics].sort(() => Math.random()-0.5);
     optionsHtml = `<div class="spot-options">${options.map(o =>
       `<div class="spot-opt" onclick="checkSpotAnswer(this,'${o.replace(/'/g,"\\'")}','${correctTitle.replace(/'/g,"\\'")}')">${o}</div>`
@@ -6066,6 +6081,13 @@ if('serviceWorker' in navigator){
     }).catch((err) => {
       console.warn('SW registration failed:', err);
     });
+  });
+  // SW 更新接管页面后自动刷新，确保总是打开最新版本
+  let swReloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if(swReloaded) return;
+    swReloaded = true;
+    location.reload();
   });
 }
 
