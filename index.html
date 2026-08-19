@@ -770,6 +770,241 @@ const MATERIALS = [
 ];
 
 // ============================================================
+// DATA: 各学习模块独立素材库（听力/口语/阅读内容互不相同）
+// 听力：场景广播、新闻播报等真实语音场景
+// 口语：跟读短句、问答练习，适合逐句模仿
+// 阅读：段落短文，书面语风格
+// ============================================================
+const MODULE_MATERIALS = {
+  listening: [
+    // ══ 英语听力 ══
+    {id:'li-en-1',lang:'en',theme:'culture',difficulty:'进阶',title:'Airport Announcements 机场广播',
+     sentences:[
+       {orig:"Attention passengers, flight BA204 to London Heathrow is now boarding at Gate 12.",trans:"各位旅客请注意，飞往伦敦希思罗的BA204航班现在在12号登机口登机。"},
+       {orig:"We apologise for the delay caused by adverse weather conditions. The new departure time is 15:40.",trans:"我们对恶劣天气造成的延误深表歉意。新的起飞时间为15:40。"},
+       {orig:"Would passenger Wang Wei, travelling to Frankfurt, please proceed to the information desk?",trans:"前往法兰克福的王伟乘客，请到问讯处。"},
+       {orig:"Please keep your boarding pass and passport ready for inspection at the security checkpoint.",trans:"请在安检口准备好登机牌和护照以备查验。"},
+       {orig:"For safety reasons, please ensure all electronic devices are switched off during take-off and landing.",trans:"出于安全考虑，请在起飞和降落期间关闭所有电子设备。"},
+       {orig:"The estimated flight time is two hours and forty-five minutes. We wish you a pleasant journey.",trans:"预计飞行时间为两小时四十五分钟。祝您旅途愉快。"}
+     ]},
+    {id:'li-en-2',lang:'en',theme:'culture',difficulty:'高阶',title:'News Briefing 新闻简讯',
+     sentences:[
+       {orig:"Good evening. Here is the latest news from around the world.",trans:"晚上好。以下是来自世界各地的最新消息。"},
+       {orig:"The central bank has announced a further increase in interest rates to curb rising inflation.",trans:"央行宣布进一步加息以抑制不断上升的通胀。"},
+       {orig:"Scientists have unveiled a breakthrough in renewable energy storage that could revolutionise the industry.",trans:"科学家公布了可再生能源存储领域的突破，可能彻底改变该行业。"},
+       {orig:"In sports, the national team secured a dramatic victory in the final minutes of the match.",trans:"体育方面，国家队在比赛最后几分钟戏剧性地获胜。"},
+       {orig:"The weather forecast predicts heavy rainfall across the northern region over the weekend.",trans:"天气预报预计周末北部地区有大雨。"},
+       {orig:"That is all for now. Stay tuned for more updates at the top of the hour.",trans:"新闻就到这里。请继续收听整点的最新报道。"}
+     ]},
+    {id:'li-en-3',lang:'en',theme:'business',difficulty:'进阶',title:'Business Phone Call 商务电话',
+     sentences:[
+       {orig:"Good morning, this is Sarah from Meridian Solutions. Am I speaking to Mr Chen?",trans:"早上好，我是Meridian Solutions的Sarah。请问是陈先生吗？"},
+       {orig:"I'm calling regarding the contract we discussed at last week's meeting.",trans:"我打电话来是关于上周会议讨论的合同。"},
+       {orig:"Could you hold for a moment, please? I'll transfer you to our legal department.",trans:"请稍等好吗？我为您转接法务部。"},
+       {orig:"I'm afraid the line is busy at the moment. Would you like to leave a message?",trans:"恐怕现在线路繁忙。您要留言吗？"},
+       {orig:"Could you confirm the delivery date in writing? We need it for our records.",trans:"您能以书面形式确认交货日期吗？我们需要存档。"},
+       {orig:"Thank you for your time. I look forward to hearing from you soon.",trans:"感谢您抽出时间。期待尽快收到您的回复。"}
+     ]},
+    {id:'li-en-4',lang:'en',theme:'daily',difficulty:'进阶',title:'Weather Report 天气预报',
+     sentences:[
+       {orig:"Here is the weather forecast for the greater metropolitan area.",trans:"以下是大都市地区的天气预报。"},
+       {orig:"Expect clear skies this morning with temperatures rising to 28 degrees by midday.",trans:"今天上午晴空万里，中午气温将升至28度。"},
+       {orig:"A cold front will move in from the north this evening, bringing scattered showers.",trans:"今晚一股冷锋将从北方移入，带来零星阵雨。"},
+       {orig:"Winds will pick up overnight, reaching speeds of up to 40 kilometres per hour.",trans:"夜间风力将增强，最高可达每小时40公里。"},
+       {orig:"Looking ahead to the weekend, sunny conditions are expected with a slight drop in humidity.",trans:"展望周末，预计天气晴朗，湿度略有下降。"},
+       {orig:"That's the forecast for today. Stay dry, and we'll see you again at six.",trans:"以上就是今天的天气预报。注意防雨，我们六点再见。"}
+     ]},
+    // ══ 德语听力 ══
+    {id:'li-de-1',lang:'de',theme:'culture',difficulty:'入门',title:'Bahnhofsdurchsage 火车站广播',
+     sentences:[
+       {orig:"Achtung, der Zug nach München fährt jetzt auf Gleis 5 ein.",trans:"请注意，开往慕尼黑的火车现在进入5号站台。"},
+       {orig:"Der Regionalzug nach Hamburg hat etwa zehn Minuten Verspätung.",trans:"开往汉堡的慢车大约晚点十分钟。"},
+       {orig:"Bitte beachten Sie, dass im Zug keine Fahrkarten verkauft werden.",trans:"请注意，车上不售票。"},
+       {orig:"Nächster Halt: Hauptbahnhof. Umsteigen Richtung Flughafen.",trans:"下一站：中央火车站。换乘开往机场方向。"},
+       {orig:"Bitte achten Sie beim Einsteigen auf den Abstand zwischen Bahnsteig und Zug.",trans:"上车时请注意站台与列车之间的间隙。"},
+       {orig:"Wir wünschen Ihnen eine gute Reise.",trans:"祝您旅途愉快。"}
+     ]},
+    {id:'li-de-2',lang:'de',theme:'culture',difficulty:'入门',title:'Nachrichten kurz 简短新闻',
+     sentences:[
+       {orig:"Hier sind die Nachrichten. Das Wetter wird morgen wärmer.",trans:"这里是新闻。明天天气会变暖。"},
+       {orig:"Die Stadt baut einen neuen Park im Stadtzentrum.",trans:"这座城市正在市中心建一个新公园。"},
+       {orig:"Viele Menschen fahren am Wochenende ans Meer.",trans:"很多人周末去海边。"},
+       {orig:"Der Supermarkt hat sonntags geschlossen.",trans:"超市周日关门。"},
+       {orig:"Der Bus fährt jetzt öfter als früher.",trans:"公交车现在比以前更频繁了。"},
+       {orig:"Das Konzert am Samstag ist schon ausverkauft.",trans:"周六的音乐会已经售罄了。"}
+     ]},
+    {id:'li-de-3',lang:'de',theme:'daily',difficulty:'入门',title:'Telefongespräch 电话对话',
+     sentences:[
+       {orig:"Hallo, hier ist Anna. Kann ich bitte mit Herrn Müller sprechen?",trans:"你好，我是Anna。请问可以找穆勒先生说话吗？"},
+       {orig:"Es tut mir leid, er ist gerade nicht im Büro.",trans:"很抱歉，他现在不在办公室。"},
+       {orig:"Kann ich eine Nachricht hinterlassen? Ja, natürlich.",trans:"我可以留言吗？当然可以。"},
+       {orig:"Bitte sagen Sie ihm, dass ich morgen anrufe.",trans:"请告诉他我明天打电话。"},
+       {orig:"Können Sie bitte die Nummer buchstabieren?",trans:"您能拼一下电话号码吗？"},
+       {orig:"Danke schön. Auf Wiederhören!",trans:"谢谢。再见！"}
+     ]},
+    {id:'li-de-4',lang:'de',theme:'daily',difficulty:'入门',title:'Ansage im Supermarkt 超市广播',
+     sentences:[
+       {orig:"Liebe Kundinnen und Kunden, unser Geschäft schließt um 20 Uhr.",trans:"亲爱的顾客朋友们，我们商店20点关门。"},
+       {orig:"Heute gibt es Sonderangebote bei Obst und Gemüse.",trans:"今天水果和蔬菜有特价。"},
+       {orig:"Bitte bezahlen Sie an der Kasse mit Bargeld oder Karte.",trans:"请在收银台用现金或银行卡支付。"},
+       {orig:"Wir bitten um Ihr Verständnis.",trans:"感谢您的理解。"}
+     ]}
+  ],
+  speaking: [
+    // ══ 英语口语 ══
+    {id:'sp-en-1',lang:'en',theme:'daily',difficulty:'进阶',title:'Daily Q&A 日常问答',
+     sentences:[
+       {orig:"How has your week been so far? — It's been busy but productive.",trans:"这周过得怎么样？——很忙但很有成效。"},
+       {orig:"What do you usually do on weekends? — I usually go hiking or catch up with friends.",trans:"你周末通常做什么？——我通常去徒步或和朋友聚聚。"},
+       {orig:"Have you tried the new restaurant downtown? — Not yet, but I've heard great things about it.",trans:"你试过市中心那家新餐厅了吗？——还没有，但我听说很不错。"},
+       {orig:"How do you stay motivated at work? — I set small goals and celebrate each achievement.",trans:"你如何保持工作动力？——我设定小目标并庆祝每个成就。"},
+       {orig:"What's your favourite way to relax? — A cup of tea and a good book do the trick.",trans:"你最喜欢的放松方式是什么？——一杯茶加一本好书就很有效。"},
+       {orig:"Any plans for the summer? — I'm thinking about travelling to Europe if time permits.",trans:"夏天有什么计划吗？——如果时间允许，我想去欧洲旅行。"}
+     ]},
+    {id:'sp-en-2',lang:'en',theme:'business',difficulty:'进阶',title:'Interview Practice 面试问答',
+     sentences:[
+       {orig:"Tell me a little about yourself and your background.",trans:"请简单介绍一下自己和你的背景。"},
+       {orig:"Why are you interested in this position? — I'm passionate about this industry and eager to grow here.",trans:"你为什么对这个职位感兴趣？——我对这个行业充满热情，渴望在这里成长。"},
+       {orig:"What would you say is your greatest strength? — I adapt quickly to new challenges and learn fast.",trans:"你最大的优势是什么？——我能快速适应新挑战，学东西很快。"},
+       {orig:"Can you give an example of a challenge you overcame? — I once led a project that was behind schedule and turned it around.",trans:"你能举个克服挑战的例子吗？——我曾接手一个进度落后的项目并扭转了局面。"},
+       {orig:"Where do you see yourself in five years? — I'd like to grow into a leadership role and mentor others.",trans:"你五年后想达到什么位置？——我想成长为领导角色并指导他人。"},
+       {orig:"Do you have any questions for us? — Yes, could you tell me about the team culture here?",trans:"你有什么问题想问我们吗？——有，能介绍一下这里的团队文化吗？"}
+     ]},
+    {id:'sp-en-3',lang:'en',theme:'culture',difficulty:'高阶',title:'Opinion Expressing 观点表达',
+     sentences:[
+       {orig:"In my view, remote work has more benefits than drawbacks.",trans:"在我看来，远程工作利大于弊。"},
+       {orig:"I strongly believe that education should be accessible to everyone.",trans:"我坚信教育应该面向所有人。"},
+       {orig:"From my perspective, the key to success is consistency, not talent.",trans:"从我的角度看，成功的关键是坚持，而不是天赋。"},
+       {orig:"There's no denying that technology has changed our lives dramatically.",trans:"不可否认，科技极大地改变了我们的生活。"},
+       {orig:"I'd argue that small daily habits matter more than occasional big efforts.",trans:"我认为日常小习惯比偶尔的大努力更重要。"},
+       {orig:"All things considered, I think the benefits outweigh the risks.",trans:"综合考虑，我认为利大于弊。"}
+     ]},
+    {id:'sp-en-4',lang:'en',theme:'daily',difficulty:'进阶',title:'Small Talk 闲聊',
+     sentences:[
+       {orig:"Beautiful weather we're having, isn't it? Perfect for a walk.",trans:"天气真好，不是吗？很适合散步。"},
+       {orig:"Did you watch the game last night? — I missed it, but I heard it was exciting.",trans:"你昨晚看比赛了吗？——错过了，但听说很精彩。"},
+       {orig:"How's your new apartment? — It's lovely, though the commute is a bit longer.",trans:"你的新公寓怎么样？——很好，就是通勤时间长了点。"},
+       {orig:"Are you into cooking? — Sort of, I enjoy trying new recipes on weekends.",trans:"你喜欢做饭吗？——还行，我喜欢周末尝试新菜谱。"},
+       {orig:"I see you're reading an interesting book. What's it about?",trans:"我看你在读一本有趣的书。是关于什么的？"},
+       {orig:"Let's grab a coffee sometime this week and catch up properly.",trans:"这周找时间喝杯咖啡，好好聊聊吧。"}
+     ]},
+    // ══ 德语口语 ══
+    {id:'sp-de-1',lang:'de',theme:'daily',difficulty:'入门',title:'Vorstellung 自我介绍',
+     sentences:[
+       {orig:"Hallo, ich heiße Li Ming. Ich komme aus China.",trans:"你好，我叫李明。我来自中国。"},
+       {orig:"Ich bin 25 Jahre alt und wohne in Berlin.",trans:"我25岁，住在柏林。"},
+       {orig:"Ich lerne Deutsch, weil ich in Deutschland arbeiten möchte.",trans:"我学德语是因为我想在德国工作。"},
+       {orig:"In meiner Freizeit höre ich Musik und lese Bücher.",trans:"空闲时间我听音乐和读书。"},
+       {orig:"Ich spreche Chinesisch, Englisch und ein bisschen Deutsch.",trans:"我会说中文、英语和一点德语。"},
+       {orig:"Ich freue mich, dich kennenzulernen.",trans:"很高兴认识你。"}
+     ]},
+    {id:'sp-de-2',lang:'de',theme:'daily',difficulty:'入门',title:'Im Restaurant 餐厅点餐',
+     sentences:[
+       {orig:"Guten Abend! Einen Tisch für zwei Personen, bitte.",trans:"晚上好！请给我们一张两人桌。"},
+       {orig:"Die Speisekarte, bitte. — Hier ist die Speisekarte.",trans:"请给我菜单。——给您菜单。"},
+       {orig:"Was empfehlen Sie? — Ich empfehle das Schnitzel.",trans:"您推荐什么？——我推荐炸肉排。"},
+       {orig:"Ich möchte ein Wasser und einen Salat, bitte.",trans:"我要一杯水和一份沙拉。"},
+       {orig:"Das Essen schmeckt sehr gut!",trans:"饭菜很好吃！"},
+       {orig:"Die Rechnung, bitte. — Zahlen Sie mit Karte oder bar?",trans:"请结账。——您刷卡还是付现金？"}
+     ]},
+    {id:'sp-de-3',lang:'de',theme:'daily',difficulty:'入门',title:'Fragen stellen 提问练习',
+     sentences:[
+       {orig:"Entschuldigung, wie spät ist es?",trans:"打扰一下，现在几点了？"},
+       {orig:"Wo ist die nächste U-Bahn-Station?",trans:"最近的地铁站在哪里？"},
+       {orig:"Wie komme ich zum Bahnhof?",trans:"我怎么去火车站？"},
+       {orig:"Was kostet eine Fahrkarte nach München?",trans:"去慕尼黑的车票多少钱？"},
+       {orig:"Können Sie das bitte wiederholen?",trans:"您能再说一遍吗？"},
+       {orig:"Wann beginnt der Film?",trans:"电影几点开始？"}
+     ]},
+    {id:'sp-de-4',lang:'de',theme:'business',difficulty:'入门',title:'Einkaufen 购物',
+     sentences:[
+       {orig:"Guten Tag! Ich möchte gern diese Schuhe anprobieren.",trans:"你好！我想试穿这双鞋。"},
+       {orig:"Welche Größe haben Sie?",trans:"您穿什么尺码？"},
+       {orig:"Haben Sie das auch in Blau?",trans:"这个有蓝色的吗？"},
+       {orig:"Wie viel kostet das? — Das kostet 39 Euro.",trans:"这个多少钱？——39欧元。"},
+       {orig:"Das ist ein bisschen teuer. Gibt es einen Rabatt?",trans:"这有点贵。有折扣吗？"},
+       {orig:"Ich nehme es. Kann ich mit Karte bezahlen?",trans:"我买了。可以刷卡吗？"}
+     ]}
+  ],
+  reading: [
+    // ══ 英语阅读 ══
+    {id:'rd-en-1',lang:'en',theme:'business',difficulty:'高阶',title:'The Future of Remote Work 远程工作的未来',
+     sentences:[
+       {orig:"The global shift to remote work, accelerated by the pandemic, has fundamentally transformed the modern workplace.",trans:"疫情加速的全球远程工作转变，从根本上改变了现代职场。"},
+       {orig:"Companies have discovered that distributed teams can be equally productive, provided that communication channels are well managed.",trans:"企业发现，只要沟通渠道管理得当，分布式团队可以同样高效。"},
+       {orig:"However, critics point out that remote work blurs the boundary between professional and personal life, leading to burnout.",trans:"然而，批评者指出，远程工作模糊了职业与个人生活的界限，导致倦怠。"},
+       {orig:"Cities are also feeling the impact, as office vacancies rise and local businesses lose their weekday customers.",trans:"城市也感受到了影响，办公空置率上升，本地企业失去了工作日的顾客。"},
+       {orig:"The hybrid model, which combines office presence with remote flexibility, has emerged as the preferred compromise.",trans:"混合模式将坐班与远程灵活性相结合，已成为首选折中方案。"},
+       {orig:"Ultimately, the future of work will depend on how organisations balance productivity with employee wellbeing.",trans:"最终，工作的未来取决于组织如何平衡生产力与员工福祉。"}
+     ]},
+    {id:'rd-en-2',lang:'en',theme:'culture',difficulty:'高阶',title:'Urban Sustainability 城市可持续发展',
+     sentences:[
+       {orig:"As urban populations swell, cities worldwide are grappling with the challenge of sustainable development.",trans:"随着城市人口膨胀，世界各地的城市都在应对可持续发展的挑战。"},
+       {orig:"Green architecture, featuring living roofs and energy-efficient designs, is transforming city skylines.",trans:"以生态屋顶和节能设计为特色的绿色建筑正在改变城市天际线。"},
+       {orig:"Public transportation networks are being expanded and modernised to reduce reliance on private vehicles.",trans:"公共交通网络正在扩建和现代化，以减少对私家车的依赖。"},
+       {orig:"Urban farming initiatives are turning vacant lots into productive green spaces, enhancing food security.",trans:"城市农业计划正在将空地变成高效绿色空间，增强粮食安全。"},
+       {orig:"Nevertheless, the cost of retrofitting aging infrastructure remains a formidable obstacle.",trans:"尽管如此，改造老化基础设施的成本仍然是一个巨大的障碍。"},
+       {orig:"Sustainable cities are not a luxury but a necessity for the generations to come.",trans:"可持续城市不是奢侈品，而是子孙后代的必需品。"}
+     ]},
+    {id:'rd-en-3',lang:'en',theme:'business',difficulty:'高阶',title:'The Art of Negotiation 谈判的艺术',
+     sentences:[
+       {orig:"Negotiation is not merely about winning concessions; it is about building enduring relationships.",trans:"谈判不仅仅是赢得让步，更是建立持久的关系。"},
+       {orig:"Successful negotiators listen more than they speak, seeking to understand the other party's underlying interests.",trans:"成功的谈判者听多于说，努力理解对方的根本利益。"},
+       {orig:"Preparation is paramount: knowing your bottom line and the alternatives available gives you leverage.",trans:"准备至关重要：清楚自己的底线和可用的备选方案能让你占据优势。"},
+       {orig:"Emotional intelligence plays a crucial role, as negotiations often hinge on trust and rapport.",trans:"情商起着关键作用，因为谈判往往取决于信任和融洽关系。"},
+       {orig:"A win-win outcome is achievable when both sides are willing to make strategic concessions.",trans:"当双方都愿意做出战略性让步时，双赢的结果是可以实现的。"},
+       {orig:"In the long run, a reputation for fairness is the most valuable asset a negotiator can possess.",trans:"从长远来看，公正的声誉是谈判者最有价值的资产。"}
+     ]},
+    {id:'rd-en-4',lang:'en',theme:'culture',difficulty:'高阶',title:'Lifelong Learning 终身学习',
+     sentences:[
+       {orig:"In an era of rapid technological change, the notion that education ends with graduation has become obsolete.",trans:"在技术快速变革的时代，教育止于毕业的观念已经过时。"},
+       {orig:"Lifelong learning enables individuals to remain relevant in a shifting job market.",trans:"终身学习使个人在变化的就业市场中保持竞争力。"},
+       {orig:"Online platforms have democratised access to knowledge, breaking down barriers of geography and cost.",trans:"在线平台使知识获取大众化，打破了地域和成本障碍。"},
+       {orig:"However, the abundance of information poses its own challenge: discerning what is truly worth learning.",trans:"然而，信息的丰富也带来了挑战：辨别什么真正值得学习。"},
+       {orig:"Employers increasingly value adaptability and curiosity over static qualifications.",trans:"雇主越来越看重适应性和好奇心，而非静态的资格证书。"},
+       {orig:"Ultimately, learning is not a destination but a lifelong journey.",trans:"归根结底，学习不是终点，而是终身的旅程。"}
+     ]},
+    // ══ 德语阅读 ══
+    {id:'rd-de-1',lang:'de',theme:'daily',difficulty:'入门',title:'Meine Familie 我的家庭',
+     sentences:[
+       {orig:"Meine Familie ist nicht groß. Wir sind vier Personen.",trans:"我的家庭不大。我们家有四口人。"},
+       {orig:"Mein Vater arbeitet als Ingenieur in einer Firma.",trans:"我爸爸在一家公司当工程师。"},
+       {orig:"Meine Mutter ist Lehrerin und arbeitet an einer Grundschule.",trans:"我妈妈是老师，在一所小学工作。"},
+       {orig:"Ich habe einen älteren Bruder. Er studiert Medizin in Hamburg.",trans:"我有一个哥哥。他在汉堡学医。"},
+       {orig:"Am Wochenende kochen wir oft zusammen und sprechen über unsere Woche.",trans:"周末我们经常一起做饭，聊聊各自的一周。"},
+       {orig:"Meine Familie ist mir sehr wichtig.",trans:"我的家庭对我来说非常重要。"}
+     ]},
+    {id:'rd-de-2',lang:'de',theme:'daily',difficulty:'入门',title:'Ein Tag in Berlin 柏林的一天',
+     sentences:[
+       {orig:"Ich wache um sieben Uhr auf und frühstücke in der Küche.",trans:"我七点起床，在厨房吃早餐。"},
+       {orig:"Dann fahre ich mit der U-Bahn zur Arbeit. Die Fahrt dauert zwanzig Minuten.",trans:"然后我坐地铁去上班。车程二十分钟。"},
+       {orig:"Mittags esse ich in einer kleinen Kantine neben dem Büro.",trans:"中午我在办公室旁边的小食堂吃饭。"},
+       {orig:"Nach der Arbeit gehe ich oft in den Park und mache einen Spaziergang.",trans:"下班后我经常去公园散步。"},
+       {orig:"Abends koche ich zu Hause und sehe fern.",trans:"晚上我在家做饭、看电视。"},
+       {orig:"Um halb elf gehe ich ins Bett.",trans:"十点半我上床睡觉。"}
+     ]},
+    {id:'rd-de-3',lang:'de',theme:'culture',difficulty:'入门',title:'Der Wochenmarkt 周末集市',
+     sentences:[
+       {orig:"Samstagmorgen gehe ich gern zum Wochenmarkt in meiner Straße.",trans:"周六早上我喜欢去我家街上的周末集市。"},
+       {orig:"Es gibt frisches Obst, Gemüse, Blumen und Käse.",trans:"那里有新鲜的水果、蔬菜、鲜花和奶酪。"},
+       {orig:"Ich kaufe Äpfel, Tomaten und ein Stück Käse.",trans:"我买苹果、西红柿和一块奶酪。"},
+       {orig:"Der Verkäufer ist sehr freundlich und gibt mir einen Rabatt.",trans:"卖家很友好，给了我折扣。"},
+       {orig:"Manchmal trinke ich einen Kaffee am Stand und plaudere mit den Leuten.",trans:"有时我在摊位喝杯咖啡，和人们聊天。"},
+       {orig:"Der Markt ist bis zwölf Uhr geöffnet.",trans:"集市开到十二点。"}
+     ]},
+    {id:'rd-de-4',lang:'de',theme:'daily',difficulty:'入门',title:'Mein Hobby 我的爱好',
+     sentences:[
+       {orig:"Mein Hobby ist Fotografie. Ich fotografiere gern die Natur.",trans:"我的爱好是摄影。我喜欢拍自然风景。"},
+       {orig:"Letztes Wochenende war ich im Wald und habe Vögel fotografiert.",trans:"上周末我去了森林，拍了一些鸟。"},
+       {orig:"Ich lerne auch gern neue Dinge über die Kamera.",trans:"我也喜欢学习关于相机的新知识。"},
+       {orig:"Im Sommer mache ich oft Fahrradtouren und nehme meine Kamera mit.",trans:"夏天我经常骑自行车出游，带上我的相机。"},
+       {orig:"Die Fotos zeige ich meinen Freunden und meiner Familie.",trans:"我把照片给朋友和家人看。"},
+       {orig:"Fotografie macht mir viel Spaß.",trans:"摄影给我带来很多乐趣。"}
+     ]}
+  ]
+};
+
+// ============================================================
 // DATA: Dictionary
 // ============================================================
 const DICTIONARY = {
@@ -1275,6 +1510,12 @@ function getMaterialsForLang(lang){
   const custom = state.customMaterials.filter(m => m.lang === lang);
   return [...built, ...custom];
 }
+// 各学习模块独立素材：listening/speaking/reading 内容互不相同
+function getModuleMaterials(module, lang){
+  const built = (MODULE_MATERIALS[module] || []).filter(m => m.lang === lang);
+  const custom = state.customMaterials.filter(m => m.lang === lang);
+  return [...built, ...custom];
+}
 function renderMaterialList(containerId, onClick){
   const mats = getMaterialsForLang(state.lang);
   const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
@@ -1290,6 +1531,10 @@ function renderMaterialList(containerId, onClick){
   return html;
 }
 function findMaterial(id){
+  for(const key in MODULE_MATERIALS){
+    const m = MODULE_MATERIALS[key].find(m => m.id === id);
+    if(m) return m;
+  }
   return MATERIALS.find(m=>m.id===id) || state.customMaterials.find(m=>m.id===id);
 }
 
@@ -1298,7 +1543,7 @@ function findMaterial(id){
 // ============================================================
 function renderListening(){
   const area = document.getElementById('contentArea');
-  const mats = getMaterialsForLang(state.lang);
+  const mats = getModuleMaterials('listening', state.lang);
   const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   if(!state.currentMaterial){
     let matCards = mats.map(m => {
@@ -1355,7 +1600,7 @@ function filterListenMats(){
   const q = (document.getElementById('listenSearch')?.value || '').toLowerCase();
   const list = document.getElementById('listenMatList');
   if(!list) return;
-  const mats = getMaterialsForLang(state.lang);
+  const mats = getModuleMaterials('listening', state.lang);
   const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   const filtered = mats.filter(m => !q || m.title.toLowerCase().includes(q) || m.theme.includes(q) || m.sentences.some(s => s.orig.toLowerCase().includes(q) || s.trans.includes(q)));
   let html = '<div class="material-list">';
@@ -1406,7 +1651,7 @@ function playSingle(idx){
 // ============================================================
 function renderSpeaking(){
   const area = document.getElementById('contentArea');
-  const mats = getMaterialsForLang(state.lang);
+  const mats = getModuleMaterials('speaking', state.lang);
   const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   if(!state.currentMaterial){
     let matCards = mats.map(m => {
@@ -1461,7 +1706,7 @@ function filterSpeakMats(){
   const q = (document.getElementById('speakSearch')?.value || '').toLowerCase();
   const list = document.getElementById('speakMatList');
   if(!list) return;
-  const mats = getMaterialsForLang(state.lang);
+  const mats = getModuleMaterials('speaking', state.lang);
   const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   const filtered = mats.filter(m => !q || m.title.toLowerCase().includes(q) || m.theme.includes(q) || m.sentences.some(s => s.orig.toLowerCase().includes(q) || s.trans.includes(q)));
   let html = '<div class="material-list">';
@@ -1568,7 +1813,7 @@ function playRecord(){
 // ============================================================
 function renderReading(){
   const area = document.getElementById('contentArea');
-  const mats = getMaterialsForLang(state.lang);
+  const mats = getModuleMaterials('reading', state.lang);
   const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   if(!state.currentMaterial){
     let matCards = mats.map(m => {
@@ -1625,7 +1870,7 @@ function filterReadMats(){
   const q = (document.getElementById('readSearch')?.value || '').toLowerCase();
   const list = document.getElementById('readMatList');
   if(!list) return;
-  const mats = getMaterialsForLang(state.lang);
+  const mats = getModuleMaterials('reading', state.lang);
   const themes = {daily:'日常生活',business:'工作商务',culture:'新闻文化',exam:'考试备考'};
   const filtered = mats.filter(m => !q || m.title.toLowerCase().includes(q) || m.theme.includes(q) || m.sentences.some(s => s.orig.toLowerCase().includes(q) || s.trans.includes(q)));
   let html = '<div class="material-list">';
@@ -1678,7 +1923,7 @@ let _grammarDetail = null; // currently selected grammar item id
 
 function renderGrammar(){
   const area = document.getElementById('contentArea');
-  const items = GRAMMAR_REF;
+  const items = state.lang === 'en' ? EN_GRAMMAR_REF : GRAMMAR_REF;
   if(!_grammarDetail){
     let cards = items.map(g => {
       return `<div class="grammar-card" onclick="_grammarDetail='${g.id}';renderGrammar()">
@@ -1687,8 +1932,8 @@ function renderGrammar(){
       </div>`;
     }).join('');
     area.innerHTML = `<div class="fade-in">
-      <div class="search-bar"><input type="text" class="search-input" id="grammarSearch" placeholder="搜索语法：输入关键词（如 变位、介词、完成时...）" oninput="filterGrammar()"></div>
-      <div class="card"><div class="card-header"><div class="card-title">语法知识点</div><span style="font-size:12px;color:var(--text-secondary)">${items.length}个专题</span></div>
+      <div class="search-bar"><input type="text" class="search-input" id="grammarSearch" placeholder="${state.lang==='en'?'搜索语法：输入关键词（如 tense, passive, conditional...）':'搜索语法：输入关键词（如 变位、介词、完成时...）'}" oninput="filterGrammar()"></div>
+      <div class="card"><div class="card-header"><div class="card-title">${state.lang==='en'?'英语语法知识点（IELTS 7 / TEM-8）':'德语语法知识点'}</div><span style="font-size:12px;color:var(--text-secondary)">${items.length}个专题</span></div>
       <div id="grammarList">${cards}</div></div>
     </div>`;
     return;
@@ -1721,7 +1966,7 @@ function filterGrammar(){
   const q = (document.getElementById('grammarSearch')?.value || '').toLowerCase();
   const list = document.getElementById('grammarList');
   if(!list) return;
-  const items = GRAMMAR_REF;
+  const items = state.lang === 'en' ? EN_GRAMMAR_REF : GRAMMAR_REF;
   const filtered = items.filter(g => !q || g.title.toLowerCase().includes(q) || g.keywords.some(k => k.toLowerCase().includes(q)) || g.content.toLowerCase().includes(q));
   if(!filtered.length){ list.innerHTML = '<div class="empty-state" style="padding:20px"><div class="es-text">未找到匹配的语法知识点</div></div>'; return; }
   list.innerHTML = filtered.map(g => {
@@ -2452,6 +2697,37 @@ content:'不改变语序的连词（动词仍在第二位）：\n   und, aber, d
 {id:'time-expressions',title:'时间表达 Zeitangaben',keywords:['时间','time','zeit','heute','morgen','gestern',' Uhr','am ','um '],
 content:'钟点：um + 数字\n   um 8 Uhr | um halb drei（2:30）| um Viertel nach vier（4:15）\n\n星期：am + 星期\n   am Montag | am Dienstag ... am Sonntag\n\n日期：am + 数字 + 月份\n   am 5. Mai | am ersten Januar\n\n月份：im + 月份\n   im Januar | im März | im Dezember\n\n季节：im + 季节\n   im Frühling | im Sommer | im Herbst | im Winter\n\n年份：im Jahr + 数字 / in + 年份\n   im Jahr 2024 | in zwei Jahren\n\n频率：täglich, wöchentlich, monatlich, jährlich\n   jeden Tag | jede Woche | jeden Monat',
 examples:'um 9 Uhr | am Freitag | im Sommer | heute Morgen'}
+];
+
+// ═══ 英语语法库（雅思7/TEM-8水平）═══
+const EN_GRAMMAR_REF = [
+{id:'en-tenses',title:'时态体系 English Tenses',keywords:['时态','tense','现在','过去','将来','完成','进行','12时态'],
+content:'英语十二时态概览：\n\n一般现在时：表示习惯/事实\n   I work in a bank.（我在银行工作。）\n\n现在进行时：正在发生\n   She is reading a book now.（她现在正在读书。）\n\n一般过去时：过去发生\n   We visited Berlin last year.（我们去年去了柏林。）\n\n现在完成时：过去发生且影响现在\n   I have finished my homework.（我已完成作业。）\n\n过去完成时：过去的过去\n   By the time we arrived, the film had started.（我们到达时电影已开始。）\n\n将来时：will / be going to\n   It will rain tomorrow. / I am going to travel next month.',
+examples:'She has lived here for 10 years. | I was watching TV when he called.'},
+{id:'en-passive',title:'被动语态 Passive Voice',keywords:['被动','passive','be done','过去分词','语态'],
+content:'被动语态构成：be + 过去分词\n\n一般现在：is/are + done\n   English is spoken worldwide.（全世界都说英语。）\n\n一般过去：was/were + done\n   The bridge was built in 1990.（这座桥建于1990年。）\n\n现在完成：has/have been + done\n   The report has been completed.（报告已完成。）\n\n情态动词：can/must + be + done\n   This task must be finished today.（这项任务今天必须完成。）\n\n何时使用：强调动作承受者 / 施动者不明或无关紧要\n   用 by 引出施动者：The cake was made by my mother.',
+examples:'The room is cleaned every day. | The letter was sent yesterday.'},
+{id:'en-conditionals',title:'条件句 Conditionals',keywords:['条件句','conditional','if','虚拟','would','mixed'],
+content:'四种条件句：\n\n零条件（事实）：If + 现在时, 现在时\n   If you heat ice, it melts.（冰遇热融化。）\n\n第一条件（可能）：If + 现在时, will + 原形\n   If it rains, we will stay home.\n\n第二条件（虚拟/不可能）：If + 过去时, would + 原形\n   If I had more time, I would travel more.\n\n第三条件（过去虚拟/后悔）：If + 过去完成时, would have + 过去分词\n   If I had studied harder, I would have passed the exam.\n\n注意：if 从句中的 be 常用 were：If I were you, I would accept the offer.',
+examples:'If I were you, I would apply. | Had I known, I would have called.'},
+{id:'en-relative',title:'定语从句 Relative Clauses',keywords:['定语从句','relative','who','which','that','whose','where','when'],
+content:'定语从句修饰名词：\n\nwho — 人：The man who called you is my boss.\nwhich — 物：The book which you lent me is great.\nthat — 人/物（口语常用）：The car that I bought is red.\nwhose — 所属：The girl whose bag was stolen cried.\nwhere — 地点：This is the café where we met.\nwhen — 时间：I remember the day when we graduated.\n\n限制性（无逗号）vs 非限制性（有逗号）：\n   My brother who lives in Berlin...（暗示有多个兄弟）\n   My brother, who lives in Berlin,...（唯一兄弟，补充信息）\n\n介词可以提前：The person to whom you spoke is the CEO.（正式）',
+examples:'The house which we visited was huge. | That is the reason why I left.'},
+{id:'en-gerund-infinitive',title:'动名词与不定式 Gerund & Infinitive',keywords:['动名词','gerund','不定式','infinitive','ing','to do'],
+content:'动名词（-ing）与不定式（to do）：\n\n后接动名词的动词：enjoy, finish, avoid, mind, consider, suggest, practice\n   I enjoy reading. | Would you mind opening the window?\n\n后接不定式的动词：want, decide, hope, plan, promise, agree, refuse\n   I decided to leave early. | She promised to help me.\n\n两者皆可且意思相近：begin, start, continue, like, love, hate\n\n意思不同的动词：\n   remember to do（记得要做）vs remember doing（记得做过）\n   stop to do（停下来去做）vs stop doing（停止做）\n   try to do（努力做）vs try doing（尝试做）\n\n介词后一律用动名词：be interested in doing | good at doing',
+examples:'I stopped to smoke. | I stopped smoking. | She enjoys swimming.'},
+{id:'en-modals',title:'情态动词 Modal Verbs',keywords:['情态动词','modal','can','must','should','might','推测'],
+content:'情态动词：\n\n能力：can / could / be able to\n   I can swim. | When I was young, I could run fast.\n\n许可：can / may / could\n   May I come in?（正式）| Can I use your phone?\n\n义务：must / have to / should / ought to\n   must = 说话人认为必须 | have to = 客观必须\n   You must see a doctor. | I have to work tomorrow.\n\n推测：must be（肯定推测）/ can\'t be（否定推测）/ might be（可能）\n   He must be tired. | It can\'t be true. | She might be late.\n\n建议：should / had better\n   You should rest. | You\'d better hurry.\n\n注意：must 没有过去式，用 had to：I had to leave early.',
+examples:'You must be joking. | He can\'t have done it. | We should apologise.'},
+{id:'en-phrasal',title:'短语动词 Phrasal Verbs',keywords:['短语动词','phrasal','look after','give up','put off','turn down'],
+content:'常用短语动词（动词+介词/副词）：\n\nlook after 照顾：She looks after her grandmother.\nlook forward to 期待：I look forward to hearing from you.\nput off 推迟：Let\'s put off the meeting until Friday.\nturn down 拒绝：He turned down the offer.\ngive up 放弃：Never give up your dreams.\nbring up 抚养/提出：She was brought up in Shanghai.\ncome across 偶然发现：I came across an old photo.\ncarry out 执行：The research was carried out by experts.\n\n注意：代词放中间：pick it up（不能说 pick up it）\n   宾语长时放后面：pick up the book on the table',
+examples:'Call off = cancel | find out = discover | run out of = 用完'},
+{id:'en-linkers',title:'连接词与从句 Linkers & Clauses',keywords:['连词','连接词','linker','although','unless','so that','从句'],
+content:'连接词与从句：\n\n并列连词：and, but, or, so, yet\n   I was tired, but I kept working.\n\n时间从句：when, while, before, after, until, as soon as\n   Call me as soon as you arrive.\n\n原因从句：because, since, as\n   She stayed home because she was ill.\n\n结果从句：so...that, such...that\n   It was so hot that we stayed inside.\n\n让步从句：although, even though, while\n   Although it rained, we went out.\n\n目的从句：so that, in order to\n   He studied hard so that he could pass.\n\n条件：if, unless, provided that\n   You won\'t pass unless you study.',
+examples:'Although he is rich, he is unhappy. | I\'ll go unless it rains.'},
+{id:'en-articles',title:'冠词与限定词 Articles & Determiners',keywords:['冠词','article','a','an','the','零冠词','限定词'],
+content:'冠词用法：\n\n不定冠词 a/an：泛指单数可数名词\n   a book | an apple（元音前用 an）\n\n定冠词 the：特指双方都知道的人或物\n   The sun rises in the east. | Please close the door.\n\n零冠词（不加冠词）：\n   泛指复数名词：I like books.\n   抽象概念：Life is short.\n   三餐、球类、学科：have breakfast | play football | study English\n\n固定搭配：\n   go to school / go to the school（身份 vs 地点）\n   in hospital / in the hospital（住院 vs 在医院）\n\n限定词：this/that/these/those, my/your/his, some/any, much/many\n   much + 不可数 | many + 可数复数',
+examples:'an hour | the United States | have dinner | in bed'}
 ];
 
 // ============================================================
