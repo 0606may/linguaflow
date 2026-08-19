@@ -2708,7 +2708,7 @@ function showDictPopup(word, meaning, x, y){
   document.getElementById('dictWord').textContent = word;
   document.getElementById('dictPhonetic').textContent = '';
   document.getElementById('dictMeaning').innerHTML = `<span class="pos">${state.lang==='en'?'英':'德'}</span> ${meaning}
-    <div style="margin-top:8px"><button class="btn btn-sm btn-accent" onclick="addToNote('word','${word.replace(/'/g,"\\'")}','${meaning.replace(/'/g,"\\'")}');event.stopPropagation()">📌 归档</button></div>`;
+    <div style="margin-top:8px"><button class="btn btn-sm btn-accent" onclick="addToNote('word',decodeURIComponent('${enc(word)}'),decodeURIComponent('${enc(meaning)}'));event.stopPropagation()">📌 归档</button></div>`;
   popup.style.left = Math.min(x, window.innerWidth - 280) + 'px';
   popup.style.top = Math.min(y + 10, window.innerHeight - 120) + 'px';
   popup.classList.add('show');
@@ -3175,7 +3175,7 @@ function renderGrammar(){
     <div class="card">
       <div class="card-header">
         <div class="card-title">${g.title}</div>
-        <button class="btn btn-accent" onclick="addToNote('grammar','${g.title.replace(/'/g,"\\'")}',\`${g.content.replace(/`/g,'\\`').replace(/\\/g,'\\\\').substring(0,200)}...\`)">📌 归档到笔记</button>
+        <button class="btn btn-accent" onclick="addToNote('grammar',decodeURIComponent('${enc(g.title)}'),decodeURIComponent('${enc(g.content.substring(0,200))}'))">📌 归档到笔记</button>
       </div>
       <div style="margin-bottom:12px">${g.keywords.map(k => `<span style="display:inline-block;padding:2px 8px;margin:2px;background:var(--highlight);border-radius:var(--radius-tag);font-size:11px;color:var(--text-secondary)">${k}</span>`).join('')}</div>
       <div style="line-height:1.8">${contentHtml}</div>
@@ -4030,7 +4030,7 @@ function doQuery(){
       ${dictResult.extra ? `<div style="font-size:12px;color:var(--text-secondary);margin-top:6px">${dictResult.extra}</div>` : ''}
       <div style="margin-top:10px;display:flex;gap:6px">
         <button class="btn btn-sm" onclick="speakQueryWord('${dictResult.word.replace(/'/g,"\\'")}')">🔊 发音</button>
-        <button class="btn btn-sm btn-primary" onclick="addToNote('word','${dictResult.word.replace(/'/g,"\\'")}','${dictResult.meaning.replace(/'/g,"\\'")}')">📒 加入笔记</button>
+        <button class="btn btn-sm btn-primary" onclick="addToNote('word',decodeURIComponent('${enc(dictResult.word)}'),decodeURIComponent('${enc(dictResult.meaning)}'))">📒 加入笔记</button>
       </div>
     </div>`;
   } else if(isSingleWord && !dictResult){
@@ -4055,7 +4055,7 @@ function doQuery(){
           <div class="gd-content">${g.content}</div>
           ${g.examples ? `<div class="gd-example">📝 ${g.examples}</div>` : ''}
           <div style="margin-top:10px">
-            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();addToNote('grammar','${g.title.replace(/'/g,"\\'")}','${g.content.substring(0,120).replace(/'/g,"\\'")}')">📒 加入笔记</button>
+            <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();addToNote('grammar',decodeURIComponent('${enc(g.title)}'),decodeURIComponent('${enc(g.content.substring(0,120))}'))">📒 加入笔记</button>
           </div>
         </div>
       </div>`;
@@ -4072,7 +4072,7 @@ function doQuery(){
   if(words.length > 1){
     html += `<div style="margin-top:16px;padding:14px;background:var(--highlight-sentence);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:space-between">
       <div style="font-size:13px;color:var(--text-secondary)">将查询内容保存为常用句</div>
-      <button class="btn btn-sm btn-primary" onclick="addToNote('phrase','${text.replace(/'/g,"\\'")}','')">📒 加入常用句笔记</button>
+      <button class="btn btn-sm btn-primary" onclick="addToNote('phrase',decodeURIComponent('${enc(text)}'),'')">📒 加入常用句笔记</button>
     </div>`;
   }
 
@@ -4083,6 +4083,10 @@ function doQuery(){
 // ============================================================
 // RIGHT-SIDE QUERY PANEL
 // ============================================================
+// 安全内联编码：文本经 URI 编码嵌入 onclick，避免换行/引号破坏 HTML 属性与 JS 字符串
+function enc(s){
+  return encodeURIComponent(String(s == null ? '' : s)).replace(/'/g,'%27');
+}
 let queryPanelOpen = true; // always open on desktop
 
 function toggleQueryPanel(){
@@ -4138,7 +4142,7 @@ function doQuickQuery(){
         ${dictResult.extra ? `<div class="qr-example">${dictResult.extra}</div>` : ''}
         <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
           <button class="btn btn-sm" onclick="speak('${dictResult.word.replace(/'/g,"\\'")}')"> 发音</button>
-          <button class="qr-add-btn" onclick="addToNote('word','${dictResult.word.replace(/'/g,"\\'")}','${dictResult.meaning.replace(/'/g,"\\'")}')"> 加入笔记</button>
+          <button class="qr-add-btn" onclick="addToNote('word',decodeURIComponent('${enc(dictResult.word)}'),decodeURIComponent('${enc(dictResult.meaning)}'))"> 加入笔记</button>
         </div>
       </div>
     </div>`;
@@ -4228,7 +4232,7 @@ function doQuickQuery(){
         <div class="qr-grammar-title">${g.title}</div>
         <div class="qr-grammar-desc">${g.content.substring(0,100)}${g.content.length>100?'...':''}</div>
         ${g.examples ? `<div class="qr-example">📝 ${g.examples}</div>` : ''}
-        <button class="qr-add-btn" onclick="addToNote('grammar','${g.title.replace(/'/g,"\\'")}','${g.content.substring(0,120).replace(/'/g,"\\'")}')"> 加入笔记</button>
+        <button class="qr-add-btn" onclick="addToNote('grammar',decodeURIComponent('${enc(g.title)}'),decodeURIComponent('${enc(g.content.substring(0,120))}'))"> 加入笔记</button>
       </div>`;
     });
     html += '</div>';
@@ -4239,7 +4243,7 @@ function doQuickQuery(){
     html += `<div class="qr-section">
       <div class="qr-card" style="background:var(--highlight-sentence);display:flex;align-items:center;justify-content:space-between">
         <div style="font-size:12px;color:var(--text-secondary)">保存为常用句</div>
-        <button class="qr-add-btn" onclick="addToNote('phrase','${text.replace(/'/g,"\\'")}','')"> 加入笔记</button>
+        <button class="qr-add-btn" onclick="addToNote('phrase',decodeURIComponent('${enc(text)}'),'')"> 加入笔记</button>
       </div>
     </div>`;
   }
@@ -4416,6 +4420,8 @@ function addToNote(category, content, detail){
   });
   saveNotesData(notes);
   trackActivity('note', `${category}:${content}`);
+  // 若当前正显示笔记面板，立即刷新
+  if(state.module === 'notes') renderNotes();
   // Show brief confirmation
   const labels = {grammar:'语法',word:'单词',phrase:'常用句'};
   const toast = document.createElement('div');
