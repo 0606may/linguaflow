@@ -4087,6 +4087,115 @@ function doQuery(){
 function enc(s){
   return encodeURIComponent(String(s == null ? '' : s)).replace(/'/g,'%27');
 }
+
+// ========== 在线词典内容（面板内联，免跳转） ==========
+const _dictCache = {};
+function stripWikitext(t){
+  return String(t).replace(/\[\[(?:[^|\]]*\|)?([^\]]+)\]\]/g,'$1')
+    .replace(/\{\{[^}]*\}\}/g,'').replace(/'''/g,'').replace(/''/g,'')
+    .replace(/<ref[\s\S]*?<\/ref>/gi,'').replace(/\[[^\]]*\]/g,'').trim();
+}
+function parseWiktionary(wikitext){
+  const w = String(wikitext);
+  const secM = w.match(/==\s*德语\s*==/);
+  if(!secM) return null;
+  const i = secM.index;
+  const endM = w.slice(i + secM[0].length).match(/\n==(?!=)/);
+  const end = endM ? i + secM[0].length + endM.index : w.length;
+  const sec = w.slice(i, end);
+  const posMap = {'-noun-':'名词','-adj-':'形容词','-verb-':'动词','-adv-':'副词','-pron-':'代词','-prep-':'介词','-conj-':'连词','-interj-':'感叹词','-num-':'数词','-phrase-':'短语'};
+  let pos = '';
+  for(const k in posMap){ if(sec.includes('{{'+k)){ pos = posMap[k]; break; } }
+  const g2 = sec.match(/'''[^']*'''\s*([mnf])\./);
+  const g3 = sec.match(/\{\{de-noun\|([mnf])\|/);
+  const gender = g2 ? g2[1] : (g3 ? g3[1] : '');
+  const defs = [...sec.matchAll(/^#\s*([^#].*)$/gm)].map(m => stripWikitext(m[1])).filter(d => d && d.length > 1 && !d.startsWith('{{') && !d.includes('*'));
+  return defs.length ? {pos, gender, defs} : null;
+}
+async function fetchOnlineDict(word, lang){
+  const key = lang + ':' + word;
+  if(_dictCache[key]) return _dictCache[key];
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 6000);
+  try{
+    if(lang === 'en'){
+      const r = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word), {signal: ctrl.signal});
+      if(!r.ok) return null;
+      const d = await r.json();
+      const phon = d[0].phonetic || (d[0].phonetics || []).map(p => p.text).find(Boolean) || '';
+      const meanings = (d[0].meanings || []).slice(0, 4).map(m => ({
+        pos: m.partOfSpeech,
+        defs: (m.definitions || []).slice(0, 3).map(x => ({text: x.definition || '', ex: x.example || ''}))
+      })).filter(m => m.defs.length);
+      const out = {source:'dictionaryapi', word: d[0].word, phonetic: phon, meanings};
+      _dictCache[key] = out;
+      return out;
+    }
+    // 德语：优先中文维基词典（词性/性/释义），超时或失败降级 MyMemory 翻译
+    try{
+      const r = await fetch('https://zh.wiktionary.org/w/api.php?action=parse&page=' + encodeURIComponent(word) + '&prop=wikitext&format=json&origin=*', {signal: ctrl.signal});
+      if(r.ok){
+        const j = await r.json();
+        const wt = j.parse && j.parse.wikitext ? j.parse.wikitext['*'] : '';
+        const p = wt ? parseWiktionary(wt) : null;
+        if(p){
+          const out = {source:'wiktionary', word, pos: p.pos, gender: p.gender, defs: p.defs.slice(0, 6)};
+          _dictCache[key] = out;
+          return out;
+        }
+      }
+    }catch(e){}
+    // 降级：MyMemory 机器翻译（须用独立 AbortController，原信号已超时中止）
+    const ctrl2 = new AbortController();
+    const timer2 = setTimeout(() => ctrl2.abort(), 6000);
+    try{
+      const t = await fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(word) + '&langpair=de|zh-CN', {signal: ctrl2.signal});
+      if(t.ok){
+        const j = await t.json();
+        const text = j.responseData && j.responseData.translatedText;
+        if(text){
+          const out = {source:'mymemory', word, defs: [stripWikitext(text)]};
+          _dictCache[key] = out;
+          return out;
+        }
+      }
+    }catch(e2){
+      return null;
+    }finally{
+      clearTimeout(timer2);
+    }
+    return null;
+  }catch(e){
+    return null;
+  }finally{
+    clearTimeout(timer);
+  }
+}
+function renderOnlineDictBlock(data){
+  const el = document.getElementById('od-content');
+  if(!el) return;
+  if(!data){
+    el.innerHTML = '<div style="color:var(--text-secondary);font-size:12px;padding:6px 2px">在线词典加载失败（网络受限或词条缺失），可使用下方词典链接跳转查看</div>';
+    return;
+  }
+  const sourceTag = data.source === 'dictionaryapi' ? '词典API' : (data.source === 'wiktionary' ? '维基词典' : '翻译');
+  const srcStyle = data.source === 'dictionaryapi' ? 'background:var(--primary);color:#f5f2ed' : 'background:var(--highlight);color:var(--text-secondary)';
+  let body = '';
+  if(data.meanings){
+    body = data.meanings.map(m => `<div style="margin-top:6px">
+      <span style="font-style:italic;color:var(--accent);font-size:12px">${escHtml(m.pos)}</span>
+      ${m.defs.map(d => `<div style="font-size:13px;line-height:1.6;margin-top:2px">• ${escHtml(d.text)}${d.ex ? `<div style="color:var(--text-secondary);font-size:12px;font-style:italic">例：${escHtml(d.ex)}</div>` : ''}</div>`).join('')}
+    </div>`).join('');
+  } else {
+    const genderTag = data.gender ? `<span style="color:var(--success);font-size:12px;font-weight:600">${data.gender === 'm' ? 'm. 阳性' : data.gender === 'f' ? 'f. 阴性' : 'n. 中性'}</span> ` : '';
+    const posTag = data.pos ? `<span style="font-size:11px;background:var(--highlight);color:var(--text-secondary);padding:1px 6px;border-radius:8px;margin-right:4px">${data.pos}</span>` : '';
+    body = `<div style="margin-top:6px">${genderTag}${posTag}${data.defs.map(d => `<div style="font-size:13px;line-height:1.6;margin-top:2px">• ${escHtml(d)}</div>`).join('')}</div>`;
+  }
+  el.innerHTML = `<div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap">${escHtml(data.word)}
+    ${data.phonetic ? `<span style="font-weight:400;color:var(--text-secondary);font-size:12px">${escHtml(data.phonetic)}</span>` : ''}
+    <span style="font-size:11px;padding:1px 6px;border-radius:8px;${srcStyle}">${sourceTag}</span></div>${body}`;
+}
+
 let queryPanelOpen = true; // always open on desktop
 
 function toggleQueryPanel(){
@@ -4156,6 +4265,14 @@ function doQuickQuery(){
           <button class="btn btn-sm" onclick="speak('${text.replace(/'/g,"\\'")}')"> 发音</button>
         </div>
       </div>
+    </div>`;
+  }
+
+  // Section 1.5: 在线词典内容（面板内联，免跳转）
+  if(isSingleWord){
+    html += `<div class="qr-section">
+      <div class="qr-label">📖 在线词典内容</div>
+      <div class="qr-card" id="od-content" style="color:var(--text-secondary);font-size:12px;padding:10px 12px">加载中…</div>
     </div>`;
   }
 
@@ -4253,6 +4370,11 @@ function doQuickQuery(){
   }
 
   container.innerHTML = html;
+
+  // 在线词典内容异步加载（单单词查询时）
+  if(isSingleWord){
+    fetchOnlineDict(text.toLowerCase(), lang).then(renderOnlineDictBlock);
+  }
 }
 
 // Text selection quick query
