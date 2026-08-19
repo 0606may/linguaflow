@@ -4272,9 +4272,12 @@ function clickWordForQuery(e, word){
 
 function doQuickQuery(){
   const input = document.getElementById('qpInput');
-  if(!input || !input.value.trim()) return;
-  const text = input.value.trim();
   const container = document.getElementById('qpResults');
+  if(!input || !input.value.trim()){
+    if(container) container.innerHTML = '<div style="text-align:center;padding:24px 16px;color:var(--text-secondary);font-size:13px;line-height:2">⚠️ 请先在上方输入要查询的单词、短语或句子<br>或者：选中页面上的文字，点击弹出的「🔍 查询」按钮</div>';
+    return;
+  }
+  const text = input.value.trim();
   container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary)">查询中...</div>';
 
   const words = text.split(/\s+/);
