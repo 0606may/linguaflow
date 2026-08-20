@@ -36,6 +36,11 @@
   --radius:8px;--radius-sm:6px;--radius-tag:4px;
 }
 body{font-family:"PingFang SC",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
+/* 移动端：消除点击黄色高亮/焦点光圈/异常选中光标 */
+*{-webkit-tap-highlight-color:transparent}
+button,a,input,select,textarea{outline:none}
+input,textarea{caret-color:#5b6e7a}
+::selection{background:rgba(91,110,122,.22);color:inherit}
 /* Sidebar */
 .sidebar{width:220px;background:var(--sidebar-bg);color:var(--sidebar-text);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
 .sidebar-brand{padding:20px;font-size:20px;font-weight:700;color:#f5f2ed;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);letter-spacing:1px}
@@ -2588,7 +2593,9 @@ function getRecommendations(lang){
 let synth = window.speechSynthesis;
 let recognition = null;
 let currentAudio = null;
-let ttsEngine = 'browser'; // 'google' or 'browser'（默认浏览器语音：Google TTS 在部分网络不可用）
+// 语音引擎持久化（Google 真人语音 / 浏览器语音）；选择后不会被自动改回
+let ttsEngine = 'google';
+try{ ttsEngine = localStorage.getItem('lf_ttsEngine') || 'google'; }catch(e){}
 
 function initVoices(){
   state.voices = synth.getVoices();
@@ -2596,6 +2603,7 @@ function initVoices(){
 }
 function populateVoiceSelect(){
   const sel = document.getElementById('voiceSelect');
+  if(!sel) return;
   sel.innerHTML = '';
   sel.innerHTML = `<option value="google">Google 真人语音</option><option value="browser">浏览器语音</option>`;
   sel.value = ttsEngine;
@@ -2604,36 +2612,85 @@ function getSelectedVoice(){ return null; }
 function onVoiceChange(){
   const sel = document.getElementById('voiceSelect');
   ttsEngine = sel.value;
+  try{ localStorage.setItem('lf_ttsEngine', ttsEngine); }catch(e){}
 }
 function onSpeedChange(){
   state.speed = parseFloat(document.getElementById('speedSlider').value);
   document.getElementById('speedVal').textContent = state.speed.toFixed(1) + 'x';
 }
 // Google Translate TTS - natural human voice
+// 主路径 translate.google.com 失败时自动改用 soundoftext(Google TTS 代理)；
+// 全部失败则本次用浏览器语音播放，但保持用户的引擎选择（不会自动改回）
+let _gMainDead = false;          // 主路径已确认不可达，跳过后续重试
+const _gTtsCache = {};           // lang:text -> soundoftext 音频URL缓存
+function gttsSoundOfText(text, lang){
+  const ck = lang + ':' + text;
+  if(_gTtsCache[ck]) return Promise.resolve(_gTtsCache[ck]);
+  return fetch('https://api.soundoftext.com/sounds', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({engine: 'Google', data: {text, voice: lang}})
+  }).then(r => r.json()).then(d => {
+    if(!d || !d.success || !d.id) return null;
+    return new Promise((resolve) => {
+      let tries = 0;
+      const poll = () => {
+        tries++;
+        fetch('https://api.soundoftext.com/sounds/' + d.id)
+          .then(r => r.json())
+          .then(j => {
+            if(j.status === 'Done' && j.location){ _gTtsCache[ck] = j.location; resolve(j.location); }
+            else if(j.status === 'Error' || j.status === 'Fail' || tries > 15){ resolve(null); }
+            else setTimeout(poll, 1200);
+          })
+          .catch(() => { if(tries > 15) resolve(null); else setTimeout(poll, 1200); });
+      };
+      poll();
+    });
+  }).catch(() => null);
+}
 function googleTTS(text, onEnd){
   if(currentAudio){ currentAudio.pause(); currentAudio = null; }
-  const lang = state.lang === 'en' ? 'en' : 'de';
-  // Split long text into chunks (Google limit ~200 chars)
+  const lang = state.lang === 'en' ? 'en-US' : 'de-DE';
+  const gLang = state.lang === 'en' ? 'en' : 'de';
   const chunks = splitTextForTTS(text, 180);
   let idx = 0;
   function playChunk(){
     if(idx >= chunks.length){ if(onEnd) onEnd(); return; }
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${lang}&client=tw-ob&q=${encodeURIComponent(chunks[idx])}`;
+    const chunk = chunks[idx];
+    if(_gMainDead){
+      soPlay(chunk);
+    } else {
+      googlePlay(chunk);
+    }
+  }
+  // 主路径：translate.google.com（部分网络可达，音质最佳）
+  function googlePlay(chunk){
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${gLang}&client=tw-ob&q=${encodeURIComponent(chunk)}`;
     const audio = new Audio(url);
+    let done = false;
+    const timer = setTimeout(() => { if(!done){ done = true; try{audio.pause();}catch(e){} soPlay(chunk); } }, 5000);
     audio.playbackRate = state.speed;
     currentAudio = audio;
-    audio.onended = () => { idx++; playChunk(); };
-    audio.onerror = () => {
-      // Fallback to browser TTS if Google fails
-      console.warn('Google TTS failed, falling back to browser TTS');
-      ttsEngine = 'browser';
-      document.getElementById('voiceSelect').value = 'browser';
-      browserTTS(text, onEnd);
-    };
-    audio.play().catch(() => {
-      ttsEngine = 'browser';
-      document.getElementById('voiceSelect').value = 'browser';
-      browserTTS(text, onEnd);
+    audio.onended = () => { if(done) return; done = true; clearTimeout(timer); idx++; playChunk(); };
+    audio.onerror = () => { if(done) return; done = true; clearTimeout(timer); _gMainDead = true; soPlay(chunk); };
+    audio.play().catch(() => { if(done) return; done = true; clearTimeout(timer); _gMainDead = true; soPlay(chunk); });
+  }
+  // 兜底：soundoftext(Google TTS 代理)
+  function soPlay(chunk){
+    gttsSoundOfText(chunk, lang).then(url => {
+      if(!url){
+        // 全部失败：本次临时用浏览器语音，不改变用户选择的引擎
+        console.warn('Google TTS 不可用，本次播放使用浏览器语音');
+        browserTTS(chunk, () => { idx++; playChunk(); });
+        return;
+      }
+      const audio = new Audio(url);
+      audio.playbackRate = state.speed;
+      currentAudio = audio;
+      audio.onended = () => { idx++; playChunk(); };
+      audio.onerror = () => { browserTTS(chunk, () => { idx++; playChunk(); }); };
+      audio.play().catch(() => { browserTTS(chunk, () => { idx++; playChunk(); }); });
     });
   }
   playChunk();
@@ -5960,15 +6017,16 @@ function renderUploadPanel(){
   if(!uploadState.imageData){
     // Upload zone
     bodyHtml = `
-      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('uploadInput').click()"
+      <div class="upload-zone" id="uploadZone" onclick="showCameraMenu()"
            ondragover="event.preventDefault();this.classList.add('dragover')"
            ondragleave="this.classList.remove('dragover')"
            ondrop="event.preventDefault();this.classList.remove('dragover');handleDropFile(event)">
         <div class="uz-icon">📷</div>
-        <div class="uz-text">点击上传或拖拽图片到此处</div>
-        <div class="uz-hint">支持 JPG / PNG / HEIC，可拍照上传</div>
+        <div class="uz-text">点击拍照或从相册选择图片</div>
+        <div class="uz-hint">支持 JPG / PNG / HEIC，可拍照或相册上传</div>
       </div>
-      <input type="file" id="uploadInput" accept="image/*" capture="environment" style="display:none" onchange="handleUploadFile(this)">`;
+      <input type="file" id="uploadInput" accept="image/*" capture="environment" style="display:none" onchange="handleUploadFile(this)">
+      <input type="file" id="uploadInputGallery" accept="image/*" style="display:none" onchange="handleUploadFile(this)">`;
   } else {
     // Image preview + OCR controls
     bodyHtml = `
@@ -6140,18 +6198,45 @@ function switchModule(mod){
   }
 }
 
-// 手机端快捷入口：直接调起相机拍照识别（智能解析）
+// 手机端快捷入口：弹出选择菜单（拍照 / 从相册选择）
 function openCamera(){
-  switchModule('import');
-  setTimeout(() => {
-    const inp = document.getElementById('uploadInput');
-    if(inp) inp.click();
-    else{
-      // 上传区尚未渲染时兜底：直接滚动到上传区
-      const zone = document.getElementById('uploadZone');
-      if(zone) zone.scrollIntoView({behavior:'smooth', block:'center'});
-    }
-  }, 450);
+  switchModule('notes');
+  if(!uploadState.show) toggleUploadPanel();
+  setTimeout(() => showCameraMenu(), 450);
+}
+function showCameraMenu(){
+  const old = document.getElementById('cameraMenu');
+  if(old) old.remove();
+  const overlay = document.createElement('div');
+  overlay.id = 'cameraMenu';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;-webkit-tap-highlight-color:transparent';
+  overlay.innerHTML = `
+    <div style="background:var(--card);border-radius:16px 16px 0 0;width:100%;max-width:480px;padding:14px 16px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -4px 20px rgba(0,0,0,.15)">
+      <div style="text-align:center;font-size:13px;color:var(--text-secondary);padding:2px 0 12px">选择图片来源</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button onclick="cameraPick('camera')" style="padding:14px;border-radius:12px;background:var(--primary);color:#f5f2ed;font-size:15px;border:none;font-weight:600">📷 拍照</button>
+        <button onclick="cameraPick('gallery')" style="padding:14px;border-radius:12px;background:var(--highlight);color:var(--text);font-size:15px;border:none;font-weight:600">🖼️ 从相册选择</button>
+        <button onclick="closeCameraMenu()" style="padding:11px;border-radius:12px;background:transparent;color:var(--text-secondary);font-size:14px;border:none">取消</button>
+      </div>
+    </div>`;
+  overlay.addEventListener('click', (e) => { if(e.target === overlay) closeCameraMenu(); });
+  document.body.appendChild(overlay);
+}
+function cameraPick(which){
+  closeCameraMenu();
+  const id = which === 'camera' ? 'uploadInput' : 'uploadInputGallery';
+  const inp = document.getElementById(id);
+  if(inp){
+    inp.value = '';
+    inp.click();
+  } else {
+    const zone = document.getElementById('uploadZone');
+    if(zone) zone.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+function closeCameraMenu(){
+  const old = document.getElementById('cameraMenu');
+  if(old) old.remove();
 }
 function renderCurrentModule(){
   const renderers = {listening:renderListening,speaking:renderSpeaking,reading:renderReading,grammar:renderGrammar,daily:renderDaily,quiz:renderQuiz,import:renderImport,progress:renderProgress,activity:renderActivity,query:renderQuery,notes:renderNotes};
