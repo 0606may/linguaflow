@@ -4159,6 +4159,41 @@ function parseWiktionary(wikitext){
   const defs = [...sec.matchAll(/^#\s*([^#].*)$/gm)].map(m => stripWikitext(m[1])).filter(d => d && d.length > 1 && !d.startsWith('{{') && !d.includes('*'));
   return defs.length ? {pos, gender, defs} : null;
 }
+
+// 有道词典建议(JSONP)：script标签加载，绕过CORS限制；用于德语在线释义
+function youdaoSuggest(word, timeoutMs){
+  return new Promise((resolve, reject) => {
+    const cbName = '_ydCb' + Date.now() + Math.floor(Math.random() * 1000);
+    const url = 'https://dict.youdao.com/suggest?num=6&ver=3.0&doctype=json&cache=false&le=de&q=' + encodeURIComponent(word) + '&callback=' + cbName;
+    let done = false;
+    const cleanup = () => {
+      if(done) return;
+      done = true;
+      clearTimeout(timer);
+      delete window[cbName];
+      const s = document.getElementById('ydScript' + cbName);
+      if(s && s.parentNode) s.parentNode.removeChild(s);
+    };
+    const timer = setTimeout(() => { cleanup(); reject(new Error('youdao timeout')); }, timeoutMs || 6000);
+    window[cbName] = (data) => { cleanup(); resolve(data || null); };
+    const s = document.createElement('script');
+    s.id = 'ydScript' + cbName;
+    s.src = url;
+    s.onerror = () => { cleanup(); reject(new Error('youdao load error')); };
+    document.head.appendChild(s);
+  });
+}
+
+// 清洗有道 explain：只保留中文释义段与词性标记，剔除页面按钮噪音
+function cleanYdExplain(ex){
+  if(!ex) return '';
+  const posRe = /^(n|f|m|adj|adv|Vt|Vi|V|vt|vi|pron|prep|num|konj|art|interj|int|ger|pp|pt|part)$/i;
+  const noiseRe = /^(赞|踩|更换|举报|好评|差评|收藏|翻译|复制|纠错|分享|导出|打印)$/;
+  const parts = String(ex).split(';').map(s => s.trim()).filter(s => s && s.length < 60);
+  const kept = parts.filter(s => ( /[\u4e00-\u9fff]/.test(s) || posRe.test(s) ) && !noiseRe.test(s));
+  return kept.slice(0, 4).join('；');
+}
+
 async function fetchOnlineDict(word, lang){
   const key = lang + ':' + word;
   if(_dictCache[key]) return _dictCache[key];
@@ -4178,15 +4213,15 @@ async function fetchOnlineDict(word, lang){
       _dictCache[key] = out;
       return out;
     }
-    // 德语：优先中文维基词典（词性/性/释义），超时或失败降级 MyMemory 翻译
+    // 德语：优先 有道词典建议(JSONP)，失败或无结果降级 MyMemory 翻译
     try{
-      const r = await fetch('https://zh.wiktionary.org/w/api.php?action=parse&page=' + encodeURIComponent(word) + '&prop=wikitext&format=json&origin=*', {signal: ctrl.signal});
-      if(r.ok){
-        const j = await r.json();
-        const wt = j.parse && j.parse.wikitext ? j.parse.wikitext['*'] : '';
-        const p = wt ? parseWiktionary(wt) : null;
-        if(p){
-          const out = {source:'wiktionary', word, pos: p.pos, gender: p.gender, defs: p.defs.slice(0, 6)};
+      const yd = await youdaoSuggest(word);
+      const entries = (yd && yd.data && yd.data.entries) || [];
+      if(entries.length){
+        const mainDef = cleanYdExplain(entries[0].explain);
+        if(mainDef){
+          const related = entries.slice(1, 4).map(e => ({word: e.entry, def: cleanYdExplain(e.explain).split('；')[0]})).filter(r => r.def && r.word !== word);
+          const out = {source:'youdao', word, defs: [mainDef], related};
           _dictCache[key] = out;
           return out;
         }
@@ -4225,7 +4260,7 @@ function renderOnlineDictBlock(data){
     el.innerHTML = '<div style="color:var(--text-secondary);font-size:12px;padding:6px 2px">在线词典加载失败（网络受限或词条缺失），可使用下方词典链接跳转查看</div>';
     return;
   }
-  const sourceTag = data.source === 'dictionaryapi' ? '词典API' : (data.source === 'wiktionary' ? '维基词典' : '翻译');
+  const sourceTag = data.source === 'dictionaryapi' ? '词典API' : (data.source === 'youdao' ? '有道词典' : (data.source === 'wiktionary' ? '维基词典' : '翻译'));
   const srcStyle = data.source === 'dictionaryapi' ? 'background:var(--primary);color:#f5f2ed' : 'background:var(--highlight);color:var(--text-secondary)';
   let body = '';
   if(data.meanings){
@@ -4233,14 +4268,24 @@ function renderOnlineDictBlock(data){
       <span style="font-style:italic;color:var(--accent);font-size:12px">${escHtml(m.pos)}</span>
       ${m.defs.map(d => `<div style="font-size:13px;line-height:1.6;margin-top:2px">• ${escHtml(d.text)}${d.ex ? `<div style="color:var(--text-secondary);font-size:12px;font-style:italic">例：${escHtml(d.ex)}</div>` : ''}</div>`).join('')}
     </div>`).join('');
+  } else if(data.cands){
+    body = `<div style="margin-top:6px">${data.cands.map(c => `<div style="font-size:13px;line-height:1.6;margin-top:2px">• ${escHtml(c)}</div>`).join('')}${data.example ? `<div style="color:var(--text-secondary);font-size:12px;line-height:1.6;margin-top:6px;border-left:2px solid var(--border);padding-left:8px">${escHtml(data.example)}</div>` : ''}</div>`;
+  } else if(data.suggest){
+    body = `<div style="margin-top:6px;font-size:13px;line-height:2">您是不是想查：${data.suggest.map(s => `<a href="javascript:void(0)" onclick="quickQueryWord('${s.word.replace(/'/g,"\\'")}')" style="color:var(--primary);font-weight:600">${escHtml(s.word)}</a>${s.trans ? `<span style="color:var(--text-secondary)">（${escHtml(s.trans)}）</span>` : ''}`).join('、')}</div>`;
   } else {
     const genderTag = data.gender ? `<span style="color:var(--success);font-size:12px;font-weight:600">${data.gender === 'm' ? 'm. 阳性' : data.gender === 'f' ? 'f. 阴性' : 'n. 中性'}</span> ` : '';
     const posTag = data.pos ? `<span style="font-size:11px;background:var(--highlight);color:var(--text-secondary);padding:1px 6px;border-radius:8px;margin-right:4px">${data.pos}</span>` : '';
-    body = `<div style="margin-top:6px">${genderTag}${posTag}${data.defs.map(d => `<div style="font-size:13px;line-height:1.6;margin-top:2px">• ${escHtml(d)}</div>`).join('')}</div>`;
+    body = `<div style="margin-top:6px">${genderTag}${posTag}${data.defs.map(d => `<div style="font-size:13px;line-height:1.6;margin-top:2px">• ${escHtml(d)}</div>`).join('')}${data.related && data.related.length ? `<div style="margin-top:8px;font-size:12px;color:var(--text-secondary);line-height:1.9">相关：${data.related.map(r => `${escHtml(r.word)}<span style="margin-left:3px">${r.def ? `（${escHtml(r.def)}）` : ''}</span>`).join('、')}</div>` : ''}</div>`;
   }
   el.innerHTML = `<div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap">${escHtml(data.word)}
     ${data.phonetic ? `<span style="font-weight:400;color:var(--text-secondary);font-size:12px">${escHtml(data.phonetic)}</span>` : ''}
     <span style="font-size:11px;padding:1px 6px;border-radius:8px;${srcStyle}">${sourceTag}</span></div>${body}`;
+}
+
+// 拼写建议点击 → 用建议词重新查询
+function quickQueryWord(w){
+  const input = document.getElementById('qpInput');
+  if(input){ input.value = w; doQuickQuery(); }
 }
 
 let queryPanelOpen = true; // always open on desktop
