@@ -6133,9 +6133,31 @@ function lemmatize(word, lang){
   return {lemma: w, found: false};
 }
 
+// 提取非中文字母，定位外语句子（核心优化）
+function extractForeignText(text, lang){
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const foreignRe = lang === 'de' ? /[a-zäöüßß]+/gi : /[a-z]+/gi;
+  const chineseRe = /[\u4e00-\u9fff\u3400-\u4dbf]+/g;
+  const extracted = [];
+  let noiseCount = 0;
+  for(const line of lines){
+    // 去掉中文字符
+    let cleaned = line.replace(chineseRe, ' ').replace(/[^\w\säöüßÄÖÜßéèêëàâùûôïçñ.'!?;:,\-–—'"()\/@#$%&*+=<>]/g, ' ');
+    // 提取外语单词
+    const foreignWords = cleaned.match(foreignRe) || [];
+    const foreignRatio = foreignWords.join(' ').length / Math.max(cleaned.trim().length, 1);
+    if(foreignWords.length === 0 || foreignRatio < 0.3){ noiseCount++; continue; }
+    // 保留含外语单词的行，用空格连接
+    extracted.push(cleaned.replace(/\s+/g, ' ').trim());
+  }
+  return {lines: extracted, noise: noiseCount};
+}
+
 // 句子重组 + 噪声过滤
 function rebuildSentences(text, lang){
-  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  // 先提取非中文外语内容
+  const foreign = extractForeignText(text, lang);
+  const lines = foreign.lines;
   const re = lang === 'de' ? /[a-zäöüß]/gi : /[a-z]/gi;
   const merged = [];
   let cur = '';
@@ -6301,6 +6323,135 @@ function saveSentenceGrammar(idx){
   setTimeout(()=>toast.remove(), 2000);
 }
 
+// 📋 一键总结：汇总所有句子的单词+语法，提供加入笔记按钮
+function buildSummarySection(){
+  if(!uploadState.parsed || !uploadState.parsed.sentences.length) return '';
+  const lang = state.lang;
+  const notes = loadNotes();
+  const allWords = [];
+  const allGrammar = [];
+  const wordSeen = new Set();
+  const gramSeen = new Set();
+
+  for(const s of uploadState.parsed.sentences){
+    for(const w of s.words){
+      if(!w.found || !w.meaning) continue;
+      if(wordSeen.has(w.lemma)) continue;
+      wordSeen.add(w.lemma);
+      const inNotes = (notes.word || []).find(n => n.content === w.lemma);
+      allWords.push({lemma: w.lemma, meaning: w.meaning, inNotes: !!inNotes});
+    }
+    for(const g of s.grammar){
+      if(gramSeen.has(g.title)) continue;
+      gramSeen.add(g.title);
+      const inNotes = (notes.grammar || []).find(n => n.content === g.title);
+      allGrammar.push({title: g.title, content: g.content, inNotes: !!inNotes});
+    }
+    for(const p of s.patterns){
+      if(gramSeen.has(p)) continue;
+      gramSeen.add(p);
+      const inNotes = (notes.grammar || []).find(n => n.content === p);
+      allGrammar.push({title: p, content: '通过智能解析识别', inNotes: !!inNotes});
+    }
+  }
+
+  if(!allWords.length && !allGrammar.length) return '';
+
+  let wordCards = '';
+  for(const w of allWords){
+    const statusIcon = w.inNotes ? '✅' : '';
+    const btnLabel = w.inNotes ? '已收录' : '+';
+    const btnClass = w.inNotes ? 'background:var(--success);color:#f5f2ed;cursor:default' : 'background:var(--accent);color:#f5f2ed';
+    wordCards += `<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="flex:1;min-width:0">
+        <span style="font-weight:600;font-size:14px">${w.lemma}</span>
+        <span style="font-size:12px;color:var(--text-secondary);margin-left:6px">${w.meaning}</span>
+        <button class="btn btn-sm" style="padding:1px 6px;font-size:11px;margin-left:4px" onclick="speak('${w.lemma.replace(/'/g,"\\'")}')">🔊</button>
+      </div>
+      <button class="btn btn-sm" style="${btnClass};border:none;padding:2px 10px;border-radius:12px;font-size:12px;white-space:nowrap" ${w.inNotes?'disabled':''} onclick="saveSummaryWord('${w.lemma.replace(/'/g,"\\'")}','${w.meaning.replace(/'/g,"\\'")}',this)">${btnLabel}${statusIcon}</button>
+    </div>`;
+  }
+
+  let gramCards = '';
+  for(const g of allGrammar){
+    const statusIcon = g.inNotes ? '✅' : '';
+    const btnLabel = g.inNotes ? '已收录' : '+';
+    const btnClass = g.inNotes ? 'background:var(--success);color:#f5f2ed;cursor:default' : 'background:var(--primary);color:#f5f2ed';
+    gramCards += `<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="flex:1;min-width:0">
+        <span style="font-weight:600;font-size:13px;color:var(--primary)">📐 ${g.title}</span>
+        <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(g.content||'').slice(0,50)}</div>
+      </div>
+      <button class="btn btn-sm" style="${btnClass};border:none;padding:2px 10px;border-radius:12px;font-size:12px;white-space:nowrap" ${g.inNotes?'disabled':''} onclick="saveSummaryGrammar('${g.title.replace(/'/g,"\\'")}','${(g.content||'').replace(/'/g,"\\'")}',this)">${btnLabel}${statusIcon}</button>
+    </div>`;
+  }
+
+  const newWordCount = allWords.filter(w => !w.inNotes).length;
+  const newGramCount = allGrammar.filter(g => !g.inNotes).length;
+  const batchDisabled = (newWordCount + newGramCount) === 0;
+
+  return `<div style="background:var(--card-bg);border-radius:12px;padding:14px;margin-top:12px;border:1px solid var(--border)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="font-size:14px;font-weight:600">📋 一键总结</div>
+      <button class="btn btn-sm btn-primary" style="font-size:12px" ${batchDisabled?'disabled':''} onclick="saveAllSummary()">💾 全部加入笔记${!batchDisabled ? ` (${newWordCount}词+${newGramCount}语法)` : ''}</button>
+    </div>
+    ${allWords.length ? `<div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:6px">📖 单词 (${allWords.length})</div>${wordCards}` : ''}
+    ${allGrammar.length ? `<div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin:10px 0 6px">📐 语法 (${allGrammar.length})</div>${gramCards}` : ''}
+  </div>`;
+}
+
+function saveSummaryWord(lemma, meaning, btnEl){
+  if(saveNoteQuiet('word', lemma, meaning)){
+    trackActivity('note', `word:${lemma}`);
+    if(btnEl){
+      btnEl.textContent = '已收录✅';
+      btnEl.style.background = 'var(--success)';
+      btnEl.style.color = '#f5f2ed';
+      btnEl.disabled = true;
+    }
+  }
+}
+function saveSummaryGrammar(title, content, btnEl){
+  if(saveNoteQuiet('grammar', title, content)){
+    trackActivity('note', `grammar:${title}`);
+    if(btnEl){
+      btnEl.textContent = '已收录✅';
+      btnEl.style.background = 'var(--success)';
+      btnEl.style.color = '#f5f2ed';
+      btnEl.disabled = true;
+    }
+  }
+}
+function saveAllSummary(){
+  if(!uploadState.parsed) return;
+  let addedWords = 0, addedGram = 0;
+  const wordSeen = new Set();
+  const gramSeen = new Set();
+  for(const s of uploadState.parsed.sentences){
+    for(const w of s.words){
+      if(!w.found || !w.meaning || wordSeen.has(w.lemma)) continue;
+      wordSeen.add(w.lemma);
+      if(saveNoteQuiet('word', w.lemma, w.meaning)){ addedWords++; trackActivity('note', `word:${w.lemma}`); }
+    }
+    for(const g of s.grammar){
+      if(gramSeen.has(g.title)) continue;
+      gramSeen.add(g.title);
+      if(saveNoteQuiet('grammar', g.title, g.content)) addedGram++;
+    }
+    for(const p of s.patterns){
+      if(gramSeen.has(p)) continue;
+      gramSeen.add(p);
+      if(saveNoteQuiet('grammar', p, '通过智能解析识别')) addedGram++;
+    }
+  }
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--success);color:#f5f2ed;padding:10px 24px;border-radius:20px;font-size:14px;z-index:9999;animation:fadeIn .3s';
+  toast.textContent = `✅ 已加入 ${addedWords} 个单词 + ${addedGram} 个语法点到笔记`;
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(), 2500);
+  renderNotes();
+}
+
 function classifyOcrLines(text, source){
   const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
   const items = [];
@@ -6420,12 +6571,6 @@ function selectAllOcrItems(selectAll){
 }
 
 function renderUploadPanel(){
-  const srcTabs = `
-    <div class="source-tabs">
-      <div class="source-tab ${uploadState.source==='duolingo'?'active':''}" onclick="setUploadSource('duolingo')">📱 多邻国</div>
-      <div class="source-tab ${uploadState.source==='grammar'?'active':''}" onclick="setUploadSource('grammar')">📕 语法书</div>
-    </div>`;
-
   let bodyHtml = '';
 
   if(!uploadState.imageData){
@@ -6437,7 +6582,7 @@ function renderUploadPanel(){
            ondrop="event.preventDefault();this.classList.remove('dragover');handleDropFile(event)">
         <div class="uz-icon">📷</div>
         <div class="uz-text">点击拍照或从相册选择图片</div>
-        <div class="uz-hint">支持 JPG / PNG / HEIC，可拍照或相册上传</div>
+        <div class="uz-hint">支持 JPG / PNG / HEIC，自动提取外语句子</div>
       </div>
       <input type="file" id="uploadInput" accept="image/*" capture="environment" style="display:none" onchange="handleUploadFile(this)">
       <input type="file" id="uploadInputGallery" accept="image/*" style="display:none" onchange="handleUploadFile(this)">`;
@@ -6459,7 +6604,7 @@ function renderUploadPanel(){
       // 🧠 智能解析区块（自动定位单词释义与语法点）
       let parsedHtml = '';
       if(uploadState.parsed && uploadState.parsed.sentences.length){
-        const noiseTip = uploadState.parsed.noise ? `<div style="font-size:11px;color:var(--text-secondary);margin-top:4px">🛡️ 已自动过滤 ${uploadState.parsed.noise} 行乱码/噪声内容</div>` : '';
+        const noiseTip = uploadState.parsed.noise ? `<div style="font-size:11px;color:var(--text-secondary);margin-top:4px">🛡️ 已自动过滤 ${uploadState.parsed.noise} 行中文/乱码/噪声，提取外语句子</div>` : '';
         const cards = uploadState.parsed.sentences.map((s, i) => {
           const chips = s.words.map(w => {
             if(w.found && w.meaning){
@@ -6485,14 +6630,18 @@ function renderUploadPanel(){
             </div>
           </div>`;
         }).join('');
+
+        // 📋 一键总结区块：汇总所有句子的单词+语法
+        const summaryHtml = buildSummarySection();
+
         parsedHtml = `<div class="smart-parse">
-          <div style="font-size:13px;font-weight:600">🧠 智能解析 <span style="font-weight:400;color:var(--text-secondary);font-size:12px">· 点击单词发音，自动定位语法</span></div>
+          <div style="font-size:13px;font-weight:600">🧠 智能解析 <span style="font-weight:400;color:var(--text-secondary);font-size:12px">· 自动提取非中文字母，定位外语句子</span></div>
           ${noiseTip}
           ${cards}
-        </div>`;
+        </div>
+        ${summaryHtml}`;
       }
       // Show classified items
-      const catLabels = {word:'单词', phrase:'常用句', grammar:'语法'};
       const catColors = {word:'background:#e4e8ea;color:#4a5d69', phrase:'background:#e4e8e4;color:#4a6b4e', grammar:'background:#eee9e1;color:#8c7a5e'};
 
       let itemsHtml = '';
@@ -6544,10 +6693,9 @@ function renderUploadPanel(){
   return `
     <div class="upload-panel">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div style="font-size:15px;font-weight:600">📷 照片上传识别</div>
+        <div style="font-size:15px;font-weight:600">📷 拍照识别（任意页面）</div>
         <button class="btn btn-sm" onclick="toggleUploadPanel()">收起 ✕</button>
       </div>
-      ${srcTabs}
       ${bodyHtml}
     </div>`;
 }
