@@ -536,6 +536,9 @@ function loadTesseract(){
   <div class="sidebar-item" data-module="quiz" onclick="switchModule('quiz')">
     <span class="icon">📝</span><span>听写测试</span>
   </div>
+  <div class="sidebar-item" data-module="quizgen" onclick="switchModule('quizgen')">
+    <span class="icon">🎯</span><span>小测验</span>
+  </div>
   <div class="sidebar-item" data-module="import" onclick="switchModule('import')">
     <span class="icon">📂</span><span>导入素材</span>
   </div>
@@ -593,6 +596,7 @@ function loadTesseract(){
     <div class="mm-item" data-module="daily" onclick="switchModule('daily')"><span class="mm-icon">📰</span><span>每日</span></div>
     <div class="mm-item" data-module="notes" onclick="switchModule('notes')"><span class="mm-icon">📒</span><span>笔记</span></div>
     <div class="mm-item" data-module="quiz" onclick="switchModule('quiz')"><span class="mm-icon">📝</span><span>听写</span></div>
+    <div class="mm-item" data-module="quizgen" onclick="switchModule('quizgen')"><span class="mm-icon">🎯</span><span>测验</span></div>
     <div class="mm-item" data-module="import" onclick="switchModule('import')"><span class="mm-icon">📂</span><span>素材</span></div>
     <div class="mm-item" onclick="openCamera()"><span class="mm-icon">📸</span><span>拍照</span></div>
   </div>
@@ -4066,6 +4070,140 @@ content:'冠词用法：\n\n不定冠词 a/an：泛指单数可数名词\n   a b
 examples:'an hour | the United States | have dinner | in bed'}
 ];
 
+// ═══ 小测验延伸库：同义词、反义词、不规则动词（用于生成延伸题型）═══
+const EN_SYNONYMS = [
+  {word:'happy',synonyms:['glad','joyful','cheerful']},
+  {word:'big',synonyms:['large','huge','enormous']},
+  {word:'small',synonyms:['tiny','little','miniature']},
+  {word:'fast',synonyms:['quick','rapid','swift']},
+  {word:'slow',synonyms:['sluggish','gradual','leisurely']},
+  {word:'beautiful',synonyms:['pretty','gorgeous','lovely']},
+  {word:'ugly',synonyms:['hideous','unattractive','unsightly']},
+  {word:'smart',synonyms:['intelligent','clever','bright']},
+  {word:'stupid',synonyms:['foolish','silly','dumb']},
+  {word:'rich',synonyms:['wealthy','affluent','prosperous']},
+  {word:'poor',synonyms:['needy','impoverished','destitute']},
+  {word:'begin',synonyms:['start','commence','initiate']},
+  {word:'end',synonyms:['finish','conclude','terminate']},
+  {word:'buy',synonyms:['purchase','acquire','obtain']},
+  {word:'sell',synonyms:['vend','market','trade']},
+  {word:'give',synonyms:['donate','grant','present']},
+  {word:'take',synonyms:['grab','seize','capture']},
+  {word:'make',synonyms:['create','produce','build']},
+  {word:'help',synonyms:['assist','aid','support']},
+  {word:'work',synonyms:['labor','toil','function']}
+];
+const EN_ANTONYMS = [
+  {word:'big',antonym:'small'},
+  {word:'hot',antonym:'cold'},
+  {word:'fast',antonym:'slow'},
+  {word:'good',antonym:'bad'},
+  {word:'happy',antonym:'sad'},
+  {word:'rich',antonym:'poor'},
+  {word:'young',antonym:'old'},
+  {word:'new',antonym:'old'},
+  {word:'easy',antonym:'hard'},
+  {word:'light',antonym:'dark'},
+  {word:'up',antonym:'down'},
+  {word:'left',antonym:'right'},
+  {word:'open',antonym:'close'},
+  {word:'start',antonym:'stop'},
+  {word:'win',antonym:'lose'},
+  {word:'give',antonym:'take'},
+  {word:'buy',antonym:'sell'},
+  {word:'come',antonym:'go'},
+  {word:'love',antonym:'hate'},
+  {word:'friend',antonym:'enemy'}
+];
+const EN_IRREGULAR = [
+  {base:'go',past:'went',participle:'gone'},
+  {base:'be',past:'was/were',participle:'been'},
+  {base:'have',past:'had',participle:'had'},
+  {base:'do',past:'did',participle:'done'},
+  {base:'see',past:'saw',participle:'seen'},
+  {base:'take',past:'took',participle:'taken'},
+  {base:'give',past:'gave',participle:'given'},
+  {base:'make',past:'made',participle:'made'},
+  {base:'know',past:'knew',participle:'known'},
+  {base:'think',past:'thought',participle:'thought'},
+  {base:'come',past:'came',participle:'come'},
+  {base:'want',past:'wanted',participle:'wanted'},
+  {base:'use',past:'used',participle:'used'},
+  {base:'find',past:'found',participle:'found'},
+  {base:'tell',past:'told',participle:'told'},
+  {base:'ask',past:'asked',participle:'asked'},
+  {base:'work',past:'worked',participle:'worked'},
+  {base:'seem',past:'seemed',participle:'seemed'},
+  {base:'feel',past:'felt',participle:'felt'},
+  {base:'try',past:'tried',participle:'tried'}
+];
+const DE_SYNONYMS = [
+  {word:'groß',synonyms:['riesig','enorm','gewaltig']},
+  {word:'klein',synonyms:['winzig','winzig','miniatur']},
+  {word:'schnell',synonyms:['rasch','flink','zügig']},
+  {word:'langsam',synonyms:['gemächlich','schleichend','bedächtig']},
+  {word:'schön',synonyms:['hübsch','wunderschön','attraktiv']},
+  {word:'hässlich',synonyms:['unscheinbar','unansehnlich','abstoßend']},
+  {word:'gut',synonyms:['ausgezeichnet','hervorragend','vortrefflich']},
+  {word:'schlecht',synonyms:['mies','übel','mangelhaft']},
+  {word:'alt',synonyms:['betagt','uralt','antik']},
+  {word:'neu',synonyms:['frisch','modern','brandneu']},
+  {word:'leicht',synonyms:['einfach','mühelos','simpel']},
+  {word:'schwer',synonyms:['schwierig','mühsam','anspruchsvoll']},
+  {word:'glücklich',synonyms:['froh','freudig','selig']},
+  {word:'traurig',synonyms:['betrübt','niedergeschlagen','melancholisch']},
+  {word:'reich',synonyms:['vermögend','wohlhabend','begütert']},
+  {word:'arm',synonyms:['bedürftig','mittellos','arm']},
+  {word:'beginnen',synonyms:['starten','anfangen','loslegen']},
+  {word:'beenden',synonyms:['abschließen','fertigstellen','vollenden']},
+  {word:'kaufen',synonyms:['erwerben','anschaffen','besorgen']},
+  {word:'verkaufen',synonyms:['veräußern','absetzen','loswerden']}
+];
+const DE_ANTONYMS = [
+  {word:'groß',antonym:'klein'},
+  {word:'heiß',antonym:'kalt'},
+  {word:'schnell',antonym:'langsam'},
+  {word:'gut',antonym:'schlecht'},
+  {word:'glücklich',antonym:'traurig'},
+  {word:'reich',antonym:'arm'},
+  {word:'jung',antonym:'alt'},
+  {word:'neu',antonym:'alt'},
+  {word:'leicht',antonym:'schwer'},
+  {word:'hell',antonym:'dunkel'},
+  {word:'oben',antonym:'unten'},
+  {word:'links',antonym:'rechts'},
+  {word:'offen',antonym:'geschlossen'},
+  {word:'beginnen',antonym:'beenden'},
+  {word:'gewinnen',antonym:'verlieren'},
+  {word:'geben',antonym:'nehmen'},
+  {word:'kaufen',antonym:'verkaufen'},
+  {word:'kommen',antonym:'gehen'},
+  {word:'lieben',antonym:'hassen'},
+  {word:'Freund',antonym:'Feind'}
+];
+const DE_IRREGULAR = [
+  {base:'gehen',past:'ging',participle:'gegangen'},
+  {base:'sein',past:'war',participle:'gewesen'},
+  {base:'haben',past:'hatte',participle:'gehabt'},
+  {base:'werden',past:'wurde',participle:'geworden'},
+  {base:'sehen',past:'sah',participle:'gesehen'},
+  {base:'nehmen',past:'nahm',participle:'genommen'},
+  {base:'geben',past:'gab',participle:'gegeben'},
+  {base:'machen',past:'machte',participle:'gemacht'},
+  {base:'wissen',past:'wusste',participle:'gewusst'},
+  {base:'denken',past:'dachte',participle:'gedacht'},
+  {base:'kommen',past:'kam',participle:'gekommen'},
+  {base:'wollen',past:'wollte',participle:'gewollt'},
+  {base:'finden',past:'fand',participle:'gefunden'},
+  {base:'sagen',past:'sagte',participle:'gesagt'},
+  {base:'arbeiten',past:'arbeitete',participle:'gearbeitet'},
+  {base:'scheinen',past:'schien',participle:'geschienen'},
+  {base:'fühlen',past:'fühlte',participle:'gefühlt'},
+  {base:'versuchen',past:'versuchte',participle:'versucht'},
+  {base:'sprechen',past:'sprach',participle:'gesprochen'},
+  {base:'lesen',past:'las',participle:'gelesen'}
+];
+
 // ============================================================
 // MODULE: AI Query
 // ============================================================
@@ -4246,7 +4384,7 @@ function cleanYdExplain(ex){
   if(!ex) return '';
   const posRe = /^(n|f|m|adj|adv|Vt|Vi|V|vt|vi|pron|prep|num|konj|art|interj|int|ger|pp|pt|part)$/i;
   const noiseRe = /^(赞|踩|更换|举报|好评|差评|收藏|翻译|复制|纠错|分享|导出|打印)$/;
-  const parts = String(ex).split(';').map(s => s.trim()).filter(s => s && s.length < 60);
+  const parts = String(ex).split(/[;；]/).map(s => s.trim()).filter(s => s && s.length < 60);
   const kept = parts.filter(s => ( /[\u4e00-\u9fff]/.test(s) || posRe.test(s) ) && !noiseRe.test(s));
   return kept.slice(0, 4).join('；');
 }
@@ -4679,7 +4817,7 @@ function speakQueryWord(word){
 // MODULE: Learning Notes
 // ============================================================
 const NOTES_KEY = 'linguaflow_notes';
-let notesState = {tab:'word', quizMode:false, quizIdx:0, quizScore:0, quizItems:[]};
+let notesState = {tab:'word', langFilter:'all', quizMode:false, quizIdx:0, quizScore:0, quizItems:[]};
 let uploadState = {show:false, source:'duolingo', imageData:null, ocrText:'', ocrItems:[], parsed:null, processing:false, tesseractReady:false};
 
 function loadNotes(){
@@ -4731,19 +4869,23 @@ function removeNote(category, idx){
 function renderNotes(){
   const area = document.getElementById('contentArea');
   const notes = loadNotes();
-  const grammarNotes = notes.grammar || [];
-  const wordNotes = [...(notes.word || []), ...(notes.phrase || [])];
+  const lf = notesState.langFilter;
+  const grammarAll = notes.grammar || [];
+  const wordAll = [...(notes.word || []), ...(notes.phrase || [])];
+  const grammarNotes = lf === 'all' ? grammarAll : grammarAll.filter(n => n.lang === lf);
+  const wordNotes = lf === 'all' ? wordAll : wordAll.filter(n => n.lang === lf);
   const totalNotes = grammarNotes.length + wordNotes.length;
 
   const tabClass = (t) => notesState.tab === t ? 'note-tab active' : 'note-tab';
+  const langClass = (l) => notesState.langFilter === l ? 'note-tab active' : 'note-tab';
 
   let listHtml = '';
   const items = notesState.tab === 'grammar' ? grammarNotes : wordNotes;
 
   if(items.length === 0){
-    listHtml = `<div class="empty-state"><div class="es-icon">📒</div><div class="es-text">暂无${notesState.tab==='grammar'?'语法':'单词/常用句'}笔记<br>在 AI 查询中点击"加入笔记"，或通过"📷 拍照上传"识别图片添加</div></div>`;
+    const hint = lf === 'all' ? '' : `（当前筛选：${lf==='en'?'英语':'德语'}）`;
+    listHtml = `<div class="empty-state"><div class="es-icon">📒</div><div class="es-text">暂无${notesState.tab==='grammar'?'语法':'单词/常用句'}笔记${hint}<br>在 AI 查询中点击"加入笔记"，或通过"📷 拍照上传"识别图片添加</div></div>`;
   } else {
-    const catLabel = notesState.tab === 'grammar' ? '语法' : (notes.word||[]).length > 0 && (notes.phrase||[]).length > 0 ? '' : '';
     items.forEach((n, i) => {
       const origCat = notes.word && notes.word.includes(n) ? '单词' : '常用句';
       listHtml += `<div class="note-item">
@@ -4770,6 +4912,11 @@ function renderNotes(){
         </div>
       </div>
       ${uploadState.show ? renderUploadPanel() : ''}
+      <div class="note-tabs" style="margin-bottom:8px">
+        <div class="${langClass('all')}" onclick="switchNoteLang('all')">全部</div>
+        <div class="${langClass('en')}" onclick="switchNoteLang('en')">🇬🇧 英语</div>
+        <div class="${langClass('de')}" onclick="switchNoteLang('de')">🇩🇪 德语</div>
+      </div>
       <div class="note-tabs">
         <div class="${tabClass('grammar')}" onclick="switchNoteTab('grammar')">📐 语法 (${grammarNotes.length})</div>
         <div class="${tabClass('word')}" onclick="switchNoteTab('word')">📝 单词及常用句 (${wordNotes.length})</div>
@@ -4777,6 +4924,11 @@ function renderNotes(){
       <div id="notesList">${listHtml}</div>
     </div>
   </div>`;
+}
+
+function switchNoteLang(lang){
+  notesState.langFilter = lang;
+  renderNotes();
 }
 
 function switchNoteTab(tab){
@@ -4903,6 +5055,268 @@ function showSpotAnswer(){
 function nextSpotQuestion(){
   notesState.quizIdx++;
   renderSpotQuiz();
+}
+
+// ============================================================
+// MODULE: Quiz Generator (小测验 - 延伸题型)
+// ============================================================
+let quizGenState = {items:[], idx:0, score:0, lang:'all'};
+
+function renderQuizGen(){
+  const area = document.getElementById('contentArea');
+  const notes = loadNotes();
+  const lf = notesState.langFilter;
+  const wordNotes = (lf === 'all' ? [...(notes.word||[]), ...(notes.phrase||[])] : [...(notes.word||[]), ...(notes.phrase||[])].filter(n => n.lang === lf));
+  const grammarNotes = lf === 'all' ? (notes.grammar||[]) : (notes.grammar||[]).filter(n => n.lang === lf);
+  const total = wordNotes.length + grammarNotes.length;
+
+  if(total < 2){
+    area.innerHTML = `<div class="fade-in" style="max-width:500px;margin:40px auto">
+      <div class="card" style="text-align:center">
+        <div style="font-size:48px;margin-bottom:16px">📚</div>
+        <div style="font-size:20px;font-weight:600;margin-bottom:12px">笔记不足</div>
+        <div style="font-size:14px;color:var(--text-secondary);margin-bottom:20px">小测验需要至少 2 条笔记（单词或语法）才能生成题目。<br>当前筛选：${lf==='all'?'全部':lf==='en'?'英语':'德语'}，共 ${total} 条。</div>
+        <button class="btn btn-primary" onclick="switchModule('notes')">去记笔记</button>
+      </div></div>`;
+    return;
+  }
+
+  area.innerHTML = `<div class="fade-in" style="max-width:600px;margin:20px auto">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🎯 智能小测验</div>
+        <div style="font-size:13px;color:var(--text-secondary)">基于笔记生成延伸题</div>
+      </div>
+      <div style="padding:20px 0">
+        <div style="font-size:15px;line-height:1.8;margin-bottom:16px">
+          当前筛选：<b>${lf==='all'?'全部语言':lf==='en'?'英语':'德语'}</b><br>
+          可用笔记：<b>${wordNotes.length}</b> 条单词/常用句 + <b>${grammarNotes.length}</b> 条语法
+        </div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:20px">
+          题型包括：反向释义、同义词/反义词选择、词形变位、听力拼写、语法应用判断。每题 4 个选项，共 10 题。
+        </div>
+        <button class="btn btn-primary" style="width:100%;padding:14px;font-size:16px" onclick="startQuizGen()">🚀 开始测验</button>
+      </div>
+    </div></div>`;
+}
+
+function startQuizGen(){
+  const notes = loadNotes();
+  const lf = notesState.langFilter;
+  const wordNotes = (lf === 'all' ? [...(notes.word||[]), ...(notes.phrase||[])] : [...(notes.word||[]), ...(notes.phrase||[])].filter(n => n.lang === lf));
+  const grammarNotes = lf === 'all' ? (notes.grammar||[]) : (notes.grammar||[]).filter(n => n.lang === lf);
+  const lang = lf === 'all' ? (state.lang || 'en') : lf;
+
+  const generators = [
+    () => genReverseDefQ(wordNotes, lang),
+    () => genSynonymQ(wordNotes, lang),
+    () => genAntonymQ(wordNotes, lang),
+    () => genIrregularQ(wordNotes, lang),
+    () => genSpellingQ(wordNotes, lang),
+    () => genGrammarAppQ(grammarNotes, lang)
+  ];
+
+  const items = [];
+  const usedTypes = new Set();
+  for(let i = 0; i < 10; i++){
+    let q = null;
+    let attempts = 0;
+    while(!q && attempts < 20){
+      const genIdx = i % generators.length;
+      const gen = generators[genIdx];
+      q = gen();
+      attempts++;
+      if(!q) generators.splice(genIdx, 1);
+      if(generators.length === 0) break;
+    }
+    if(q) items.push(q);
+  }
+
+  if(items.length < 2){
+    alert('无法生成足够题目，请增加笔记内容。');
+    return;
+  }
+
+  quizGenState = {items, idx:0, score:0, lang};
+  renderQuizGenQuestion();
+}
+
+function renderQuizGenQuestion(){
+  const area = document.getElementById('contentArea');
+  const {items, idx, score} = quizGenState;
+
+  if(idx >= items.length){
+    const pct = Math.round(score / items.length * 100);
+    area.innerHTML = `<div class="fade-in" style="max-width:500px;margin:40px auto">
+      <div class="card" style="text-align:center">
+        <div style="font-size:48px;margin-bottom:16px">${pct>=80?'🎉':pct>=60?'👍':'💪'}</div>
+        <div style="font-size:24px;font-weight:700;margin-bottom:8px">测验完成！</div>
+        <div style="font-size:18px;color:var(--text-secondary)">答对 ${score} / ${items.length}（${pct}%）</div>
+        <div style="margin-top:20px;display:flex;gap:12px;justify-content:center">
+          <button class="btn btn-primary" onclick="startQuizGen()">🔄 再来一轮</button>
+          <button class="btn" onclick="switchModule('notes')">返回笔记</button>
+        </div>
+      </div></div>`;
+    trackActivity('quizgen', `测验 ${score}/${items.length}`);
+    return;
+  }
+
+  const q = items[idx];
+  const optionsHtml = q.options.map((opt, i) =>
+    `<div class="spot-opt" data-idx="${i}" onclick="checkQuizGenAnswer(this, ${i}, ${q.correctIdx})">${opt}</div>`
+  ).join('');
+
+  area.innerHTML = `<div class="fade-in" style="max-width:600px;margin:20px auto">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">🎯 小测验 (${idx+1}/${items.length})</div>
+        <div style="font-size:13px;color:var(--text-secondary)">得分：${score}</div>
+      </div>
+      <div class="spot-card">
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px">${q.typeLabel}</div>
+        <div class="spot-question">${q.question}</div>
+        <div class="spot-options" style="margin-top:16px">${optionsHtml}</div>
+      </div>
+      <div style="text-align:center;margin-top:16px">
+        <button class="btn" onclick="switchModule('notes')">退出测验</button>
+      </div>
+    </div></div>`;
+}
+
+function checkQuizGenAnswer(el, selectedIdx, correctIdx){
+  const allOpts = el.parentElement.querySelectorAll('.spot-opt');
+  allOpts.forEach(o => {
+    o.onclick = null;
+    const i = parseInt(o.dataset.idx);
+    if(i === correctIdx) o.classList.add('correct');
+  });
+  if(selectedIdx === correctIdx){
+    el.classList.add('correct');
+    quizGenState.score++;
+  } else {
+    el.classList.add('wrong');
+  }
+  setTimeout(() => {
+    quizGenState.idx++;
+    renderQuizGenQuestion();
+  }, 1500);
+}
+
+// ═══ 题型生成器 ═══
+function genReverseDefQ(wordNotes, lang){
+  if(wordNotes.length < 2) return null;
+  const target = wordNotes[Math.floor(Math.random() * wordNotes.length)];
+  if(!target.detail) return null;
+  const distractors = wordNotes.filter(n => n.content !== target.content && n.detail).sort(() => Math.random()-0.5).slice(0,3).map(n => n.content);
+  if(distractors.length < 3) return null;
+  const options = [target.content, ...distractors].sort(() => Math.random()-0.5);
+  return {
+    typeLabel: '📝 反向释义',
+    question: `释义「${target.detail}」对应的单词是？`,
+    options,
+    correctIdx: options.indexOf(target.content)
+  };
+}
+
+function genSynonymQ(wordNotes, lang){
+  const lib = lang === 'de' ? DE_SYNONYMS : EN_SYNONYMS;
+  const matched = wordNotes.filter(n => lib.find(s => s.word.toLowerCase() === n.content.toLowerCase()));
+  if(matched.length === 0) return null;
+  const target = matched[Math.floor(Math.random() * matched.length)];
+  const entry = lib.find(s => s.word.toLowerCase() === target.content.toLowerCase());
+  if(!entry) return null;
+  const correct = entry.synonyms[Math.floor(Math.random() * entry.synonyms.length)];
+  const distractors = lib.filter(e => e.word !== target.content).sort(() => Math.random()-0.5).slice(0,3).map(e => e.synonyms[0]);
+  const options = [correct, ...distractors].sort(() => Math.random()-0.5);
+  return {
+    typeLabel: '🔗 同义词选择',
+    question: `哪个词与「${target.content}」意思最接近？`,
+    options,
+    correctIdx: options.indexOf(correct)
+  };
+}
+
+function genAntonymQ(wordNotes, lang){
+  const lib = lang === 'de' ? DE_ANTONYMS : EN_ANTONYMS;
+  const matched = wordNotes.filter(n => lib.find(a => a.word.toLowerCase() === n.content.toLowerCase()));
+  if(matched.length === 0) return null;
+  const target = matched[Math.floor(Math.random() * matched.length)];
+  const entry = lib.find(a => a.word.toLowerCase() === target.content.toLowerCase());
+  if(!entry) return null;
+  const correct = entry.antonym;
+  const distractors = lib.filter(a => a.word !== target.content).sort(() => Math.random()-0.5).slice(0,3).map(a => a.antonym);
+  const options = [correct, ...distractors].sort(() => Math.random()-0.5);
+  return {
+    typeLabel: '⚖️ 反义词选择',
+    question: `「${target.content}」的反义词是？`,
+    options,
+    correctIdx: options.indexOf(correct)
+  };
+}
+
+function genIrregularQ(wordNotes, lang){
+  const lib = lang === 'de' ? DE_IRREGULAR : EN_IRREGULAR;
+  const matched = wordNotes.filter(n => lib.find(v => v.base.toLowerCase() === n.content.toLowerCase()));
+  if(matched.length === 0) return null;
+  const target = matched[Math.floor(Math.random() * matched.length)];
+  const entry = lib.find(v => v.base.toLowerCase() === target.content.toLowerCase());
+  if(!entry) return null;
+  const askPast = Math.random() > 0.5;
+  const correct = askPast ? entry.past : entry.participle;
+  const label = askPast ? '过去式' : '过去分词';
+  const distractors = lib.filter(v => v.base !== target.content).sort(() => Math.random()-0.5).slice(0,3).map(v => askPast ? v.past : v.participle);
+  const options = [correct, ...distractors].sort(() => Math.random()-0.5);
+  return {
+    typeLabel: '🔄 词形变位',
+    question: `「${target.content}」的${label}是？`,
+    options,
+    correctIdx: options.indexOf(correct)
+  };
+}
+
+function genSpellingQ(wordNotes, lang){
+  if(wordNotes.length < 2) return null;
+  const target = wordNotes[Math.floor(Math.random() * wordNotes.length)];
+  const word = target.content;
+  if(word.length < 3) return null;
+  const distractors = [];
+  for(let i = 0; i < 3; i++){
+    let d = word.split('');
+    const pos = Math.floor(Math.random() * d.length);
+    const chars = 'abcdefghijklmnopqrstuvwxyzäöüß';
+    d[pos] = chars[Math.floor(Math.random() * chars.length)];
+    d = d.join('');
+    if(d !== word && !distractors.includes(d)) distractors.push(d);
+  }
+  if(distractors.length < 3) return null;
+  const options = [word, ...distractors].sort(() => Math.random()-0.5);
+  return {
+    typeLabel: '🔊 听力拼写',
+    question: `听发音，选择正确的拼写。<br><button class="btn btn-sm" onclick="speak('${word.replace(/'/g,"\\'")}')">🔊 播放发音</button>`,
+    options,
+    correctIdx: options.indexOf(word)
+  };
+}
+
+function genGrammarAppQ(grammarNotes, lang){
+  if(grammarNotes.length < 2) return null;
+  const target = grammarNotes[Math.floor(Math.random() * grammarNotes.length)];
+  const ref = lang === 'de' ? GRAMMAR_REF : EN_GRAMMAR_REF;
+  const matched = ref.find(r => target.content.toLowerCase().includes(r.title.toLowerCase()) || r.keywords.some(k => target.content.toLowerCase().includes(k.toLowerCase())));
+  if(!matched || !matched.examples) return null;
+  const correctEx = matched.examples.split('|')[0].trim();
+  const distractors = grammarNotes.filter(n => n.content !== target.content).sort(() => Math.random()-0.5).slice(0,3).map(n => {
+    const r = ref.find(x => n.content.toLowerCase().includes(x.title.toLowerCase()));
+    return r && r.examples ? r.examples.split('|')[0].trim() : n.content;
+  });
+  if(distractors.length < 3) return null;
+  const options = [correctEx, ...distractors].sort(() => Math.random()-0.5);
+  return {
+    typeLabel: '📐 语法应用',
+    question: `哪句正确使用了「${target.content}」？`,
+    options,
+    correctIdx: options.indexOf(correctEx)
+  };
 }
 
 // ============================================================
@@ -6188,7 +6602,7 @@ function switchModule(mod){
     _grammarDetail = null;
     document.querySelectorAll('.sidebar-item').forEach(el => el.classList.toggle('active', el.dataset.module === mod));
     document.querySelectorAll('.mm-item[data-module]').forEach(el => el.classList.toggle('active', el.dataset.module === mod));
-    const titles = {listening:'🎧 听力训练',speaking:'🗣️ 口语跟读',reading:'📖 阅读查词',grammar:'📐 语法学习',daily:'📰 每日更新',quiz:'📝 听写测试',import:'📂 导入素材',progress:'📊 学习进度',activity:'📅 学习记录',query:'🔍 AI 查询',notes:'📒 学习笔记'};
+    const titles = {listening:'🎧 听力训练',speaking:'🗣️ 口语跟读',reading:'📖 阅读查词',grammar:'📐 语法学习',daily:'📰 每日更新',quiz:'📝 听写测试',quizgen:'🎯 小测验',import:'📂 导入素材',progress:'📊 学习进度',activity:'📅 学习记录',query:'🔍 AI 查询',notes:'📒 学习笔记'};
     document.getElementById('topbarTitle').textContent = titles[mod] || mod;
     renderCurrentModule();
   } catch(e) {
@@ -6239,7 +6653,7 @@ function closeCameraMenu(){
   if(old) old.remove();
 }
 function renderCurrentModule(){
-  const renderers = {listening:renderListening,speaking:renderSpeaking,reading:renderReading,grammar:renderGrammar,daily:renderDaily,quiz:renderQuiz,import:renderImport,progress:renderProgress,activity:renderActivity,query:renderQuery,notes:renderNotes};
+  const renderers = {listening:renderListening,speaking:renderSpeaking,reading:renderReading,grammar:renderGrammar,daily:renderDaily,quiz:renderQuiz,quizgen:renderQuizGen,import:renderImport,progress:renderProgress,activity:renderActivity,query:renderQuery,notes:renderNotes};
   (renderers[state.module] || renderListening)();
 }
 
